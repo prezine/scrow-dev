@@ -10,7 +10,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff', 'is_active', 'created_at',)
     fieldsets = (
         ('Basic Details', {'fields': (
-            'name', 'email', 'calling_code', 'phone',
+            'name', 'email','password', 'calling_code', 'phone',
         )}),
         ('Others', {'fields': (
             'gender', 'address', 'country', 'state', 'city', 'photo',)}),

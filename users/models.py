@@ -10,7 +10,6 @@ from utils.files import file_upload_path
 
 class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -23,6 +22,11 @@ class UserManager(BaseUserManager):
 GENDER_CHOICES = (
     ('Male', 'male'),
     ('Female', 'female'),
+)
+
+ACCOUNT_TYPE = (
+    ('Staff', 'staff'),
+    ('Normal', 'normal'),
 )
 
 
@@ -41,8 +45,10 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModelWithSoftDelete):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, null=True, blank=True)
     business = models.ForeignKey(Business, on_delete=models.CASCADE, null=True, blank=True)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_activated = models.DateTimeField(null=True, blank=True)
     is_staff = models.BooleanField(default=False)
+    account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE, null=True, blank=True)
 
     objects = UserManager()
 
