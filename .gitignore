@@ -1,0 +1,12 @@
+*.pyc
+.scrowenv/
+db.*
+.env
+.env.prod
+.idea/
+.vscode/
+__pycache__/
+assets/
+node_modules/
+static/css/app.css
+static/js/app.js
