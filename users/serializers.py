@@ -49,6 +49,7 @@ class UserSerializer(serializers.ModelSerializer):
             city=validated_data.get('city'),
             address=validated_data.get('address'),
             gender=validated_data.get('gender'),
+            date_of_birth=validated_data.get('date_of_birth'),
         )
         instance.set_password(validated_data.get('password').lower())
         instance.save()

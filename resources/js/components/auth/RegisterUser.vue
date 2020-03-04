@@ -65,6 +65,11 @@
                        placeholder="Address">
                 <div class="error" v-if="!$v.formData.address.required">Enter your address</div>
             </div>
+            <div class="form-group">
+                <label>Date of birth</label>
+                <datetime type="date" v-model.trim="$v.formData.date_of_birth.$model"></datetime>
+                <div class="error" v-if="!$v.formData.date_of_birth.required">Enter your date of birth</div>
+            </div>
 
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Create Account</button>
@@ -94,7 +99,8 @@
                     address: '',
                     city: '',
                     state: '',
-                    country: ''
+                    country: '',
+                    date_of_birth: ''
                 }
             }
         },
@@ -133,6 +139,9 @@
                     required
                 },
                 address: {
+                    required
+                },
+                date_of_birth: {
                     required
                 }
             }

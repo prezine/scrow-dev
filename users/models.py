@@ -43,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModelWithSoftDelete):
     city = models.CharField(max_length=200)
     address = models.CharField(max_length=300)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    date_of_birth = models.DateField(null=True, blank=True)
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, null=True, blank=True)
     business = models.ForeignKey(Business, on_delete=models.CASCADE, null=True, blank=True)
     is_active = models.BooleanField(default=True)
