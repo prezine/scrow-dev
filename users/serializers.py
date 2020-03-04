@@ -1,7 +1,11 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.sites.models import Site
+from django.urls import reverse
 from rest_framework import serializers
 
 from users.models import User
+from utils.mailer import Mailer
+from utils.helpers import send_verification_link
 from utils.token import Token
 
 
@@ -48,12 +52,9 @@ class UserSerializer(serializers.ModelSerializer):
         )
         instance.set_password(validated_data.get('password').lower())
         instance.save()
-        token = Token()
-        verification_code = token.gen_token(length=35, ext='alphanum')
-        token.persist_token(verification_code, instance.email, lifetime=None)
 
         user = authenticate(username=instance.email, password=validated_data.get('password').lower())
         login(self.context.get("request"), user)
 
-        print(verification_code)
+        send_verification_link(instance)
         return instance

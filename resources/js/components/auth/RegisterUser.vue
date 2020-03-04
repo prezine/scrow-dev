@@ -1,7 +1,5 @@
 <template>
     <div>
-        <status-msg-util v-if="errorResponse" type="error">{{errorResponse}}</status-msg-util>
-        <status-msg-util v-if="successResponse">{{successResponse}}</status-msg-util>
         <form @submit.prevent="createUser">
             <div class="form-group">
                 <input type="text" v-model.trim="$v.formData.name.$model" class="form-control" placeholder="Name">
@@ -77,13 +75,8 @@
 
 <script>
     import {required, minLength, email, sameAs} from 'vuelidate/lib/validators';
-    import statusMessage from '../utils/status-msg';
-
     export default {
         name: "RegisterUser",
-        components: {
-            StatusMsgUtil: statusMessage
-        },
         data() {
             return {
                 isLoading: false,
