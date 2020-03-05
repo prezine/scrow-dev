@@ -1,0 +1,128 @@
+{% load static %}
+{% load business %}
+<div class="top-bar color-scheme-bright">
+    <div class="logo-w menu-size">
+        <a class="logo" href="{% url 'dashboard' %}">
+            <img src="{% static 'logo.png' %}" style="height: 40px;">
+        </a>
+    </div>
+    <div class="fancy-selector-w" data-step="6"
+         data-intro="Easily switch from Scrow to any other Circelpanda's Product">
+        <div class="fancy-selector-current">
+            <div class="fs-img shadowless"><img alt="" src="{% static 'img/company5.png' %}"></div>
+            <div class="fs-main-info">
+                <div class="fs-name">Circlepanda Products</div>
+                <div class="fs-sub"><span>Currect:</span><strong>Scrow</strong></div>
+            </div>
+            <div class="fs-selector-trigger"><i class="os-icon os-icon-arrow-down4"></i></div>
+        </div>
+        <div class="fancy-selector-options">
+            <div class="fancy-selector-option">
+                <div class="fs-img shadowless"><img alt="" src="{% static 'img/company5.png' %}"></div>
+                <div class="fs-main-info">
+                    <div class="fs-name">Coinbase</div>
+                </div>
+            </div>
+            <div class="fancy-selector-option">
+                <div class="fs-img shadowless"><img alt="" src="{% static 'img/company3.png' %}"></div>
+                <div class="fs-main-info">
+                    <div class="fs-name">Trips</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--------------------
+    START - Top Menu Controls
+    -------------------->
+    <div class="top-menu-controls">
+        <div class="element-search autosuggest-search-activator">
+            <input placeholder="Start typing to search..." type="text">
+        </div>
+        <!--------------------
+        START - Messages Link in secondary top menu
+        -------------------->
+        <div class="messages-notifications os-dropdown-trigger os-dropdown-position-left">
+            <i class="os-icon os-icon-mail-14"></i>
+            <div class="new-messages-count">12</div>
+            <div class="os-dropdown light message-list">
+                <ul>
+                    <li>
+                        <a href="./assets/misc_calendar.html#">
+                            <div class="user-avatar-w"><img alt="" src="{% static 'img/avatar1.jpg' %}"></div>
+                            <div class="message-content">
+                                <h6 class="message-from">John Mayers</h6>
+                                <h6 class="message-title">Account Update</h6></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./assets/misc_calendar.html#">
+                            <div class="user-avatar-w"><img alt="" src="{% static 'img/avatar2.jpg' %}"></div>
+                            <div class="message-content">
+                                <h6 class="message-from">Phil Jones</h6>
+                                <h6 class="message-title">Secutiry Updates</h6></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./assets/misc_calendar.html#">
+                            <div class="user-avatar-w"><img alt="" src="{% static 'img/avatar3.jpg' %}"></div>
+                            <div class="message-content">
+                                <h6 class="message-from">Bekky Simpson</h6>
+                                <h6 class="message-title">Vacation Rentals</h6></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./assets/misc_calendar.html#">
+                            <div class="user-avatar-w"><img alt="" src="{% static 'img/avatar4.jpg' %}"></div>
+                            <div class="message-content">
+                                <h6 class="message-from">Alice Priskon</h6>
+                                <h6 class="message-title">Payment Confirmation</h6></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--------------------
+        END - Messages Link in secondary top menu
+        -------------------->
+        <!--------------------
+        START - User avatar and menu in secondary top menu
+        -------------------->
+        <div class="logged-user-w">
+            <div class="logged-user-i">
+                <div class="avatar-w" data-step="7" data-intro="Hover on this Icon to access a logout option"><img
+                        alt="" src="{% static 'img/avatar1.jpg' %}"></div>
+                <div class="logged-user-menu color-style-bright">
+                    <div class="logged-user-avatar-info">
+                        <div class="avatar-w"><img alt="" src="{% static 'img/avatar1.jpg' %}"></div>
+                        <div class="logged-user-info-w">
+                            <div class="logged-user-name">{{ user.name }}</div>
+                            {% if user.business %}
+                            <div class="logged-user-role">{{staff_role}}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="bg-icon"><i class="os-icon os-icon-crown"></i></div>
+                    <ul>
+                        <li><a href="./settings"><i class="os-icon os-icon-settings"></i><span>Settings</span></a></li>
+                        <li><a href="./#"><i class="os-icon os-icon-documents-03"></i><span>Documentation</span></a>
+                        </li>
+                        <li><a href="./"><i class="os-icon os-icon-life-buoy"></i><span>Support</span></a></li>
+                        <li><a href="#" onclick="
+            event.preventDefault();
+            document.getElementById('logout-form').submit();"><i
+                                class="os-icon os-icon-signs-11"></i><span>Logout</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--------------------
+    END - User avatar and menu in secondary top menu
+    -------------------->
+    </div>
+    <!--------------------
+    END - Top Menu Controls
+    -------------------->
+</div>
+<!--------------------
+END - Top Bar
+-------------------->

@@ -1,0 +1,28 @@
+.hide {	display: none; }
+.icon-2 i {
+    width: 24px !important;
+    height: 24px !important;
+}
+.icon-3 i {
+    width: 32px !important;
+    height: 32px !important;
+}
+.icon-4 i {
+    width: 48px !important;
+    height: 48px !important;
+}
+.icon-5 i {
+    width: 64px !important;
+    height: 64px !important;
+}
+.logo-preview {
+	display: inline-table;
+	height: 90px;
+	width: 90px;
+	margin-bottom: 30px;
+}
+
+.unstyle_elementbox {
+    background-color: transparent;
+    box-shadow: none;
+}

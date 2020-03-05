@@ -1,5 +1,8 @@
 <template>
     <div>
+        <h3>User Registration</h3>
+        <div v-if="errorResponse">{{errorResponse}}</div>
+        <div v-if="successResponse">{{successResponse}}</div>
         <form @submit.prevent="createUser">
             <div class="form-group">
                 <input type="text" v-model.trim="$v.formData.name.$model" class="form-control" placeholder="Name">
@@ -80,8 +83,10 @@
 
 <script>
     import {required, minLength, email, sameAs} from 'vuelidate/lib/validators';
+
     export default {
         name: "RegisterUser",
+        props: ['noReload'],
         data() {
             return {
                 isLoading: false,
@@ -147,11 +152,18 @@
             }
         },
         methods: {
-            createUser() {
+            createUser: function () {
                 this.$v.$touch();
                 if (!this.$v.$invalid) {
                     axios.post('/api/users/create-user', this.formData).then(resp => {
-                        window.location = '/dashboard';
+                        if (this.noReload) {
+                            this.$store.commit('createUser', {
+                                registered: true,
+                                userId: resp.data.id
+                            });
+                        } else {
+                            window.location = '/dashboard';
+                        }
                     }).catch(err => {
                         console.log(err.response);
                         if (err.response.statusCode === 400) {
@@ -159,7 +171,7 @@
                                 console.log(err.response.data)
                             }
                         }
-                    })
+                    });
                 }
             }
         }

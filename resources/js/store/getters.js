@@ -4,5 +4,6 @@ export default {
   },
   statusMsg: state => {
     return state.statusMsg;
-  }
+  },
+  userCreated: state => state.userCreated
 };

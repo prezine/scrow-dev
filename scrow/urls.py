@@ -28,5 +28,7 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
 
     path('api/users/', include('users.urls')),
-    path('dashboard', user_auth_access_decorator(dashboard_view), name='dashboard')
+    path('dashboard', user_auth_access_decorator(dashboard_view), name='dashboard'),
+
+    path('business/', include('business.urls')),
 ]

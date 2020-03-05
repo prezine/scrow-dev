@@ -17,18 +17,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='staffrole',
-            name='staff',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AddField(
             model_name='business',
             name='bank',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='finance.Bank'),
-        ),
-        migrations.AddField(
-            model_name='business',
-            name='staffs',
-            field=models.ManyToManyField(related_name='staffs', to='business.StaffRole'),
-        ),
+        )
     ]

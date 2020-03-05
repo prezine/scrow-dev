@@ -13,6 +13,7 @@ Vue.use(Vue2Filters);
 Vue.use(Vuelidate);
 
 Vue.component('register-user', require('./components/auth/RegisterUser.vue').default);
+Vue.component('register-business', require('./components/auth/RegisterBusiness.vue').default);
 Vue.component('resend-verification-link', require('./components/auth/ResendVerificationLink.vue').default);
 Vue.component('status-msg', require('./components/utils/StatusMsg.vue').default);
 

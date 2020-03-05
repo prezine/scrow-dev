@@ -4,5 +4,6 @@ export default {
   },
   setstatusMsg: (state, payload) => {
     state.statusMsg = payload;
-  }
+  },
+  createUser: (state, payload) => state.userCreated = payload
 };

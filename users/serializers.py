@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.sites.models import Site
 from django.urls import reverse
+from django.utils import dateparse
 from rest_framework import serializers
 
 from users.models import User
@@ -13,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, error_messages={'required': 'username is required.'})
     email = serializers.CharField(error_messages={'required': 'email address is required.'})
     retype_password = serializers.CharField(required=False, allow_blank=True)
+    date_of_birth = serializers.CharField(required=True)
 
     class Meta:
         model = User
@@ -40,6 +42,7 @@ class UserSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
+        date_of_birth = dateparse.parse_datetime(validated_data.get('date_of_birth')).date()
         instance = User(
             name=validated_data.get('name'),
             email=validated_data.get('email').lower(),
@@ -49,7 +52,7 @@ class UserSerializer(serializers.ModelSerializer):
             city=validated_data.get('city'),
             address=validated_data.get('address'),
             gender=validated_data.get('gender'),
-            date_of_birth=validated_data.get('date_of_birth'),
+            date_of_birth=date_of_birth,
         )
         instance.set_password(validated_data.get('password').lower())
         instance.save()
