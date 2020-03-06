@@ -4,7 +4,8 @@ import time
 
 from config.app_config import (
     PROFILE_UPLOAD_PATH,
-    BUSINESS_AVATAR_UPLOAD_PATH
+    BUSINESS_AVATAR_UPLOAD_PATH,
+    DOCUMENT_UPLOAD_PATH
 )
 
 
@@ -24,6 +25,9 @@ class FileUpload:
 
     def business_avatar_upload_path(self, instance, filename):
         return self.__file_upload(instance, filename, BUSINESS_AVATAR_UPLOAD_PATH)
+
+    def document_upload_path(self, instance, filename):
+        return self.__file_upload(instance, filename, DOCUMENT_UPLOAD_PATH)
 
 
 file_upload_path = FileUpload()

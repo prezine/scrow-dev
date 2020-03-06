@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from business.models import Business, Staff, Role
+from business.models import Business, Staff, Role, BusinessVerification
 from users.models import User
 
 
@@ -56,6 +56,24 @@ class BusinessSerializer(serializers.ModelSerializer):
             business_type=validated_data.get('business_type')
         )
 
+        user.business = business
+        user.save()
         role = Role.objects.create(role='Owner', user=user)
         Staff.objects.create(role=role, business=business)
         return business
+
+
+class BusinessVerificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessVerification
+        fields = '__all__'
+
+    def create(self, validated_data):
+        verification = BusinessVerification.objects.filter(business=validated_data.get('business').pk)
+        if verification:
+            verification.update(**validated_data)
+            verification = BusinessVerification.objects.get(business=validated_data.get('business').pk)
+        else:
+            verification = BusinessVerification.objects.create(**validated_data)
+
+        return verification

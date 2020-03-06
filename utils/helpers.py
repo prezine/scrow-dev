@@ -1,8 +1,13 @@
+from django.contrib import messages
 from django.contrib.sites.models import Site
+from django.http import Http404
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
+from business.forms import BankDetailsForm
+from business.models import Business
+from users.models import User
 from utils.mailer import Mailer
 from utils.token import Token
 
@@ -47,3 +52,24 @@ def check_password_reset_token(user, reset_token):
     token.remove_token(user.pk)
 
     return eval_token
+
+
+def update_bank_details(request, form):
+    if request.user.business:
+        try:
+            business = Business.objects.get(pk=request.user.business.pk)
+        except Business.DoesNotExist:
+            raise Http404
+
+    if business.bank:
+        form = BankDetailsForm(instance=business.bank, data=request.POST)
+    if form.is_valid():
+        bank = form.save()
+        if business:
+            business.bank = bank
+            business.save()
+        else:
+            user = User.objects.get(pk=request.user.pk)
+            user.bank = bank
+            user.save()
+        messages.success(request, 'Bank details updated!')

@@ -9,6 +9,7 @@ env.read_env(f'{BASE_DIR}/.env')
 # FILE UPLOAD PATH
 PROFILE_UPLOAD_PATH = 'uploads/profile'
 BUSINESS_AVATAR_UPLOAD_PATH = 'uploads/business'
+DOCUMENT_UPLOAD_PATH = 'uploads/documents'
 
 NUMBERS = '0123456789'
 ALPHA_NUM = f'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ{NUMBERS}'

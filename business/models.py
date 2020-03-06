@@ -1,6 +1,6 @@
 from django.db import models
 
-from config.models import BaseModel
+from config.models import BaseModel, BaseModelWithSoftDelete
 from finance.models import Bank
 from utils.files import file_upload_path
 
@@ -54,3 +54,10 @@ class Staff(models.Model):
 
     def __str__(self):
         return '%s : %s' % (self.business.name, self.role)
+
+
+class BusinessVerification(BaseModel):
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    cac_cert = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
+    tax_doc = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
+    personal_id = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)

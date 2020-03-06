@@ -1,7 +1,8 @@
 from django.contrib import admin
 
-from .models import Business, Staff, Role
+from .models import Business, Staff, Role, BusinessVerification
 
 admin.site.register(Business)
 admin.site.register(Role)
 admin.site.register(Staff)
+admin.site.register(BusinessVerification)

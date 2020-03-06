@@ -96,9 +96,9 @@
                         <div class="avatar-w"><img alt="" src="{% static 'img/avatar1.jpg' %}"></div>
                         <div class="logged-user-info-w">
                             <div class="logged-user-name">{{ user.name }}</div>
-                            {% if user.business %}
-                            <div class="logged-user-role">{{staff_role}}</div>
-                            {% endif %}
+{#                            {% if user.business %}#}
+                            <div class="logged-user-role">{%  staff_role user %}</div>
+{#                            {% endif %}#}
                         </div>
                     </div>
                     <div class="bg-icon"><i class="os-icon os-icon-crown"></i></div>

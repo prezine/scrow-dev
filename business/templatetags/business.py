@@ -10,7 +10,7 @@ register = template.Library()
 def staff_role(user):
     if user.business:
         try:
-            return Staff.objects.get(role__user=user.pk).role
+            return Staff.objects.get(role__user=user.pk).role.role
         except Staff.DoesNotExist:
             return None
     return None
