@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 
+from business.models import StaffInvite
 from users.forms import LoginForm, ForgotPasswordForm, ForgotResetForm
 from users.models import User
 from users.serializers import UserSerializer
@@ -19,8 +20,19 @@ from utils.helpers import send_verification_link, send_reset_password_link, chec
 from utils.token import Token
 
 
-def register_user_view(request):
-    return render(request, 'users/auth/register.html')
+def register_user_view(request, invite_id=None):
+    if invite_id:
+        try:
+            invite = StaffInvite.objects.get(invite_id=invite_id)
+        except StaffInvite.DoesNotExist:
+            messages.warning(request, 'Invite link not valid.')
+            return redirect(reverse('userLogin'))
+
+        if invite.is_active:
+            messages.warning(request, 'Invite link has already been used, thus is no longer active.')
+            return redirect(reverse('userLogin'))
+    context = {'invite_id': invite_id}
+    return render(request, 'users/auth/register.html', context)
 
 
 class RegisterUserApi(CreateAPIView):

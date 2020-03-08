@@ -17,7 +17,8 @@ class Business(BaseModel):
     state = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     address = models.CharField(max_length=300)
-    photo = models.ImageField(upload_to=file_upload_path.business_avatar_upload_path, default='', blank=True)
+    photo = models.ImageField(upload_to=file_upload_path.business_avatar_upload_path,
+                              default='business-photo-fallback.png', blank=True)
     category = models.CharField(max_length=200)
     sub_category = models.CharField(max_length=200)
     business_type = models.CharField(max_length=20, choices=BUSINESS_TYPE, default='startup')
@@ -61,3 +62,14 @@ class BusinessVerification(BaseModel):
     cac_cert = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
     tax_doc = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
     personal_id = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
+
+
+class StaffInvite(BaseModel):
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    invite_id = models.CharField(max_length=200)
+    role = models.CharField(max_length=20)
+    is_active = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name

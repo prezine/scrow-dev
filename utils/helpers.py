@@ -46,6 +46,18 @@ def send_reset_password_link(user):
     #        payload={'reset_link': reset_link})
 
 
+def send_team_invite_link(invite_id):
+    current_site = Site.objects.get_current()
+
+    invite_path = reverse('teamInvite', kwargs={'invite_id': invite_id})
+
+    invite_link = '%s%s' % (current_site.domain, invite_path)
+
+    print(invite_link)
+    # Mailer(template='business/mail/team/invite.html', subject='Scrow - Invite to join a team', to_email=email,
+    #        payload={'invite_link': invite_link})
+
+
 def check_password_reset_token(user, reset_token):
     token = Token()
     eval_token = token.evaluate_token(user.pk, reset_token)

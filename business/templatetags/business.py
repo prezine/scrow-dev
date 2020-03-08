@@ -1,4 +1,3 @@
-import os
 from django import template
 
 from business.models import Staff

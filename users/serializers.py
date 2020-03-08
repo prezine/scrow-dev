@@ -1,13 +1,10 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.sites.models import Site
-from django.urls import reverse
-from django.utils import dateparse
+from django.utils import dateparse, timezone
 from rest_framework import serializers
 
+from business.models import StaffInvite, Role, Staff
 from users.models import User
-from utils.mailer import Mailer
 from utils.helpers import send_verification_link
-from utils.token import Token
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(error_messages={'required': 'email address is required.'})
     retype_password = serializers.CharField(required=False, allow_blank=True)
     date_of_birth = serializers.CharField(required=True)
+    invite_id = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = User
@@ -39,10 +37,20 @@ class UserSerializer(serializers.ModelSerializer):
         if User.objects.filter(name=name).exists():
             raise serializers.ValidationError('Username already in use')
 
+        if attrs.get('invite_id'):
+            try:
+                invite = StaffInvite.objects.get(invite_id=attrs.get('invite_id'))
+            except StaffInvite.DoesNotExist:
+                raise serializers.ValidationError('Sorry your invite link is not valid')
+
+            if invite.is_active:
+                raise serializers.ValidationError('Invite link has already been used, thus is no longer active.')
+
         return attrs
 
     def create(self, validated_data):
         date_of_birth = dateparse.parse_datetime(validated_data.get('date_of_birth')).date()
+
         instance = User(
             name=validated_data.get('name'),
             email=validated_data.get('email').lower(),
@@ -56,6 +64,17 @@ class UserSerializer(serializers.ModelSerializer):
         )
         instance.set_password(validated_data.get('password').lower())
         instance.save()
+
+        if validated_data.get('invite_id'):
+            invite = StaffInvite.objects.get(invite_id=validated_data.get('invite_id'))
+            invite.is_active = timezone.now()
+            invite.save()
+
+            instance.business = invite.business
+            instance.save()
+
+            role = Role.objects.create(role=invite.role, user=instance)
+            Staff.objects.create(role=role, business=instance.business)
 
         user = authenticate(username=instance.email, password=validated_data.get('password').lower())
         login(self.context.get("request"), user)

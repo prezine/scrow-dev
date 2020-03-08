@@ -16,6 +16,9 @@ Vue.component('register-user', require('./components/auth/RegisterUser.vue').def
 Vue.component('register-business', require('./components/auth/RegisterBusiness.vue').default);
 Vue.component('resend-verification-link', require('./components/auth/ResendVerificationLink.vue').default);
 Vue.component('verify-business-details', require('./components/business/VerifyDetails.vue').default);
+
+Vue.component('team-members', require('./components/business/teams/TeamMembers.vue').default);
+
 Vue.component('status-msg', require('./components/utils/StatusMsg.vue').default);
 
 new Vue({

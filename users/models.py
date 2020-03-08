@@ -37,7 +37,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModelWithSoftDelete):
     email = models.EmailField(max_length=300, db_index=True, unique=True)
     phone = models.CharField(max_length=20, db_index=True, unique=True)
     calling_code = models.IntegerField(default=234)
-    photo = models.ImageField(upload_to=file_upload_path.profile_image_upload_path, default='', blank=True)
+    photo = models.ImageField(upload_to=file_upload_path.profile_image_upload_path,
+                              default='profile-photo-fallback.png', blank=True)
     country = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
     city = models.CharField(max_length=200)

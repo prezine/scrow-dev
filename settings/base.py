@@ -1,7 +1,6 @@
 from datetime import timedelta
 from config.app_config import *
 
-
 ALLOWED_HOSTS = ['localhost', '*']
 
 # Application definition
@@ -58,6 +57,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'business.context_processors.user_role'
             ],
         },
     },

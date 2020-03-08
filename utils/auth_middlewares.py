@@ -26,3 +26,13 @@ class NonAuthMiddleware(object):
                 return HttpResponseRedirect('/admin')
             return HttpResponseRedirect('login')
         return None
+
+
+class BusinessOnlyMiddleware:
+    def process_request(self, request):
+        if request.user.is_authenticated:
+            if request.user.business:
+                return None
+            return HttpResponseRedirect('/admin')
+        else:
+            return HttpResponseRedirect('/login')

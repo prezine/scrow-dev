@@ -86,7 +86,16 @@
 
     export default {
         name: "RegisterUser",
-        props: ['noReload'],
+        props: {
+            'noReload': {
+                type: Boolean,
+                required: false
+            },
+            'invite_id': {
+                type: String,
+                required: false
+            }
+        },
         data() {
             return {
                 isLoading: false,
@@ -105,7 +114,8 @@
                     city: '',
                     state: '',
                     country: '',
-                    date_of_birth: ''
+                    date_of_birth: '',
+                    invite_id: this.invite_id
                 }
             }
         },
@@ -168,7 +178,7 @@
                         console.log(err.response);
                         if (err.response.statusCode === 400) {
                             if (err.response.data) {
-                                console.log(err.response.data)
+                                console.log(err.response.data);
                             }
                         }
                     });

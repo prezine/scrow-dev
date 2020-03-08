@@ -1,13 +1,30 @@
 from rest_framework import serializers
 
-from business.models import Business, Staff, Role, BusinessVerification
+from business.models import Business, Staff, Role, BusinessVerification, StaffInvite
 from users.models import User
+from users.serializers import UserSerializer
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Role
+        fields = '__all__'
 
 
 class StaffSerializer(serializers.ModelSerializer):
+    role = RoleSerializer(read_only=True)
+
     class Meta:
         model = Staff
         fields = '__all__'
+
+
+class StaffInviteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StaffInvite
+        exclude = ('invite_id', 'is_active')
 
 
 class BusinessSerializer(serializers.ModelSerializer):

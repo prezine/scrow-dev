@@ -2,19 +2,22 @@
 {% load static %}
 {% load business %}
 {% block page_title %}Overview{% endblock %}
+{% block suffix_headtags %}
+    <link href="{% static 'css/offline-theme-chrome.css' %}" rel="stylesheet">
+    <link href="{% static 'libraries/introjs/introjs.css' %}" rel="stylesheet">
+{% endblock %}
 {% block content %}
     <div class="element-content">
-    <div>
-{% if user.business %}
-            Hey business man
-            {% staff_role user %}
-        {% endif %}
-    </div>
+        <div>
+            {% if user.business and user_role.role.role == 'Owner' %}
+                <a href="{% url 'business:workers' %}">Add Workers or something like that</a>
+            {% endif %}
+        </div>
 
         <div class="row" align="center">
             <div class="col-md-2"></div>
             <div class="col-md-8 mt-5 mb-4" data-step="1"
-                 data-intro="Hi {{user.name}}, Welcome to scrow, Hit next to learn more and skip to pass">
+                 data-intro="Hi {{ user.name }}, Welcome to scrow, Hit next to learn more and skip to pass">
                 <h4 style="font-weight: 600">Hi, {{ user.name }} — Welcome to Scrow!</h4>
                 {% if not user.is_activated %}
                     <p>Your account is currently unverified - this means there're a couple more things to finish up
@@ -58,3 +61,6 @@
         </div>
     </div>
 {% endblock content %}
+{% block suffix_bottomtags %}
+    <script src="{% static 'libraries/introjs/intro.js' %}"></script>
+{% endblock %}
