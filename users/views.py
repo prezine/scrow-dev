@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import Http404
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import View
@@ -20,7 +20,7 @@ from utils.helpers import send_verification_link, send_reset_password_link, chec
 from utils.token import Token
 
 
-def register_user_view(request, invite_id=None):
+def register_user_view(request, invite_id=''):
     if invite_id:
         try:
             invite = StaffInvite.objects.get(invite_id=invite_id)
