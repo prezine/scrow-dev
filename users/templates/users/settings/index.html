@@ -23,7 +23,6 @@
                                         data-title="Preference Settings"> Preferences </a></li>
                 <li class="nav-item"><a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_api"
                                         data-title="API Settings"> API Keys & Webhooks </a></li>
-                <!--<li class="nav-item"><a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_upgrade"> Upgrade Business </a></li>-->
             </ul>
         </div>
     </div>
@@ -34,90 +33,7 @@
             <div class="element-wrapper">
                 <!-- Profile -->
                 <div class="element-box" id="tab_profile">
-                    <form id="formValidate">
-                        <h6 class="form-header text-center" style="font-weight: 600">Your Profile</h6>
-                        <div class="form-group">
-                            <label for=""> Fullname</label>
-                            <input class="form-control" data-error="Your name" placeholder="Your Fullname"
-                                   required="required" type="text">
-                            <div class="help-block form-text with-errors form-control-feedback"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for=""> Email address</label>
-                                    <input class="form-control" data-error="Your email address is invalid"
-                                           placeholder="Your Email Address" required="required" type="email">
-                                    <div class="help-block form-text with-errors form-control-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for=""> Gender </label>
-                                    <select class="form-control">
-                                        <option>Select gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="business">Business</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button class="mr-2 mb-2 btn btn-sm btn-rounded btn-primary btn-outline-primary"
-                                    type="button"> Change Password
-                            </button>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Phone Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text" style="padding: 0 25px;font-weight: 600">
-                                        +234
-                                    </div>
-                                </div>
-                                <input class="form-control" placeholder="817 123 4567" type="text">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Country</label>
-                                    <select class="form-control" id="country" required></select>
-                                    <div class="help-block form-text with-errors form-control-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">State</label>
-                                    <select class="form-control" id="state" required></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">Username</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">@</div>
-                                        </div>
-                                        <input class="form-control" placeholder="Display name" type="text">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for=""> Date of Birth</label>
-                                    <input class="single-daterange form-control" placeholder="Date of birth" type="text"
-                                           value="01/01/2000">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-buttons-w" align="center">
-                            <button class="mr-2 mb-2 btn btn-outline-success" type="button"> Save Changes</button>
-                        </div>
-                    </form>
+                    <profile-details></profile-details>
                 </div>
                 <!-- Business -->
                 <div class="element-box hide" id="tab_business">

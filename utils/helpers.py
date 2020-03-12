@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.sites.models import Site
+from django.db.models import Q
 from django.http import Http404
 from django.urls import reverse
 from django.utils.encoding import force_bytes
@@ -85,3 +86,15 @@ def update_bank_details(request, form):
             user.bank = bank
             user.save()
         messages.success(request, 'Bank details updated!')
+
+
+def check_username_exist(model, pk, name):
+    return model.objects.filter(~Q(id=pk), name=name).exists()
+
+
+def check_email_exist(model, pk, email):
+    return model.objects.filter(~Q(id=pk), email=email).exists()
+
+
+def check_phone_exist(model, pk, phone):
+    return model.objects.filter(~Q(id=pk), phone=phone).exists()

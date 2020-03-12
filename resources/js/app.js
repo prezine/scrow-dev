@@ -19,6 +19,8 @@ Vue.component('verify-business-details', require('./components/business/VerifyDe
 
 Vue.component('team-members', require('./components/business/teams/TeamMembers.vue').default);
 
+Vue.component('profile-details', require('./components/user/Profile.vue').default);
+
 Vue.component('status-msg', require('./components/utils/StatusMsg.vue').default);
 
 new Vue({

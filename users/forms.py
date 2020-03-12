@@ -44,3 +44,9 @@ class ForgotResetForm(forms.Form):
             raise forms.ValidationError("Password and retype password do not match")
 
         return cleaned_data
+
+
+class ProfileDetailsForm(forms.ModelForm):
+    class Meta:
+        model = User
+        exclude = ('name', 'email')

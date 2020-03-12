@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from rest_framework import permissions, status
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils.encoding import force_text
@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_decode
 from business.models import StaffInvite
 from users.forms import LoginForm, ForgotPasswordForm, ForgotResetForm
 from users.models import User
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, UpdateUserSerializer
 from utils.helpers import send_verification_link, send_reset_password_link, check_password_reset_token
 from utils.token import Token
 
@@ -188,3 +188,15 @@ class LogoutView(View):
     def post(self, request):
         logout(request)
         return redirect((reverse('homepage')))
+
+
+class ProfileDetailsView(RetrieveUpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UpdateUserSerializer
+
+    def get_object(self):
+        try:
+            user = User.objects.get(pk=self.request.user.pk)
+        except User.DoesNotExist:
+            return []
+        return user

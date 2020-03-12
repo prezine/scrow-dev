@@ -30,6 +30,7 @@ urlpatterns = [
     path('password-reset', PasswordResetView.as_view(), name='password_reset_form'),
     path('logout', LogoutView.as_view(), name='logout'),
 
+    # path('users/', include('users.urls')),
     path('api/users/', include('users.urls')),
     path('dashboard', user_auth_access_decorator(dashboard_view), name='dashboard'),
     path('settings', user_auth_access_decorator(settings_view), name='settings'),
