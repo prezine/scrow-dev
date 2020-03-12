@@ -16,21 +16,21 @@
                             <input type="text" v-model.trim="$v.formData.name.$model" class="form-control">
                             <div class="error" v-if="!$v.formData.name.required">Enter invitee name</div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" :class="{'has-danger': $v.formData.role.$error}">
                             <label>Email address</label>
                             <input type="email" v-model.trim="$v.formData.email.$model" class="form-control">
-                            <div class="error" v-if="!$v.formData.email.required">Enter your email address</div>
+                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback" v-if="!$v.formData.email.required">Enter your email address</div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" :class="{'has-danger': $v.formData.role.$error}">
                             <label>Roles</label>
                             <select v-model.trim="$v.formData.role.$model" class="form-control">
-                                <option value="" selected default>
+                                <option value="" selected disabled>
                                     Select role
                                 </option>
                                 <option value="Developer">Developer</option>
                                 <option value="Moderator">Moderator</option>
                             </select>
-                            <div class="error" v-if="!$v.formData.role.required">Select role</div>
+                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback" v-if="!$v.formData.role.required">Select role</div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -51,8 +51,6 @@
             return {
                 isLoading: false,
                 formErrors: [],
-                errorResponse: '',
-                successResponse: '',
                 formData: {
                     name: '',
                     email: '',
