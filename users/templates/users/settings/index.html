@@ -1,0 +1,332 @@
+{% extends '../partials/base.html' %}
+{% load static %}
+{% block page_title %}Settings{% endblock %}
+{% block suffix_headtags %}
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <!--START - Control panel above projects-->
+    <div class="os-tabs-w mx-5">
+        <div class="os-tabs-controls">
+            <ul class="nav nav-tabs" style="font-weight: 600">
+                <li class="nav-item"><a aria-expanded="false" class="nav-link active" data-toggle="tab"
+                                        href="#tab_profile" data-title="Profile Settings"> Profile </a></li>
+                <li class="nav-item"><a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_business"
+                                        data-title="Business Settings"> Business </a></li>
+                <li class="nav-item"><a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_accounts"
+                                        data-title="Account Settings"> Settlement Accounts </a></li>
+                {% if user.business and user_role.role.role == 'Owner' %}
+                    <li class="nav-item"><a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_team"
+                                            data-title="Team Settings"> Team </a></li>
+                {% endif %}
+                <li class="nav-item"><a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_preferences"
+                                        data-title="Preference Settings"> Preferences </a></li>
+                <li class="nav-item"><a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_api"
+                                        data-title="API Settings"> API Keys & Webhooks </a></li>
+            </ul>
+        </div>
+    </div>
+    <!--END - Control panel above projects-->
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 col-sm-12">
+            <div class="element-wrapper">
+                <!-- Profile -->
+                <div class="element-box" id="tab_profile">
+                    <profile-details></profile-details>
+                </div>
+                <!-- Business -->
+                <div class="element-box hide" id="tab_business">
+                    <form id="formValidate">
+                        <h6 class="form-header text-center" style="font-weight: 600">Your Business</h6>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for=""> Default Currency </label>
+                                    <select class="form-control">
+                                        <option value="NG">NG</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <label for=""> Business Contact Email</label>
+                                    <input class="form-control" data-error="Your Business Email Address is invalid"
+                                           placeholder="Your Business Email Address" required="required" type="email">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Business Support Email</label>
+                                    <input class="form-control" data-error="Your Support Email Address is invalid"
+                                           placeholder="Your Support Email Address" required="required" type="email">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Business Chargeback Email</label>
+                                    <input class="form-control" data-error="Your Chargeback Email Address is invalid"
+                                           placeholder="Your Chargeback Email Address" required="required" type="email">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Business Name</label>
+                            <input class="form-control" data-error="Your Business Name is invalid"
+                                   placeholder="Your Business Name" required="required" type="text">
+                            <div class="help-block form-text with-errors form-control-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Business Phone Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text" style="padding: 0 25px;font-weight: 600">
+                                        +234
+                                    </div>
+                                </div>
+                                <input class="form-control" placeholder="817 123 4567" type="tel">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Business Address</label>
+                                    <input class="form-control" data-error="Your Business Address is invalid"
+                                           placeholder="Your Business Address" required="required" type="text">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="">Business Website</label>
+                                    <input class="form-control" data-error="Your Business Website is invalid"
+                                           placeholder="Your Business Website" required="required" type="url">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Business Logo</label>
+                            <input class="form-control" data-error="Your Business Website is invalid"
+                                   placeholder="Your Business Website" required="required" type="file">
+                            <div class="help-block form-text with-errors form-control-feedback"></div>
+                        </div>
+                        <fieldset class="form-group">
+                            <legend><span>Social Media</span></legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Instagram Username</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">@</div>
+                                            </div>
+                                            <input class="form-control" placeholder="Instagram username" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Twitter Username</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">@</div>
+                                            </div>
+                                            <input class="form-control" placeholder="Twitter username" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-buttons-w" align="center">
+                            <button class="mr-2 mb-2 btn btn-outline-success" type="button"> Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Settlement Accounts -->
+                <div class="element-box hide" id="tab_accounts">
+                    <form id="formValidate">
+                        <h6 class="form-header text-center" style="font-weight: 600">Settlement Accounts </h6>
+                        <div class="form-group">
+                            <label for=""> BVN </label>
+                            <input class="form-control" data-error="Your name" placeholder="Your BVN"
+                                   required="required" type="text">
+                            <div class="help-block form-text with-errors form-control-feedback"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Account name </label>
+                                    <input class="form-control" data-error="Your account name is invalid"
+                                           placeholder="Your Account name" required="required" type="email">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Bank name </label>
+                                    <select class="form-control bank">
+                                        <option>Select Bank</option>
+                                        <option value="male">Male</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons-w" align="center">
+                            <button class="mr-2 mb-2 btn btn-outline-success" type="button"> Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Team -->
+                {% if user.business and user_role.role.role == 'Owner' %}
+                    {% include 'business/staffs/index.html' %}
+                {% endif %}
+                <!-- Preferences -->
+                <div class="element-box hide" id="tab_preferences">
+                    <form id="formValidate">
+                        <h6 class="form-header text-center" style="font-weight: 600">Your Preferences</h6>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Payment Channels </label>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input checked="" class="form-check-input" type="checkbox">
+                                        Allow Card Payments
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input checked="" class="form-check-input" type="checkbox">
+                                        Allow Bank Payments
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox">
+                                        Allow USSD Payments
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox">
+                                        Allow QR Payments
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Email Receipts </label>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input checked="" class="form-check-input" type="checkbox">
+                                        Email receipt to customers
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Transaction Emails </label>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input checked="" class="form-check-input" type="checkbox">
+                                        Email me for every transaction
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">International Payments </label>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input checked="" class="form-check-input" type="checkbox">
+                                        Accept payments from intl. cards
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Payout Schedule </label>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input checked="" class="form-check-input" type="checkbox" disabled="">
+                                        Next Day Settlement.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons-w" align="center">
+                            <button class="mr-2 mb-2 btn btn-outline-success" type="button"> Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Preferences -->
+                <div class="element-box hide" id="tab_api">
+                    <form id="formValidate">
+                        <h6 class="form-header text-center" style="font-weight: 600">API Configuration </h6>
+                        <div class="form-group">
+                            <label for="">Live Secret Key</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="sc_sk__live_nd3ub9buf39fh3hisn" type="url"
+                                       value="sc_sk__live_nd3ub9buf39fh3hisn" readonly="readonly">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text" style="padding: 0 25px;font-weight: 600">
+                                        Copy
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Live Public Key</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="sc_pk__live_nd3ub9buf39fh3hisn" type="url"
+                                       readonly="readonly" value="sc_pk__live_nd3ub9buf39fh3hisn">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text" style="padding: 0 25px;font-weight: 600">
+                                        Copy
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Live Callback URL </label>
+                                    <input class="form-control" data-error="Your callback url is invalid"
+                                           placeholder="Live Callback URL" required="required" type="url">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Live Webhook URL </label>
+                                    <input class="form-control" data-error="Your Webhook url is invalid"
+                                           placeholder="Live Webhook URL" required="required" type="url">
+                                    <div class="help-block form-text with-errors form-control-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons-w" align="center">
+                            <button class="mr-2 mb-2 btn btn-outline-success" type="button"> Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block suffix_bottomtags %}
+    <script src="{% static 'js/countries.js' %}"></script>
+    <script type="text/javascript">
+        populateCountries("country", "state");
+    </script>
+{% endblock %}

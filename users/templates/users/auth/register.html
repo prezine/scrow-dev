@@ -1,0 +1,7 @@
+{% extends 'core/partials/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Registrations</h1>
+    <register-user :invite_id="'{{ invite_id }}'"></register-user>
+{% endblock content %}

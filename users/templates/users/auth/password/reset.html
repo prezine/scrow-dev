@@ -1,0 +1,37 @@
+{% extends 'core/partials/base.html' %}
+{% block content %}
+
+    <form class="rd-form" method="post" action="{% url 'password_reset_form' %}">
+        <input type="hidden" name="user" id="user" value="{{ user }}"/>
+        {% csrf_token %}
+        {% if messages %}
+            {% for message in messages %}
+                <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <span>
+                        {{ message }}
+                    </span>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-warning">
+                {{ form.non_field_errors|striptags }}
+            </div>
+        {% endif %}
+
+
+        <div class="form-group">
+            <input placeholder="New Password" type="password" name="password">
+        </div>
+        <div class="form-group">
+            <input placeholder="Retype Password" type="password" name="retype_password">
+        </div>
+        <button type="submit">
+            <span>Reset Password</span>
+        </button>
+    </form>
+
+{% endblock content %}

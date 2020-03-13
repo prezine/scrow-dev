@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scrow — {% block page_title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta content="Scrow, Escrow, Circlepanda, Circlepanda Escrow, Protect your transaction, anonymouse transaction, trade with trust, best escrow service, #1 Escrow company in Africa, Africa, Trade, Trust, Transactions, Business, Buy, Sell, Market, Payment, Platform"
+          name="keywords">
+    <meta content="Circlepanda Inc" name="author">
+    <meta content="Scrow description" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="author" content="Circlepanda">
+    <meta name="robot" content="index, follow">
+    <meta name="copyright" content="Copyright © {% now "Y" %} Scrow. All Rights Reserved.">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="1 days">
+    <link href="{% static 'favicon.png' %}" rel="shortcut icon">
+    <link href="{% static 'favicon.png' %}" rel="apple-touch-icon">
+    <link href="http://fast.fonts.net/cssapi/487b73f1-c2d1-43db-8526-db577e4c822b.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'bower_components/select2/dist/css/select2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/dropzone/dist/dropzone.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/slick-carousel/slick/slick.css' %}" rel="stylesheet">
+    <link href="{% static 'icon_fonts_assets/entypo/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    {% block suffix_headtags %}{% endblock %}
+</head>
+
+<body class="menu-position-side menu-side-left full-screen">
+<div class="all-wrapper solid-bg-all" id="app">
+    <status-msg></status-msg>
+    <form action="{% url 'logout' %}"
+          method="POST"
+          style="display: none;" id="logout-form">
+        {% csrf_token %}
+    </form>
+    {% include "./header.html" %}
+    <div class="layout-w">
+
+        {% include "./mobile-menu.html" %}
+        {% include "./web-menu.html" %}
+        <div class="content-w">
+            <div class="content-i">
+                <div class="content-box">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="display-type"></div>
+</div>
+<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/popper.js/dist/umd/popper.min.js' %}"></script>
+<script src="{% static 'bower_components/moment/moment.js' %}"></script>
+<script src="{% static 'bower_components/chart.js/dist/Chart.min.js' %}"></script>
+<script src="{% static 'bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+<script src="{% static 'bower_components/jquery-bar-rating/dist/jquery.barrating.min.js' %}"></script>
+<script src="{% static 'bower_components/ckeditor/ckeditor.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-validator/dist/validator.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js' %}"></script>
+<script src="{% static 'bower_components/dropzone/dist/dropzone.js' %}"></script>
+<script src="{% static 'bower_components/editable-table/mindmup-editabletable.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+<script src="{% static 'bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/tether/dist/js/tether.min.js' %}"></script>
+<script src="{% static 'bower_components/slick-carousel/slick/slick.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/util.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/alert.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/button.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/carousel.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/collapse.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/dropdown.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/modal.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/tab.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/tooltip.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/js/dist/popover.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/demo_customizer.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/offline.js' %}"></script>
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-42863888-9', 'auto');
+    ga('send', 'pageview');
+</script>
+{% block suffix_bottomtags %}{% endblock %}
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

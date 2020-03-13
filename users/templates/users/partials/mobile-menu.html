@@ -1,0 +1,82 @@
+{% load static %}
+<div class="menu-mobile menu-activated-on-click color-scheme-dark">
+    <div class="mm-logo-buttons-w">
+        <a class="mm-logo" href="{% url 'dashboard' %}">
+            <img src="{% static 'logo-white.png' %}">
+        </a>
+        <div class="mm-buttons">
+            <div class="content-panel-open">
+                <div class="os-icon os-icon-grid-circles"></div>
+            </div>
+            <div class="mobile-menu-trigger">
+                <div class="os-icon os-icon-hamburger-menu-1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-and-user">
+        <div class="logged-user-w">
+            <div class="avatar-w"><img alt="" src="{% static 'assets/img/avatar1.jpg' %}"></div>
+            <div class="logged-user-info-w">
+                <div class="logged-user-name">Maria Gomez</div>
+                <div class="logged-user-role">Administrator</div>
+            </div>
+        </div>
+        <!--------------------
+        START - Mobile Menu List
+        -------------------->
+        <ul class="main-menu">
+            <li>
+                <a href="{% url 'dashboard' %}">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-layout"></div>
+                </div><span>Overview</span></a>
+            </li>
+            <li class="has-sub-menu">
+                <a href="./transactions">
+                    <div class="icon-w">
+                        <div class="os-icon os-icon-credit-card"></div>
+                    </div>
+                    <span>Transactions</span>
+                </a>
+            </li>
+            <li>
+                <a href="./tracker">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-navigation"></div>
+                </div><span>Tracker</span></a>
+            </li>
+            <li>
+                <a href="./customers">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-users"></div>
+                </div><span>Customers</span></a>
+            </li>
+            <li>
+                <a href="./insights">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-bar-chart-stats-up"></div>
+                </div><span>Insights</span></a>
+            </li>
+            <li>
+                <a href="./tools">
+                    <div class="icon-w">
+                        <div class="os-icon os-icon-grid"></div>
+                    </div><span>Tools</span>
+                </a>
+            </li>
+            <li>
+                <a href="./tools">
+                    <div class="icon-w">
+                        <div class="entypo-icon-flickr"></div>
+                    </div><span>Mini-Store</span>
+                </a>
+            </li>
+            <li>
+                <a href="/settings">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-settings"></div>
+                </div><span>Settings</span></a>
+            </li>
+        </ul>
+    </div>
+</div>

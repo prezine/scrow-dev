@@ -44,3 +44,9 @@ class Token:
     @staticmethod
     def remove_token(key):
         cache.delete(f'token.{key}')
+
+
+def generate_invite_token():
+    token = Token()
+    invite_id = token.gen_token(length=120, ext='alphanum')
+    return invite_id

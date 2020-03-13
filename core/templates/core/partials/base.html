@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Scrow</title>
+</head>
+<body>
+<div id="app">
+    <status-msg></status-msg>
+    {% block content %}{% endblock %}
+</div>
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
