@@ -1,18 +1,19 @@
 from django.contrib import messages
+from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
 from rest_framework import permissions, status
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from business.forms import BankDetailsForm
-from business.models import Business, Staff, StaffInvite
+from business.models import Staff, StaffInvite
 from business.serializers import BusinessSerializer, BusinessVerificationSerializer, StaffSerializer, \
-    StaffInviteSerializer
+    StaffInviteSerializer, BusinessUpdateSerializer
 from utils.helpers import update_bank_details, send_team_invite_link
-from utils.token import Token, generate_invite_token
+from utils.token import generate_invite_token
 
 
 def register_view(request):
@@ -94,3 +95,19 @@ class TeamMembersView(APIView):
         send_team_invite_link(staff_obj.invite_id)
 
         return Response(data='Invite sent! Invitee will be added to the team once invite is accepted.')
+
+
+class BusinessView(RetrieveUpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = BusinessUpdateSerializer
+
+    def get_object(self):
+        if self.request.user.business:
+            try:
+                Staff.objects.get(business=self.request.user.business.pk, role__role='Owner',
+                                  role__user=self.request.user.pk)
+            except Staff.DoesNotExist:
+                raise Http404
+
+            return self.request.user.business
+        raise Http404

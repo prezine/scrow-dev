@@ -89,16 +89,27 @@
         -------------------->
         <div class="logged-user-w">
             <div class="logged-user-i">
-                <div class="avatar-w" data-step="7" data-intro="Hover on this Icon to access a logout option"><img
-                        alt="" src="{% static 'img/avatar1.jpg' %}"></div>
+                <div class="avatar-w" data-step="7" data-intro="Hover on this Icon to access a logout option">
+                    {% if user.business %}
+                        <img alt="" src="{% get_media_prefix %}{{user.business.photo}}">
+                    {% else %}
+                        <img alt="" src="{% get_media_prefix %}{{user.photo}}">
+                    {% endif %}
+                </div>
                 <div class="logged-user-menu color-style-bright">
                     <div class="logged-user-avatar-info">
-                        <div class="avatar-w"><img alt="" src="{% static 'img/avatar1.jpg' %}"></div>
+                        <div class="avatar-w">
+                            {% if user.business %}
+                                <img alt="" src="{% get_media_prefix %}{{user.business.photo}}">
+                            {% else %}
+                                <img alt="" src="{% get_media_prefix %}{{user.photo}}">
+                            {% endif %}
+                        </div>
                         <div class="logged-user-info-w">
                             <div class="logged-user-name">{{ user.name }}</div>
-{#                            {% if user.business %}#}
-                            <div class="logged-user-role">{%  staff_role user %}</div>
-{#                            {% endif %}#}
+                            {% if user.business %}
+                                <div class="logged-user-role">{% staff_role user %}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="bg-icon"><i class="os-icon os-icon-crown"></i></div>

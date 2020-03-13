@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="element-box" id="tab_profile">
         <form @submit.prevent="updateProfile">
             <h6 class="form-header text-center" style="font-weight: 600">Your Profile</h6>
             <div class="form-group">

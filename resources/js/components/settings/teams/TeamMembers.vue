@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="element-box hide" id="tab_team">
         <h6 class="form-header text-center" style="font-weight: 600">Team members</h6>
         <div class="col-sm-12">
             <div class="element-wrapper">

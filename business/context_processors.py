@@ -7,8 +7,8 @@ def user_role(request):
             try:
                 staff = Staff.objects.get(business=request.user.business.pk, role__user=request.user.pk)
             except Staff.DoesNotExist:
-                return {'user_role': None}
+                return {'user_role': None, 'business_pk': ''}
 
-            return {'user_role': staff}
+            return {'user_role': staff, 'business_pk': request.user.business.pk}
 
-    return {'user_role': None}
+    return {'user_role': None, 'business_pk': ''}

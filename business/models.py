@@ -9,6 +9,11 @@ BUSINESS_TYPE = (
     ('Startup', 'startup')
 )
 
+CURRENCY = (
+    ('NGN', 'naira'),
+    ('USD', 'us_dollar')
+)
+
 
 class Business(BaseModel):
     name = models.CharField(max_length=300, db_index=True, unique=True)
@@ -27,7 +32,13 @@ class Business(BaseModel):
     staffs = models.ManyToManyField('Role',
                                     through='Staff',
                                     related_name='staffs')
+    phone = models.CharField(max_length=20, null=True, blank=True)
     website = models.CharField(max_length=300, null=True, blank=True)
+    currency = models.CharField(max_length=10, choices=CURRENCY, default='naira')
+    support_email = models.EmailField(max_length=300, null=True, blank=True)
+    chargeback_email = models.EmailField(max_length=300, null=True, blank=True)
+    twitter_username = models.CharField(max_length=100, null=True, blank=True)
+    instagram_username = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.name

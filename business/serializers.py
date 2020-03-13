@@ -94,3 +94,12 @@ class BusinessVerificationSerializer(serializers.ModelSerializer):
             verification = BusinessVerification.objects.create(**validated_data)
 
         return verification
+
+
+class BusinessUpdateSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(read_only=True)
+    email = serializers.CharField(required=True)
+
+    class Meta:
+        model = Business
+        exclude = ('staffs', 'country', 'city', 'state', 'category', 'sub_category')
