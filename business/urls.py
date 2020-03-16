@@ -3,7 +3,8 @@ from django.utils.decorators import decorator_from_middleware
 
 from utils.auth_middlewares import BusinessOnlyMiddleware, AuthOnlyMiddleware
 from .views import (register_view, CreateBusinessView, BankDetailsView, business_setup, verification_view,
-                    bank_details_edit_view, VerificationFileUpload, TeamMembersView, BusinessView, FindUsers, TeamInviteView)
+                    bank_details_edit_view, VerificationFileUpload, TeamMembersView, BusinessView, FindUsers,
+                    TeamInviteView, switch_business_view)
 
 business_only_access_decorator = decorator_from_middleware(BusinessOnlyMiddleware)
 user_auth_access_decorator = decorator_from_middleware(AuthOnlyMiddleware)
@@ -20,5 +21,6 @@ urlpatterns = [
     path('team', business_only_access_decorator(TeamMembersView.as_view()), name='workers'),
     path('team/find', business_only_access_decorator(FindUsers.as_view())),
     path('details', BusinessView.as_view()),
-    path('team/invite/<str:invite_id>', user_auth_access_decorator(TeamInviteView.as_view()), name='teamInvite')
+    path('team/invite/<str:invite_id>', user_auth_access_decorator(TeamInviteView.as_view()), name='teamInvite'),
+    path('switch/<int:pk>', switch_business_view, name='switch')
 ]

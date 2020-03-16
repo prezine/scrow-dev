@@ -19,5 +19,5 @@ def user_role(request):
 def user_businesses(request):
     if request.user.is_authenticated:
         memberships = TeamMember.objects.filter(Q(user=request.user.pk), ~Q(business=request.user.active_business.pk))
-        return {'businesses': [Business.objects.get(pk=membership.pk) for membership in memberships]}
-    return {'businesses': ()}
+        return {'user_businesses': [Business.objects.get(pk=membership.business.pk) for membership in memberships]}
+    return {'user_businesses': ()}

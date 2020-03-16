@@ -11,8 +11,9 @@
     export default {
         name: "RegisterBusiness",
         props: ['user_id'],
-        mounted() {
-            if (this.user_id && typeof  this.user_id === 'number') {
+        created() {
+            let user_id = parseInt(this.user_id);
+            if (this.user_id && !isNaN(user_id)) {
                 this.$store.commit('createUser', {
                     registered: true,
                     userId: this.user_id

@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.db.models import Q
 from django.http import Http404, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework import permissions, status
@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from business.forms import BankDetailsForm
-from business.models import TeamMember, StaffInvite
+from business.models import TeamMember, StaffInvite, Business
 from business.serializers import (BusinessSerializer, BusinessVerificationSerializer, TeamMemberSerializer,
                                   StaffInviteSerializer, BusinessUpdateSerializer)
 from users.models import User
@@ -151,3 +151,19 @@ class TeamInviteView(View):
 
             messages.success(request, 'You are now a member of the team.')
         return render(request, 'business/team/index.html', {'invite_id': invite_id})
+
+
+def switch_business_view(request, pk):
+    try:
+        business = Business.objects.get(pk=pk)
+    except Business.DoesNotExist:
+        return redirect(reverse('dashboard'))
+
+    if not TeamMember.objects.filter(user=request.user.pk, business=business.pk):
+        return redirect(reverse('dashboard'))
+
+    user = User.objects.get(pk=request.user.pk)
+    user.active_business = business
+    user.save()
+
+    return redirect(reverse('dashboard'))
