@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.utils import dateparse, timezone
 from rest_framework import serializers
-from rest_framework.utils import model_meta
 
 from business.models import StaffInvite, Role, Staff
 from users.models import User
