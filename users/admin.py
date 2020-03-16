@@ -13,7 +13,7 @@ class UserAdmin(BaseUserAdmin):
             'name', 'email','password', 'calling_code', 'phone',
         )}),
         ('Others', {'fields': (
-            'gender', 'address', 'country', 'state', 'city', 'photo', 'business', 'bank',)}),
+            'gender', 'address', 'country', 'state', 'city', 'photo', 'active_business',)}),
         ('Permissions', {'fields': ('is_staff', 'deleted_at', 'is_active', 'is_activated',)}),
     )
 

@@ -31,7 +31,7 @@ class NonAuthMiddleware(object):
 class BusinessOnlyMiddleware:
     def process_request(self, request):
         if request.user.is_authenticated:
-            if request.user.business:
+            if request.user.active_business:
                 return None
             return HttpResponseRedirect('/admin')
         else:

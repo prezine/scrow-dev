@@ -10,6 +10,15 @@
 
     export default {
         name: "RegisterBusiness",
+        props: ['user_id'],
+        mounted() {
+            if (this.user_id && typeof  this.user_id === 'number') {
+                this.$store.commit('createUser', {
+                    registered: true,
+                    userId: this.user_id
+                });
+            }
+        },
         computed: {
             ...mapGetters(['userCreated']),
             currentComponent() {

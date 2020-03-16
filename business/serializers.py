@@ -1,23 +1,15 @@
 from rest_framework import serializers
 
-from business.models import Business, Staff, Role, BusinessVerification, StaffInvite
+from business.models import Business, TeamMember, BusinessVerification, StaffInvite
 from users.models import User
 from users.serializers import UserSerializer
 
 
-class RoleSerializer(serializers.ModelSerializer):
+class TeamMemberSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:
-        model = Role
-        fields = '__all__'
-
-
-class StaffSerializer(serializers.ModelSerializer):
-    role = RoleSerializer(read_only=True)
-
-    class Meta:
-        model = Staff
+        model = TeamMember
         fields = '__all__'
 
 
@@ -34,7 +26,7 @@ class BusinessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Business
-        exclude = ('staffs',)
+        fields = '__all__'
 
     def validate(self, attrs):
         email = attrs.get('email')
@@ -53,9 +45,6 @@ class BusinessSerializer(serializers.ModelSerializer):
         if not User.objects.filter(pk=user_id).exists():
             raise serializers.ValidationError('Request could not be validated.')
 
-        if Role.objects.filter(user=user_id).exists():
-            raise serializers.ValidationError('Sorry! You cannot create a business as you are already a worker in one.')
-
         return attrs
 
     def create(self, validated_data):
@@ -73,10 +62,9 @@ class BusinessSerializer(serializers.ModelSerializer):
             business_type=validated_data.get('business_type')
         )
 
-        user.business = business
+        user.active_business = business
         user.save()
-        role = Role.objects.create(role='Owner', user=user)
-        Staff.objects.create(role=role, business=business)
+        TeamMember.objects.create(role='Owner', user=user, business=business)
         return business
 
 
@@ -102,4 +90,4 @@ class BusinessUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Business
-        exclude = ('staffs', 'country', 'city', 'state', 'category', 'sub_category')
+        exclude = ('country', 'city', 'state', 'category', 'sub_category')

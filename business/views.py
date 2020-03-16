@@ -9,9 +9,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from business.forms import BankDetailsForm
-from business.models import Staff, StaffInvite
-from business.serializers import BusinessSerializer, BusinessVerificationSerializer, StaffSerializer, \
-    StaffInviteSerializer, BusinessUpdateSerializer
+from business.models import TeamMember, StaffInvite
+from business.serializers import (BusinessSerializer, BusinessVerificationSerializer, TeamMemberSerializer,
+                                  StaffInviteSerializer, BusinessUpdateSerializer)
 from utils.helpers import update_bank_details, send_team_invite_link
 from utils.token import generate_invite_token
 
@@ -61,17 +61,17 @@ class VerificationFileUpload(CreateAPIView):
 
 class TeamMembersView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = StaffSerializer
+    serializer_class = TeamMemberSerializer
 
     def get(self, request):
-        queryset = Staff.objects.filter(business=request.user.business.pk)
+        queryset = TeamMember.objects.filter(business=request.user.business.pk)
         serializer = self.serializer_class(queryset, many=True)
         return Response(data=serializer.data)
 
     def post(self, request):
         try:
-            Staff.objects.get(business=request.user.business.pk, role__role='Owner', role__user=request.user.pk)
-        except Staff.DoesNotExist:
+            TeamMember.objects.get(business=request.user.business.pk, role__role='Owner', role__user=request.user.pk)
+        except TeamMember.DoesNotExist:
             return Response(data={'response': 'You do not have the permission to access this area'},
                             status=status.HTTP_401_UNAUTHORIZED)
         data = {
@@ -104,9 +104,9 @@ class BusinessView(RetrieveUpdateAPIView):
     def get_object(self):
         if self.request.user.business:
             try:
-                Staff.objects.get(business=self.request.user.business.pk, role__role='Owner',
-                                  role__user=self.request.user.pk)
-            except Staff.DoesNotExist:
+                TeamMember.objects.get(business=self.request.user.business.pk, role='Owner',
+                                       user=self.request.user.pk)
+            except TeamMember.DoesNotExist:
                 raise Http404
 
             return self.request.user.business
