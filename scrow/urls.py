@@ -36,6 +36,7 @@ urlpatterns = [
     path('settings', user_auth_access_decorator(settings_view), name='settings'),
 
     path('business/', include('business.urls')),
+    path('transactions/', include('transactions.urls'))
 ]
 
 if settings.DEBUG:

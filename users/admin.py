@@ -14,7 +14,7 @@ class UserAdmin(BaseUserAdmin):
         )}),
         ('Others', {'fields': (
             'gender', 'address', 'country', 'state', 'city', 'photo', 'business', 'bank',)}),
-        ('Permissions', {'fields': ('is_staff', 'deleted_at', 'is_active',)}),
+        ('Permissions', {'fields': ('is_staff', 'deleted_at', 'is_active', 'is_activated',)}),
     )
 
     add_fieldsets = (

@@ -21,6 +21,8 @@ Vue.component('status-msg', require('./components/utils/StatusMsg.vue').default)
 
 Vue.component('settings-tab', require('./components/settings/SettingsTab.vue').default);
 
+Vue.component('profile-completion-bar', require('./components/users/ProfileCompletion.vue').default);
+
 new Vue({
   el: '#app',
   store
