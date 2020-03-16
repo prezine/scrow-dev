@@ -1,0 +1,26 @@
+{% extends 'users/partials/base.html' %}
+{% load static %}
+{% block page_title %}Settings{% endblock %}
+{% block suffix_headtags %}
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    {% if messages %}
+
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div>
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Accept Invite</button>
+        </form>
+    {% endif %}
+{% endblock content %}

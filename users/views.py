@@ -20,19 +20,8 @@ from utils.helpers import send_verification_link, send_reset_password_link, chec
 from utils.token import Token
 
 
-def register_user_view(request, invite_id=''):
-    if invite_id:
-        try:
-            invite = StaffInvite.objects.get(invite_id=invite_id)
-        except StaffInvite.DoesNotExist:
-            messages.warning(request, 'Invite link not valid.')
-            return redirect(reverse('userLogin'))
-
-        if invite.is_active:
-            messages.warning(request, 'Invite link has already been used, thus is no longer active.')
-            return redirect(reverse('userLogin'))
-    context = {'invite_id': invite_id}
-    return render(request, 'users/auth/register.html', context)
+def register_user_view(request):
+    return render(request, 'users/auth/register.html')
 
 
 class RegisterUserApi(CreateAPIView):
@@ -44,7 +33,6 @@ class LoginView(View):
     form_class = LoginForm
 
     def get(self, request):
-        print(request.user)
         if request.user.is_authenticated:
             return redirect('dashboard')
         return render(request, 'users/auth/login.html', {'form': self.form_class, 'message': []})

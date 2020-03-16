@@ -18,7 +18,6 @@ urlpatterns = [
     path('', homepage_view, name='homepage'),
 
     path('register', register_user_view, name='userRegistration'),
-    path('register/<str:invite_id>', register_user_view, name='teamInvite'),
     path('login', LoginView.as_view(), name='userLogin'),
     path('account-verification/<str:verification_code>/<str:email>', account_verification_view,
          name='accountVerification'),

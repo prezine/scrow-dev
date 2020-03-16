@@ -2,12 +2,13 @@ from django.contrib import messages
 from django.contrib.sites.models import Site
 from django.db.models import Q
 from django.http import Http404
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 from business.forms import BankDetailsForm
-from business.models import Business
+from business.models import Business, StaffInvite, TeamMember
 from users.models import User
 from utils.mailer import Mailer
 from utils.token import Token
@@ -47,10 +48,10 @@ def send_reset_password_link(user):
     #        payload={'reset_link': reset_link})
 
 
-def send_team_invite_link(invite_id):
+def send_team_invite_link(invite_id, email):
     current_site = Site.objects.get_current()
 
-    invite_path = reverse('teamInvite', kwargs={'invite_id': invite_id})
+    invite_path = reverse('business:teamInvite', kwargs={'invite_id': invite_id})
 
     invite_link = '%s%s' % (current_site.domain, invite_path)
 
@@ -98,3 +99,18 @@ def check_email_exist(model, pk, email):
 
 def check_phone_exist(model, pk, phone):
     return model.objects.filter(~Q(id=pk), phone=phone).exists()
+
+
+def validate_invite(invite_id, request):
+    try:
+        invite = StaffInvite.objects.get(invite_id=invite_id)
+    except StaffInvite.DoesNotExist:
+        return messages.warning(request, 'Invite link not valid.')
+
+    if invite.is_active:
+        return messages.warning(request, 'Invite link has already been used, thus is no longer active.')\
+
+    if TeamMember.objects.filter(user=request.user.pk, business=invite.business.pk):
+        return messages.warning(request, 'You are already a member of this team.')
+
+    return invite

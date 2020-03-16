@@ -7,8 +7,8 @@
                     <div class="form-group">
                         <label for="currency"> Default Currency</label>
                         <select class="form-control" id="currency" v-model.trim="$v.formData.currency.$model">
-                            <option value="NGN" :selected="formData.currency === 'naira'">NG</option>
-                            <option value="USD" :selected="formData.currency === 'us_dollar'">USD</option>
+                            <option value="NGN" :selected="formData.currency === 'NGN'">NG</option>
+                            <option value="USD" :selected="formData.currency === 'USD'">USD</option>
                         </select>
                         <div class="error" v-if="!$v.formData.currency.required">Please select currency</div>
                     </div>
@@ -226,6 +226,9 @@
                     axios.put('/business/details', formData).then(resp => {
                         this.$store.commit('setstatusMsg', {type: 'success', msg: 'Profile details updated.'});
                         console.log('Form Success: ', resp.data);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 5000)
                     }).catch(err => {
                         if (err.response) {
                             if (err.response.data.non_field_errors) {

@@ -1,7 +1,9 @@
 from django.contrib import messages
-from django.http import Http404
+from django.db.models import Q
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from rest_framework import permissions, status
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from django.views import View
@@ -12,7 +14,9 @@ from business.forms import BankDetailsForm
 from business.models import TeamMember, StaffInvite
 from business.serializers import (BusinessSerializer, BusinessVerificationSerializer, TeamMemberSerializer,
                                   StaffInviteSerializer, BusinessUpdateSerializer)
-from utils.helpers import update_bank_details, send_team_invite_link
+from users.models import User
+from users.serializers import UserSerializer
+from utils.helpers import update_bank_details, send_team_invite_link, validate_invite
 from utils.token import generate_invite_token
 
 
@@ -64,20 +68,21 @@ class TeamMembersView(APIView):
     serializer_class = TeamMemberSerializer
 
     def get(self, request):
-        queryset = TeamMember.objects.filter(business=request.user.business.pk)
+        queryset = TeamMember.objects.filter(business=request.user.active_business.pk)
         serializer = self.serializer_class(queryset, many=True)
         return Response(data=serializer.data)
 
     def post(self, request):
         try:
-            TeamMember.objects.get(business=request.user.business.pk, role__role='Owner', role__user=request.user.pk)
+            TeamMember.objects.get(business=request.user.active_business.pk, role='Owner',
+                                   user=request.user.pk)
         except TeamMember.DoesNotExist:
             return Response(data={'response': 'You do not have the permission to access this area'},
                             status=status.HTTP_401_UNAUTHORIZED)
         data = {
-            'name': request.data.get('name'),
             'role': request.data.get('role'),
-            'business': request.user.business.pk
+            'email': request.data.get('email'),
+            'business': request.user.active_business.pk
         }
 
         serializer = StaffInviteSerializer(data=data)
@@ -86,13 +91,13 @@ class TeamMembersView(APIView):
         data['invite_id'] = invite_id
 
         staff_obj, created = StaffInvite.objects.get_or_create(
-            business=request.user.business,
-            name=request.data.get('name'),
+            business=request.user.active_business,
+            email=request.data.get('email'),
             role=request.data.get('role'),
             defaults={'invite_id': invite_id},
         )
 
-        send_team_invite_link(staff_obj.invite_id)
+        send_team_invite_link(staff_obj.invite_id, email=request.data.get('email'))
 
         return Response(data='Invite sent! Invitee will be added to the team once invite is accepted.')
 
@@ -102,12 +107,47 @@ class BusinessView(RetrieveUpdateAPIView):
     serializer_class = BusinessUpdateSerializer
 
     def get_object(self):
-        if self.request.user.business:
+        if self.request.user.active_business:
             try:
-                TeamMember.objects.get(business=self.request.user.business.pk, role='Owner',
+                TeamMember.objects.get(business=self.request.user.active_business.pk, role='Owner',
                                        user=self.request.user.pk)
             except TeamMember.DoesNotExist:
                 raise Http404
 
-            return self.request.user.business
+            return self.request.user.active_business
         raise Http404
+
+
+class FindUsers(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        email = request.GET.get('email')
+        team_members = TeamMember.objects.filter(business=request.user.active_business.pk)
+        users = [User.objects.filter(~Q(pk=member.user.pk), Q(email__contains=email))[0] for member in team_members]
+        serializer = self.serializer_class(users, many=True)
+        return Response(data=serializer.data)
+
+
+class TeamInviteView(View):
+    def get(self, request, invite_id):
+        validate_invite(invite_id, request)
+
+        return render(request, 'business/team/index.html', {'invite_id': invite_id})
+
+    def post(self, request, invite_id):
+        invite_instance = validate_invite(invite_id, request)
+
+        if invite_instance:
+            invite_instance.is_active = timezone.now()
+            invite_instance.save()
+
+            user = User.objects.get(pk=request.user.pk)
+            user.active_business = invite_instance.business
+            user.save()
+
+            TeamMember.objects.create(user=user, business=user.active_business, role=invite_instance.role)
+
+            messages.success(request, 'You are now a member of the team.')
+        return render(request, 'business/team/index.html', {'invite_id': invite_id})

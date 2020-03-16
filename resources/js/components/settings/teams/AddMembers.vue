@@ -11,15 +11,20 @@
                 </div>
                 <form @submit.prevent="sendInvite">
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>Member Name</label>
-                            <input type="text" v-model.trim="$v.formData.name.$model" class="form-control">
-                            <div class="error" v-if="!$v.formData.name.required">Enter invitee name</div>
-                        </div>
-                        <div class="form-group" :class="{'has-danger': $v.formData.role.$error}">
+                        <div class="form-group" :class="{'has-danger': $v.formData.email.$error}">
                             <label>Email address</label>
-                            <input type="email" v-model.trim="$v.formData.email.$model" class="form-control">
-                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback" v-if="!$v.formData.email.required">Enter your email address</div>
+                            <input type="email" v-model.trim="$v.formData.email.$model" @input="findUser"
+                                   placeholder="Add by email" class="form-control">
+                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback"
+                                 v-if="!$v.formData.email.required">Enter your email address
+                            </div>
+                            <div class="position-relative" v-if="users">
+                                <div class="team-members-area">
+                                    <div class="team-member" @click="selectUser(user)" v-for="user in users">
+                                        {{user.name}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group" :class="{'has-danger': $v.formData.role.$error}">
                             <label>Roles</label>
@@ -30,7 +35,9 @@
                                 <option value="Developer">Developer</option>
                                 <option value="Moderator">Moderator</option>
                             </select>
-                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback" v-if="!$v.formData.role.required">Select role</div>
+                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback"
+                                 v-if="!$v.formData.role.required">Select role
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -49,10 +56,10 @@
         name: "AddMembers",
         data() {
             return {
+                users: [],
                 isLoading: false,
                 formErrors: [],
                 formData: {
-                    name: '',
                     email: '',
                     role: ''
                 }
@@ -60,9 +67,6 @@
         },
         validations: {
             formData: {
-                name: {
-                    required
-                },
                 role: {
                     required
                 },
@@ -86,11 +90,41 @@
                         }
                     });
                 }
+            },
+            findUser() {
+                axios.get(`business/team/find?email=${this.formData.email}`).then(resp => {
+                    this.users = resp.data;
+                }).catch(err => {
+                    console.log(err);
+                });
+            },
+            selectUser(user) {
+                this.formData.email = user.email;
+                this.users = [];
             }
         }
     }
 </script>
 
 <style scoped>
+    .team-members-area {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: 7px 12px;
+        max-height: 90px;
+        overflow-y: auto;
+    }
 
+    .team-member {
+        display: block;
+        padding: 8px 12px;
+        color: #5e6063;
+        cursor: pointer;
+    }
+
+    .team-member + .team-member {
+        border-bottom: 1px;
+    }
 </style>
