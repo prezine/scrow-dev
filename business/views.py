@@ -5,13 +5,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework import permissions, status
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from business.forms import BankDetailsForm
-from business.models import TeamMember, StaffInvite, Business
+from business.models import TeamMember, StaffInvite, Business, BusinessVerification
 from business.serializers import (BusinessSerializer, BusinessVerificationSerializer, TeamMemberSerializer,
                                   StaffInviteSerializer, BusinessUpdateSerializer)
 from users.models import User
@@ -36,9 +37,7 @@ class BankDetailsView(View):
         return render(request, 'business/bank.html', {'form': self.form_class, 'message': messages})
 
     def post(self, request):
-        form = BankDetailsForm(instance=request.user.bank, data=request.POST)
-        update_bank_details(request, form)
-        return render(request, 'business/bank.html', {'form': form, 'message': messages})
+        return update_bank_details(request)
 
 
 def business_setup(request):
@@ -47,11 +46,9 @@ def business_setup(request):
 
 def bank_details_edit_view(request):
     if request.method == 'POST':
-        form = BankDetailsForm(instance=request.user.bank, data=request.POST)
-        update_bank_details(request, form)
-        return render(request, 'business/setup.html', {'form': form, 'message': messages})
+        return update_bank_details(request)
     else:
-        return reverse('dashboard')
+        return render(request, 'business/setup.html')
 
 
 def verification_view(request):
@@ -167,3 +164,15 @@ def switch_business_view(request, pk):
     user.save()
 
     return redirect(reverse('dashboard'))
+
+
+@api_view(['GET'])
+@permission_classes((permissions.IsAuthenticated,))
+def business_verification_details_view(request):
+    try:
+        queryset = BusinessVerification.objects.get(business=request.user.active_business.pk)
+    except BusinessVerification.DoesNotExist:
+        return Response(data={})
+
+    serializer = BusinessVerificationSerializer(instance=queryset)
+    return Response(data=serializer.data)
