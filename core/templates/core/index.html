@@ -1,18 +1,827 @@
+{% extends './partials/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div id="app">
-    <h1>Home Page</h1>
-    <a href="{% url 'userRegistration' %}">Registration</a><br>
-    <a href="{% url 'business:register' %}">Register Business</a><br>
-    <a href="{% url 'userLogin' %}">Login</a><br>
-    <a href="{% url 'lostPassword' %}">Lost Password</a>
-</div>
-<script src="{% static 'js/app.js' %}"></script>
-</body>
-</html>
+{% block content %}
+    <!--Begin Hero Section-->
+    <section id="home">
+        <div class="container-page  hero">
+            <!--container-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 col-xs-7 col-sm-7 col-12">
+                        <!--text-->
+                        <div class="hero-text">
+                            <h1>Modern escrow system for Africa</h1>
+                            <p>Stay safe, transparent & secure with scrow, protect yourself from fraud over anonymous
+                                transactions</p>
+                            <div class="quote-form">
+                                <input type="text" name="email" class="form-control" placeholder="E-mail Adress">
+                                <button type="submit" class="btn btn-form">Request</button>
+                            </div>
+                            <a href="#" class="icobutton icobutton-arrow btn-secttion"><img
+                                    src="{% static 'assets/images/icons/arrow.svg' %}" class="hand" alt=""></a>
+                        </div>
+                        <!--text-->
+                    </div>
+                    <div class="col-md-5 col-xs-5 col-sm-5 col-12">
+                        <!-- slider image -->
+                        <div class="slider-image text-right">
+                            <img src="{% static 'assets/images/image1.png' %}" alt="">
+                            <img src="{% static 'assets/images/image2.png' %}" alt="">
+                        </div>
+                        <!-- slider image -->
+                    </div>
+                </div>
+            </div>
+            <!--container-->
+        </div>
+    </section>
+    <section class="pd-tp-80 pd-bt-40">
+        <h1>My links</h1>
+        <a href="{% url 'userRegistration' %}">Registration</a><br>
+        <a href="{% url 'business:register' %}">Register Business</a><br>
+        <a href="{% url 'userLogin' %}">Login</a><br>
+        <a href="{% url 'lostPassword' %}">Lost Password</a>
+    </section>
+    <!-- about block colored-->
+    <section id="about-p" class="pd-tp-80 pd-bt-40 bg-color-1 about-text">
+        <!--container-->
+        <div class="container">
+            <div class="row">
+                <!--text-->
+                <div class="col-md-5 col-lg-5 col-sm-5 col-12">
+                    <h2>Building a business is hard, getting paid shouldn't be</h2>
+                </div>
+                <!--text-->
+                <!--number block-->
+                <div class="col-md-6 col-lg-6 col-sm-6 offset-md-1 col-12">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-4 col-12">
+                            <div class="icon-text">
+                                <img src="{% static 'assets/images/icons/favorites.svg' %}" class="animate-icon" alt="">
+                                <h3>4.2+ Rating</h3>
+                                <span>Reviews</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-4 col-12">
+                            <div class="icon-text">
+                                <img src="{% static 'assets/images/icons/secure-shield.svg' %}" alt="">
+                                <h3>Secure</h3>
+                                <span>Approved since 2020</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-4 col-12">
+                            <div class="icon-text">
+                                <img src="{% static 'assets/images/icons/headphones.svg' %}" alt="">
+                                <h3>Support</h3>
+                                <span>Average 1 min response</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--number block-->
+            </div>
+        </div>
+        <!--container-->
+    </section>
+    <!-- about block colored-->
+    <!--About app-->
+    <section id="about">
+        <!--container-->
+        <div class="content-text bg-color padd-80">
+            <div class="container">
+                <div class="row ">
+                    <!-- image-->
+                    <div class="col-lg-6 col-md-6 col-12 wow fadeInLeft">
+                        <img src="{% static 'assets/images/image3.png' %}" alt="">
+                    </div>
+                    <!--image-->
+                    <!-- description text-->
+                    <div class="col-lg-6 col-md-6 col-12 ">
+                        <h2 class="title-h2">Our wallet is built</h2>
+                        <h3>for the crypto beginner</h3>
+                        <p class="font-p mg-tp-30 mg-bt-30">
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+                            architecto beatae vitae dicta sunt explicabo.
+                        </p>
+                        <ul class="list-text">
+                            <li><img src="{% static 'assets/images/icons/padlock.svg' %}" alt="">
+                                <p> Secure transfers with Verified Money</p>
+                            </li>
+                            <li><img src="{% static 'assets/images/icons/credit-card.svg' %}" alt="">
+                                <p>Easily buy and sell things within the wallet</p>
+                            </li>
+                            <li><img src="{% static 'assets/images/icons/investment.svg' %}" alt="">
+                                <p>Invest for free, forever</p>
+                            </li>
+                        </ul>
+                        <div class="actions-btn">
+                            <a href="index.html" class="btn btn-blue"><img src="{% static 'assets/images/icons/apple.svg' %}" alt="">Get
+                                on IOS</a>
+                            <a href="index.html" class="btn btn-blue"><img src="{% static 'assets/images/icons/play-store.svg' %}"
+                                                                           alt="">Get on Android</a>
+                        </div>
+                    </div>
+                    <!-- description text-->
+                </div>
+            </div>
+        </div>
+        <!--container-->
+    </section>
+    <!--Features -->
+    <section id="features">
+        <div class="padd-80">
+            <!--container-->
+            <div class="container">
+                <div class="row">
+                    <div class="row-centered">
+                        <div class="col-centered col-lg-7">
+                            <!--text-->
+                            <h2 class="title-h2">Our features </h2>
+                            <p class="font-p mg-tp-30 mg-bt-30">
+                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                                laudantium, totam rem aperiam, eaque ipsa quae
+                            </p>
+                            <!--text-->
+                        </div>
+                    </div>
+                    <!-- service block-->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="service-block">
+                            <div class="icon-service bg-icon-1">
+                                <img src="{% static 'assets/images/icons/atm-card.svg' %}" alt="">
+                            </div>
+                            <h3>Automatic Payouts</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service block-->
+                    <!-- service block-->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="service-block">
+                            <div class="icon-service bg-icon-2">
+                                <img src="{% static 'assets/images/icons/bars-chart.svg' %}" alt="">
+                            </div>
+                            <h3>Network Effect</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service block-->
+                    <!-- service block-->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="service-block">
+                            <div class="icon-service bg-icon-3">
+                                <img src="{% static 'assets/images/icons/teamwork.svg' %}" alt="">
+                            </div>
+                            <h3>Bigger Rewards</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service block-->
+                    <!-- service block-->
+                    <div class="col-lg-4 col-md-4 ">
+                        <div class="service-block blast-wrapper mg-bt-0">
+                            <div class="icon-service bg-icon-2">
+                                <img src="{% static 'assets/images/icons/mobile.svg' %}" alt="">
+                            </div>
+                            <h3>Safe & secure</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service block-->
+                    <!-- service block-->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="service-block blast-wrapper mg-bt-0">
+                            <div class="icon-service bg-icon-1">
+                                <img src="{% static 'assets/images/icons/dollar-sign.svg' %}" alt="">
+                            </div>
+                            <h3>Saving transaction</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service block-->
+                    <!-- service block-->
+                    <div class="col-lg-4 col-md-4 ">
+                        <div class="service-block   mg-bt-0">
+                            <div class="icon-service bg-icon-4">
+                                <img src="{% static 'assets/images/icons/cart.svg' %}" alt="">
+                            </div>
+                            <h3>crypto gaming market</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service block-->
+                </div>
+            </div>
+            <!--container-->
+        </div>
+    </section>
+    <!--Features -->
+    <!--Features app-->
+    <section id="features-app" class="bg-color padd-80">
+        <!--container-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <!-- tabs-->
+                    <h2 class="title-h2">How Scrow works</h2>
+                    <h3>#1 choice modern businesses in Africa</h3>
+                    <p class="font-p mg-tp-30 mg-bt-30">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+                        beatae vitae dicta sunt explicabo.
+                    </p>
+                    <ul class="list-text">
+                        <li><img src="{% static 'assets/images/icons/padlock.svg' %}" alt="">
+                            <p> Buyer &amp; Seller agrees</p>
+                        </li>
+                        <li><img src="{% static 'assets/images/icons/credit-card.svg' %}" alt="">
+                            <p> Buyer Securely pay through scrow</p>
+                        </li>
+                        <li><img src="{% static 'assets/images/icons/cart.svg' %}" alt="">
+                            <p> Seller deliver goods / service</p>
+                        </li>
+                        <li><img src="{% static 'assets/images/icons/checkmark.svg' %}" alt="">
+                            <p> Buyer Approves delivery</p>
+                        </li>
+                        <li><img src="{% static 'assets/images/icons/investment.svg' %}" alt="">
+                            <p>Seller get's paid</p>
+                        </li>
+                    </ul>
+                    <!-- tabs-->
+                </div>
+                <!-- content tab-->
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="step-content-image slider-nav text-center">
+                        <div class="step-image-inner">
+                            <img src="{% static 'assets/images/how-it-works.png' %}" alt="">
+                        </div>
+                        <div class="step-image-inner">
+                            <img src="{% static 'assets/images/image6.png' %}" alt="">
+                        </div>
+                        <div class="step-image-inner">
+                            <img src="{% static 'assets/images/image1.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <!-- content tab-->
+            </div>
+        </div>
+        <!--container-->
+    </section>
+    <!--Features app -->
+    <!--Video -->
+    <section id="pricing">
+        <div class="container-page padd-80 video-bloc">
+            <!--container-->
+            <div class="container">
+                <div class="row">
+                    <div class="row-centered">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <!--table plan -->
+                                <div class="col-md-10 col-lg-10 offset-md-1 col-xs-12">
+                                    <h2 class="title-h2 pb-2">Our pricing</h2>
+                                    <div class="table-plan background-white active">
+                                        <ul class="accordion">
+                                            <li class="active" data-type="paying">Sending Funds</li>
+                                            <li data-type="withdraw">Withdrawing Funds</li>
+                                        </ul>
+                                        <div class="row pt-3" id="paying">
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                <form>
+                                                    <label>Enter transaction amount</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-outline-secondary dropdown-toggle"
+                                                                    type="button" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false">NGN
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" href="#">EUR</a>
+                                                                <a class="dropdown-item" href="#">USD</a>
+                                                                <a class="dropdown-item" href="#">GHS</a>
+                                                                <a class="dropdown-item" href="#">UGX</a>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control"
+                                                               aria-label="Text input with dropdown button"
+                                                               placeholder="Enter amount">
+                                                    </div>
+                                                    <div id="calculator-box" class="calculator-box">
+                                                        <div class="item small">
+                                                            <div class="float-left">Amount
+                                                            </div>
+                                                            <span id="send_transfer_amount" class="figure float-right">
+                                                                    $ 0.00
+                                                                </span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="item small">
+                                                            <div class="float-left">Escrow fee
+                                                            </div>
+                                                            <span id="send_transfer_amount" class="figure float-right">
+                                                                    $ 0.00
+                                                                </span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="item small">
+                                                            <div class="float-left">Processing fee <span
+                                                                    id="processing"></span></div>
+                                                            <span id="send_processing_fee" class="figure float-right">
+                                                                    $ 0.00
+                                                                </span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="item big">
+                                                            <div class="float-left">Total transaction cost</div>
+                                                            <span id="send_total_amount" class="figure float-right">
+                                                                    $ 0.00
+                                                                </span>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-12 pt-2">
+                                                <div class="description">
+                                                    <h4>This calculator estimate the total fees associated with your
+                                                        transaction.</h4>
+                                                    <p>Escrow fee is calculated from:</p>
+                                                    <ul>
+                                                        <li>
+                                                            <img src="{% static 'assets/images/icons/checkmark.svg' %}" alt="">
+                                                            how long you're keeping the money in escrow
+                                                        </li>
+                                                        <li>
+                                                            <img src="{% static 'assets/images/icons/checkmark.svg' %}" alt="">
+                                                            the country you're transacting from
+                                                        </li>
+                                                        <li>
+                                                            <img src="{% static 'assets/images/icons/checkmark.svg' %}" alt="">
+                                                            the amount involved
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row pt-3 hide" id="withdraw">
+                                            <div class="col-md-6 col-sm-6 col-12">
+                                                <form>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button class="btn btn-outline-secondary dropdown-toggle"
+                                                                    type="button" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false">NGN
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" href="#">EUR</a>
+                                                                <a class="dropdown-item" href="#">USD</a>
+                                                                <a class="dropdown-item" href="#">GHS</a>
+                                                                <a class="dropdown-item" href="#">UGX</a>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control"
+                                                               aria-label="Text input with dropdown button"
+                                                               placeholder="Enter amount">
+                                                    </div>
+                                                    <div id="calculator-box" class="calculator-box">
+                                                        <div class="item small">
+                                                            <div class="float-left">Withdrawal amount
+                                                            </div>
+                                                            <span id="send_transfer_amount" class="figure float-right">
+                                                                    $ 0.00
+                                                                </span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="item small">
+                                                            <div class="float-left">Transfer charge
+                                                            </div>
+                                                            <span id="send_transfer_amount" class="figure float-right">
+                                                                    $ 0.00
+                                                                </span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="item big">
+                                                            <div class="float-left">Due amount</div>
+                                                            <span id="send_total_amount" class="figure float-right">
+                                                                    $ 0.00
+                                                                </span>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-12 pt-2">
+                                                <div class="description">
+                                                    <p>What's included in the fee?</p>
+                                                    <ul>
+                                                        <li>
+                                                            <img src="{% static 'assets/images/icons/checkmark.svg' %}" alt="">
+                                                            Both parties verified by identity checks
+                                                        </li>
+                                                        <li>
+                                                            <img src="{% static 'assets/images/icons/checkmark.svg' %}" alt="">
+                                                            We help you through any disputes
+                                                        </li>
+                                                        <li>
+                                                            <img src="{% static 'assets/images/icons/checkmark.svg' %}" alt="">
+                                                            Funds are held until both parties are happy
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--table plan -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--container-->
+        </div>
+    </section>
+    <!--Video -->
+    <!-- testimonials -->
+    <section id="testimonials" class="bg-color">
+        <div class="container-page padd-80">
+            <!--container-->
+            <div class="container">
+                <div class="row">
+                    <div class="row-centered">
+                        <div class="col-centered col-lg-7 col-md-7">
+                            <h2 class="title-h2">Testmonials</h2>
+                            <p class="font-p mg-tp-30 mg-bt-30">
+                                We find serving million of people and businesses an honor. <br> Listen to what few of
+                                them has to say about Scrow
+                            </p>
+                            <div class="testimonial-slider">
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/1.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Kathleen Mills</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/2.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Tyler Bryant</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/3.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Bruce Wong</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/4.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Jhone Dhoe</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/5.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Mark Thompsone</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/6.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Max Harris</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/7.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Lucy Kelly</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/8.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Ethan Nguyen</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="avatar-item">
+                                        <img src="{% static 'assets/images/testimonial/9.jpg' %}" alt="">
+                                    </div>
+                                    <div class="item-inner">
+                                        <p>
+                                            Nam libero tempore, cum soluta nobis est eligen di opt ios cumque nihil
+                                            impedit quo minus id quo d maxime placeat facere possimus. Sed ut perspi
+                                            ciatis unde omnis iste natus error sit </p>
+                                        <div class="rating">
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                            <span class="icon_star"></span>
+                                        </div>
+                                        <div class="avatar-info">
+                                            <h4>Jack Martin</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- avatar images -->
+                            <div class="slider-avatar">
+                                <div data-slide="1" class="item-image avatar1 medium-avtar">
+                                    <img src="{% static 'assets/images/testimonial/1.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="2" class="item-image avatar2 big-avtar">
+                                    <img src="{% static 'assets/images/testimonial/2.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="3" class="item-image avatar3 medium-avtar">
+                                    <img src="{% static 'assets/images/testimonial/3.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="4" class="item-image avatar4 small-avtar">
+                                    <img src="{% static 'assets/images/testimonial/4.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="5" class="item-image avatar5 big-avtar">
+                                    <img src="{% static 'assets/images/testimonial/5.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="6" class="item-image avatar6 medium-avtar">
+                                    <img src="{% static 'assets/images/testimonial/6.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="7" class="item-image avatar7 small-avtar">
+                                    <img src="{% static 'assets/images/testimonial/7.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="8" class="item-image avatar8 small-avtar">
+                                    <img src="{% static 'assets/images/testimonial/8.jpg' %}" class="hand-image" alt="">
+                                </div>
+                                <div data-slide="9" class="item-image avatar9 big-avtar">
+                                    <img src="{% static 'assets/images/testimonial/9.jpg' %}" class="hand-image" alt="">
+                                </div>
+                            </div>
+                            <!-- avatar images -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--container-->
+        </div>
+    </section>
+    <!-- testimonials -->
+    <!-- get app -->
+    <section id="get-app" class="bg-color-1 pd-tp-60">
+        <div class="container">
+            <!--container-->
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-12">
+                    <img src="{% static 'assets/images/image8.png' %}" alt="">
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-12 wow fadeInRight">
+                    <div class="padd-80">
+                        <h2 class="title-h2 color-white">Join millions accept payments with scrow</h2>
+                        <p class="color-white font-p mg-tp-30 mg-bt-30 font-20">We handle trust, and let you bother
+                            about
+                            <br>crud issues</p>
+                        <a href="index.html" class="btn btn-white"> Get Started </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--container-->
+    </section>
+    <!-- get app -->
+    <!--sponsors clients-->
+    <section id="sponsors" class="padd-40 bg-color">
+        <!--container-->
+        <div class="container">
+            <div class="row">
+                <div class="row-centered">
+                    <div class="col-centered col-lg-12 col-md-12">
+                        <div class="client-slider">
+                            <div class="item">
+                                <img src="{% static 'assets/images/clients/logo1.png' %}" class="img-responsive" alt="ChatSpot"
+                                     title="ChatSpot">
+                            </div>
+                            <div class="item">
+                                <img src="{% static 'assets/images/clients/logo1.png' %}" class="img-responsive" alt="ChatSpot"
+                                     title="ChatSpot">
+                            </div>
+                            <div class="item">
+                                <img src="{% static 'assets/images/clients/logo1.png' %}" class="img-responsive" alt="ChatSpot"
+                                     title="ChatSpot">
+                            </div>
+                            <div class="item">
+                                <img src="{% static 'assets/images/clients/logo1.png' %}" class="img-responsive" alt="ChatSpot"
+                                     title="ChatSpot">
+                            </div>
+                            <div class="item">
+                                <img src="{% static 'assets/images/clients/logo1.png' %}" class="img-responsive" alt="ChatSpot"
+                                     title="ChatSpot">
+                            </div>
+                            <div class="item">
+                                <img src="{% static 'assets/images/clients/logo1.png' %}" class="img-responsive" alt="ChatSpot"
+                                     title="ChatSpot">
+                            </div>
+                            <div class="item">
+                                <img src="{% static 'assets/images/clients/logo1.png' %}" class="img-responsive" alt="ChatSpot"
+                                     title="ChatSpot">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End sponsors clients-->
+    <!--contact-->
+    <section id="contact" class=" padd-80">
+        <!--container-->
+        <div class="container">
+            <div class="contact-inner">
+                <div class="row-centered">
+                    <div class="col-centered col-lg-7">
+                        <h2 class="title-h2">Have any question? </h2>
+                        <p class="font-p mg-tp-30 mg-bt-60 ">
+                            Of course we'd love to Help
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-6 col-sm-6 col-lg-6 col-12">
+                        <div class="content-info">
+                            <form action="index.html#" method="post">
+                                <div class="form-group">
+                                    <input type="text" name="name" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="4" cols="3"
+                                              placeholder="Your message "></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-blue">Send message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class=" col-md-6 col-sm-6 col-lg-6 col-12">
+                        <div class="info-icon">
+                            <div class="icon-contact bg-icon-4">
+                                <img src="{% static 'assets/images/icons/map.svg' %}" alt="">
+                            </div>
+                            <div class="content-contact">
+                                <h3>Adress</h3>
+                                <p>71 Amsteroum Avenue Sedney, NY 10243</p>
+                            </div>
+                        </div>
+                        <div class="info-icon">
+                            <div class="icon-contact bg-icon-2">
+                                <img src="{% static 'assets/images/icons/phone.svg' %}" alt="">
+                            </div>
+                            <div class="content-contact">
+                                <h3>Phone</h3>
+                                <p>+234 817 968 5649</p>
+                            </div>
+                        </div>
+                        <div class="info-icon">
+                            <div class="icon-contact bg-icon-3">
+                                <img src="{% static 'assets/images/icons/email.svg' %}" alt="">
+                            </div>
+                            <div class="content-contact">
+                                <h3>E-mail</h3>
+                                <p>support@circlepanda.io</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--container-->
+    </section>
+    <!--contact-->
+{% endblock content %}
