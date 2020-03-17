@@ -1,0 +1,59 @@
+{% load static %}
+<!--sidebar menu-->
+<a href="index.html#menu-nav" class="menu-nav-trigger">
+    Menu
+    <span class="menu-nav-icon"></span>
+    <svg x="0px" y="0px" width="54px" height="54px" viewBox="0 0 54 54">
+        <circle fill="transparent" stroke="#656e79" stroke-width="1" cx="27" cy="27" r="25" stroke-dasharray="157 157"
+                stroke-dashoffset="157"></circle>
+    </svg>
+</a>
+<div id="menu-nav" class="menu-nav">
+    <div class="menu-navigation-wrapper">
+        <div class="menu-half-block">
+            <h2>Navigation</h2>
+            <nav>
+                <ul class="menu-primary-nav">
+                    <li><a href="./about" class="selected section-scroll">About</a></li>
+                    <li><a href="./#pricing" class="section-scroll">Pricing</a></li>
+                    <li><a href="./#testimonials" class="section-scroll">Testimonials</a></li>
+                    <li><a href="./contact" class="section-scroll">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="menu-half-block">
+            <address>
+                <ul class="menu-contact-info">
+                    <li><a href="mailto:support@circlepanda.io">support@circlepanda.io</a></li>
+                    <li>+234 817 968 5649</li>
+                    <li>
+                        <span>71 Amsteroum Avenue Sedney,</span>
+                        <span>NY 10243</span>
+                    </li>
+                </ul>
+            </address>
+        </div>
+    </div>
+</div>
+<!--sidebar menu-->
+<header class="navbar-header clearfix">
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <!--container-->
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand" href="./#"><img src="{% static 'assets/images/logo.png' %}" class="logo"
+                                                    alt="Circlepanda Escrow Payment"></a>
+            <!-- Logo -->
+            <!-- Get started -->
+            <div class="ml-auto right-nav">
+                <ul>
+                    <li>
+                        <a href="index.html" class="btn btn-blue">Get started</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Get started -->
+        </div>
+        <!--container-->
+    </nav>
+</header>

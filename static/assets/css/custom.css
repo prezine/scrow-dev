@@ -1,0 +1,38 @@
+.hide { display: none; }
+ul.accordion {
+	border-bottom: 1px solid #CCCCCC;
+}
+ul.accordion li,
+ul.accordion li.active { 
+	display: inline-table; 
+	padding: 3px 15px;
+	cursor: pointer;
+	transition: .5s ease-in-out;
+	scroll-behavior: smooth;
+	border-bottom: 3px solid transparent;
+}
+ul.accordion li.active {
+	border-color: #1C1F26;
+}
+.description {
+ 	border-radius: 5px;
+    background-color: #58caff29;
+    padding: 20px;
+ }
+ .description ul li {
+ 	display: inline-block;
+ 	line-height: 30px;
+ 	list-style: asterisks;
+ }
+ .logo { width: 180px; }
+
+ .team img {
+ 	display: inline-block;
+ 	width: 70%;
+ }
+ .bout {
+ 	background-image: url(../images/bout.jpg);
+ 	background-size: cover;
+ 	height: auto;
+ 	min-height: 500px;
+ }
