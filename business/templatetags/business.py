@@ -1,15 +1,15 @@
 from django import template
 
-from business.models import Staff
+from business.models import TeamMember, Business
 
 register = template.Library()
 
 
 @register.simple_tag
 def staff_role(user):
-    if user.business:
+    if user.active_business:
         try:
-            return Staff.objects.get(role__user=user.pk).role.role
-        except Staff.DoesNotExist:
+            return TeamMember.objects.get(user=user.pk, business=user.active_business.pk).role
+        except TeamMember.DoesNotExist:
             return None
     return None

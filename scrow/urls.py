@@ -18,7 +18,6 @@ urlpatterns = [
     path('', homepage_view, name='homepage'),
 
     path('register', register_user_view, name='userRegistration'),
-    path('register/<str:invite_id>', register_user_view, name='teamInvite'),
     path('login', LoginView.as_view(), name='userLogin'),
     path('account-verification/<str:verification_code>/<str:email>', account_verification_view,
          name='accountVerification'),
@@ -36,6 +35,7 @@ urlpatterns = [
     path('settings', user_auth_access_decorator(settings_view), name='settings'),
 
     path('business/', include('business.urls')),
+    path('transactions/', include('transactions.urls'))
 ]
 
 if settings.DEBUG:

@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-if="!isLinkSent">
-            <button type="button" @click="resendLink">Resend Verification Link</button>
-        </div>
+        <template @click="resendLink" v-if="!isLinkSent">
+            <slot></slot>
+        </template>
     </div>
 </template>
 
@@ -25,5 +25,4 @@
 </script>
 
 <style scoped>
-
 </style>

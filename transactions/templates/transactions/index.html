@@ -1,0 +1,350 @@
+{% extends 'users/partials/base.html' %}
+{% load static %}
+{% block page_title %}Transactions{% endblock %}
+{% block suffix_headtags %}
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <div class="os-tabs-w">
+        <div class="os-tabs-controls os-tabs-complex">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a aria-expanded="false" class="nav-link active" data-toggle="tab" href="#tab_overview"
+                       data-title="Transactions Overview">
+                        <span class="tab-label">Overview</span>
+                        <span class="badge badge-success">
+                                                <i class="os-icon os-icon-award"></i>
+                                                <span></span>
+                                            </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_create_transaction"
+                       data-title="New Transaction">
+                        <span class="tab-label">New Transaction</span>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-xl-block">
+                    <a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_history"
+                       data-title="Transaction History">
+                        <span class="tab-label">History</span>
+                    </a>
+                </li>
+                <li class="nav-item nav-actions d-none d-sm-block"><a class="btn btn-grey" href="./transactions#"><i
+                        class="os-icon os-icon-plus-circle"></i><span>Add Wallet</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Overview -->
+    <div class="element-box" id="tab_overview">
+        <div class="row">
+            <div class="col-sm-12 col-lg-8 col-xxl-6">
+                <div class="element-balances justify-content-between mobile-full-width">
+                    <div class="balance balance-v2">
+                        <div class="balance-title">Total Revenue</div>
+                        <div class="balance-value"><span class="d-xxl-none">₦0</span>
+                            <span class="d-none d-xxl-inline-block">₦0</span>
+                        </div>
+                    </div>
+                    <div class="balance-table pl-sm-2">
+                        <table class="table table-lightborder table-bordered table-v-compact mb-0">
+                            <tr>
+                                <td><strong>2</strong>
+                                    <div class="balance-label smaller lighter text-nowrap">Fraud Block</div>
+                                </td>
+                                <td><strong>0</strong>
+                                    <div class="balance-label smaller lighter text-nowrap">Bank Error</div>
+                                </td>
+                                <td><strong>0</strong>
+                                    <div class="balance-label smaller lighter text-nowrap">Customer Error</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>0</strong>
+                                    <div class="balance-label smaller lighter text-nowrap">Processing Errors</div>
+                                </td>
+                                <td class="text-success"><strong>80%</strong>
+                                    <div class="balance-label smaller lighter text-nowrap">Success rate</div>
+                                </td>
+                                <td class="text-danger"><strong>20%</strong>
+                                    <div class="balance-label smaller lighter text-nowrap">Failed rate</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="element-wrapper compact">
+                    <div class="element-box-tp">
+                        <div class="element-actions d-none d-sm-block">
+                            <form class="form-inline justify-content-sm-end">
+                                <label class="smaller" for="">Show Period:</label>
+                                <select class="form-control form-control-sm form-control-faded">
+                                    <option selected="true">Last 30 days</option>
+                                    <option>This Week</option>
+                                    <option>This Month</option>
+                                    <option>Today</option>
+                                </select>
+                            </form>
+                        </div>
+                        <h6 class="element-box-header">Balance History</h6>
+                        <div class="el-chart-w">
+                            <canvas data-chart-data="13,28,19,24,43,49,40,35,42,46,38,32,45" height="50"
+                                    id="liteLineChartV3" width="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2 d-none d-xxl-block">
+                <div class="element-box less-padding">
+                    <h6 class="element-box-header text-center">Portfolio Distribution</h6>
+                    <div class="el-chart-w">
+                        <canvas height="120" id="donutChart1" width="120"></canvas>
+                        <div class="inside-donut-chart-label"><strong>263</strong><span>Coins</span></div>
+                    </div>
+                    <div class="el-legend condensed">
+                        <div class="row">
+                            <div class="col-auto col-xxxxl-6 ml-sm-auto mr-sm-auto">
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+                                    <div class="legend-value"><span>Bitcoins</span>
+                                        <div class="legend-sub-value">17%, 12 Coins</div>
+                                    </div>
+                                </div>
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
+                                    <div class="legend-value"><span>Litecoin</span>
+                                        <div class="legend-sub-value">22%, 0.3 Coins</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 d-none d-xxxxl-block">
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #806ef9;"></div>
+                                    <div class="legend-value"><span>Etherium</span>
+                                        <div class="legend-sub-value">3%, 7 Coins</div>
+                                    </div>
+                                </div>
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #d97b70;"></div>
+                                    <div class="legend-value"><span>Ripple</span>
+                                        <div class="legend-sub-value">15%, 4 Coins</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 d-none d-lg-block">
+                <img src="assets/img/master_drib.jpg" style="width: 310px">
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-6 col-sm-3 col-xxl-2">
+                <a class="element-box el-tablo centered trend-in-corner smaller" href="./transactions#">
+                    <div class="label">Fraud Block</div>
+                    <div class="value">1</div>
+                    <div class="trending trending-up"><span>12%</span><i class="os-icon os-icon-arrow-up6"></i></div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-3 col-xxl-2">
+                <a class="element-box el-tablo centered trend-in-corner smaller" href="./transactions#">
+                    <div class="label">Bank Error</div>
+                    <div class="value text-danger">1</div>
+                    <div class="trending trending-down"><span>12%</span><i class="os-icon os-icon-arrow-down6"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-3 col-xxl-2">
+                <a class="element-box el-tablo centered trend-in-corner smaller" href="./transactions#">
+                    <div class="label">Customer Error</div>
+                    <div class="value">1</div>
+                    <div class="trending trending-up"><span>12%</span><i class="os-icon os-icon-arrow-up6"></i></div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-3 col-xxl-2">
+                <a class="element-box el-tablo centered trend-in-corner smaller" href="./transactions#">
+                    <div class="label">Processing Errors</div>
+                    <div class="value">0</div>
+                    <div class="trending trending-up"><span>12%</span><i class="os-icon os-icon-arrow-up6"></i></div>
+                </a>
+            </div>
+            <div class="col-6 col-xxl-2 d-sm-none d-xxl-block">
+                <a class="element-box el-tablo centered trend-in-corner smaller" href="./transactions#">
+                    <div class="label">Litecoin Price</div>
+                    <div class="value">-$3,473</div>
+                    <div class="trending trending-down"><span>5%</span><i class="os-icon os-icon-arrow-down6"></i></div>
+                </a>
+            </div>
+            <div class="col-6 col-xxl-2 d-sm-none d-xxl-block">
+                <a class="element-box el-tablo centered trend-in-corner smaller" href="./transactions#">
+                    <div class="label">Last Month</div>
+                    <div class="value">-$3,248</div>
+                    <div class="trending trending-down"><span>12%</span><i class="os-icon os-icon-arrow-down6"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- New Transaction -->
+    <div class="element-box hide" id="tab_create_transaction">
+        <div class="row">
+            <div class="col-lg-2">&nbsp;</div>
+            <div class="col-lg-8">
+                <div class="element-wrapper">
+                    <h6 class="element-header">Create New Transaction</h6>
+                    <form>
+                        <div class="form-group">
+                            <label for=""> Customer Name </label>
+                            <input class="form-control" placeholder="Enter customer name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Customer Email address</label>
+                            <input class="form-control" placeholder="Enter customer email" type="email">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Customer Home address</label>
+                            <input class="form-control" placeholder="Enter customer home address" type="text">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for=""> Customer Phone </label>
+                                    <input class="form-control" placeholder="Enter customer phone" type="tel">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="">Customer Gender</label>
+                                    <select class="form-control">
+                                        <option>Select gender</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Not sure</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <fieldset class="form-group">
+                            <legend><span>Transaction Data</span></legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for=""> Name of Item</label>
+                                        <input class="form-control" placeholder="Enter item name" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Item Quantity</label>
+                                        <input class="form-control" placeholder="Item Quantity" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for=""> Expected Delivery Date</label>
+                                        <div class="date-input">
+                                            <input class="single-daterange form-control" placeholder="Date of delivery"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Currency</label>
+                                        <select class="form-control">
+                                            <option>Select currency</option>
+                                            <option>Nigerian Naira (NGN)</option>
+                                            <option>U.S. Dollar (USD)</option>
+                                            <option>European Euro (EUR)</option>
+                                            <option>Japanese Yen (JPY)</option>
+                                            <option>British Pound (GBP)</option>
+                                            <option>Swiss Franc (CHF)</option>
+                                            <option>Canadian Dollar (CAD)</option>
+                                            <option>Australian/New Zealand Dollar</option>
+                                            <option>South African Rand (ZAR)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Amount </label>
+                                <input class="form-control" placeholder="Enter amount per item" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label> Terms of service </label>
+                                <textarea class="form-control" rows="3"
+                                          placeholder="We agreed that we'll send x item in gold color and x Ton by y day"></textarea>
+                            </div>
+                        </fieldset>
+                        <div class="form-buttons-w">
+                            <button class="btn btn-primary" type="submit"> Create New Transaction</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- History -->
+    <div class="element-box unstyle_elementbox hide" id="tab_history">
+        <div class="row pt-1">
+            <div class="col-sm-12">
+                <!--START - Recent Ticket Comments-->
+                <div class="element-wrapper">
+                    <h6 class="element-header">Transaction History</h6>
+                    <div class="element-box-tp">
+                        <div class="table-responsive">
+                            <table class="table table-padded">
+                                <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Item</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="user-with-avatar"><img alt="" src="./assets/img/avatar1.jpg"><span>Precious Tom</span>
+                                        </div>
+                                    </td>
+                                    <td><span> Nike Shoe </span></td>
+                                    <td class="bolder"><span class="text-success">1,250 USD</span></td>
+                                    <td class="nowrap">
+                                        <span class="status-pill smaller yellow"></span>
+                                        <span>In progress</span>
+                                    </td>
+                                    <td><span class="lighter">2 Days ago</span></td>
+                                    <td class="row-actions">
+                                        <a href="#"><i class="os-icon os-icon-grid-10"></i></a>
+                                        <a href="#"><i class="os-icon os-icon-ui-44"></i></a>
+                                        <a class="danger" href="#"><i class="os-icon os-icon-ui-15"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--END - Recent Ticket Comments-->
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block right_sidebar %}
+    <div class="content-panel compact color-scheme-dark">
+        <div class="content-panel-close"><i class="os-icon os-icon-close"></i></div>
+        <div class="element-wrapper compact">
+            <div class="element-actions actions-only"><a class="element-action element-action-fold"
+                                                         href="#"><i
+                    class="os-icon os-icon-minus-circle"></i></a></div>
+            <h6 class="element-header">Profile Completion</h6>
+            <profile-completion-bar></profile-completion-bar>
+        </div>
+    </div>
+{% endblock %}

@@ -91,10 +91,6 @@
                 type: Boolean,
                 required: false
             },
-            'invite_id': {
-                type: String,
-                required: false
-            }
         },
         data() {
             return {
@@ -114,8 +110,7 @@
                     city: '',
                     state: '',
                     country: '',
-                    date_of_birth: '',
-                    invite_id: this.invite_id
+                    date_of_birth: ''
                 }
             }
         },

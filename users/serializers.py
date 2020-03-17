@@ -1,9 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.utils import dateparse, timezone
 from rest_framework import serializers
-from rest_framework.utils import model_meta
 
-from business.models import StaffInvite, Role, Staff
+from business.models import StaffInvite, TeamMember
 from users.models import User
 from utils.helpers import send_verification_link, check_username_exist, check_email_exist, check_phone_exist
 
@@ -13,7 +12,6 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(error_messages={'required': 'email address is required.'})
     retype_password = serializers.CharField(required=False, allow_blank=True)
     date_of_birth = serializers.CharField(required=True)
-    invite_id = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = User
@@ -30,16 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Password and retyped password does not match')
 
         validate_user_existence(serializers, email, phone, name)
-
-        if attrs.get('invite_id'):
-            try:
-                invite = StaffInvite.objects.get(invite_id=attrs.get('invite_id'))
-            except StaffInvite.DoesNotExist:
-                raise serializers.ValidationError('Sorry your invite link is not valid')
-
-            if invite.is_active:
-                raise serializers.ValidationError('Invite link has already been used, thus is no longer active.')
-
         return attrs
 
     def create(self, validated_data):
@@ -67,8 +55,7 @@ class UserSerializer(serializers.ModelSerializer):
             instance.business = invite.business
             instance.save()
 
-            role = Role.objects.create(role=invite.role, user=instance)
-            Staff.objects.create(role=role, business=instance.business)
+            TeamMember.objects.create(role=invite.role, user=instance, business=instance.business)
 
         user = authenticate(username=instance.email, password=validated_data.get('password').lower())
         login(self.context.get("request"), user)

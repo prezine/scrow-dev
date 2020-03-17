@@ -1,6 +1,6 @@
 from django import forms
 
-from business.models import Staff
+from business.models import TeamMember
 from finance.models import Bank
 
 
@@ -12,5 +12,5 @@ class BankDetailsForm(forms.ModelForm):
 
 class WorkersForm(forms.ModelForm):
     class Meta:
-        model = Staff
+        model = TeamMember
         fields = '__all__'

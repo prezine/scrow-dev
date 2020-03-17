@@ -48,5 +48,5 @@ class Token:
 
 def generate_invite_token():
     token = Token()
-    invite_id = token.gen_token(length=120, ext='alphanum')
+    invite_id = token.gen_token(length=80, ext='alphanum')
     return invite_id

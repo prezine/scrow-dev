@@ -1,16 +1,77 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>Scrow — Africa's #1 Escrow Platform</title>
+    <!--Metas-->
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Scrow">
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <title>Scrow</title>
+    <!--External Stylesheets css-->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!--Animate -->
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <!--Slick -->
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <!-- Magnific Popup-->
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <!--Template Stylesheets css-->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+    <!-- Custom cSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <script src="{% static 'assets/js/modernizr.js' %}"></script>
+    <!--[if lt IE 9]>
+        <script src="{% static 'assets/js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'assets/js/respond.min.js' %}"></script>
+        <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target=".navbar-default" data-offset="100">
 <div id="app">
-    <status-msg></status-msg>
-    {% block content %}{% endblock %}
+    <!-- Page Preloader -->
+    <div id="loading-page">
+        <div id="loading-center-page">
+            <div id="loading-center-absolute">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Preloader -->
+    <!-- Page Content -->
+    <div class="warpper clearfix">
+        <!-- Header -->
+        {% include "./header.html" %}
+        <!--Header-->
+        <status-msg></status-msg>
+        {% block content %}{% endblock %}
+    </div>
+    <!-- Footer-->
+    {% include "./footer.html" %}
+    <!--Footer -->
 </div>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<!-- Bootstrap Plugins -->
+<script src="{% static 'assets/js/bootstrap.min.j' %}s"></script>
+<script src="{% static 'assets/js/jquery.easing.js' %}"></script>
+<script src="{% static 'assets/js/wow.min.js' %}"></script>
+<script src="{% static 'assets/js/magnific-popup.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.scrollUp.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
+<script src="{% static 'assets/js/slick.min.js' %}"></script>
+<script src="{% static 'assets/js/mo.min.js' %}"></script>
+<!-- Main js -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/js/custom.js' %}"></script>
 <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

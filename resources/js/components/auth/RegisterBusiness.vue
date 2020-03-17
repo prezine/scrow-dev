@@ -10,6 +10,16 @@
 
     export default {
         name: "RegisterBusiness",
+        props: ['user_id'],
+        created() {
+            let user_id = parseInt(this.user_id);
+            if (this.user_id && !isNaN(user_id)) {
+                this.$store.commit('createUser', {
+                    registered: true,
+                    userId: this.user_id
+                });
+            }
+        },
         computed: {
             ...mapGetters(['userCreated']),
             currentComponent() {
