@@ -1,37 +1,55 @@
-{% extends 'core/partials/base.html' %}
+{% extends 'users/auth/partials/base.html' %}
+{% load static %}
+{% block page_title %}Reset Password {% endblock %}
 {% block content %}
-
-    <form class="rd-form" method="post" action="{% url 'password_reset_form' %}">
-        <input type="hidden" name="user" id="user" value="{{ user }}"/>
-        {% csrf_token %}
-        {% if messages %}
-            {% for message in messages %}
-                <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <i class="fa fa-times"></i>
-                    </button>
-                    <span>
+    <div class="auth-box-w ">
+        <div class="text-center pt-3 pb-2">
+            <a href="/"><img alt="" src="{% static '/logo.png' %}" class="logo-responsive"></a>
+        </div>
+        <h4 class="auth-header">Reset Password</h4>
+        <form method="post" action="{% url 'password_reset_form' %}">
+            <input type="hidden" name="user" id="user" value="{{ user }}"/>
+            {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <span>
                         {{ message }}
                     </span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-warning">
+                    {{ form.non_field_errors|striptags }}
                 </div>
-            {% endfor %}
-        {% endif %}
-        {% if form.non_field_errors %}
-            <div class="alert alert-warning">
-                {{ form.non_field_errors|striptags }}
+            {% endif %}
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input placeholder="New Password"
+                               class="form-control {% if form.email.errors %}is-invalid{% endif %}" type="password"
+                               name="password">
+                        <div class="pre-icon os-icon os-icon-fingerprint"></div>
+                        <div class="invalid-feedback">
+                            {{ form.password.errors.0 | escape }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input placeholder="Retype Password" class="form-control" type="password"
+                               name="retype_password">
+                    </div>
+                </div>
             </div>
-        {% endif %}
-
-
-        <div class="form-group">
-            <input placeholder="New Password" type="password" name="password">
-        </div>
-        <div class="form-group">
-            <input placeholder="Retype Password" type="password" name="retype_password">
-        </div>
-        <button type="submit">
-            <span>Reset Password</span>
-        </button>
-    </form>
-
+            <div class="buttons-w">
+                <button class="btn btn-primary" type="submit">Reset Password</button>
+            </div>
+        </form>
+    </div>
 {% endblock content %}

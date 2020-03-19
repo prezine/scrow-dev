@@ -1,47 +1,60 @@
-{% extends 'core/partials/base.html' %}
+{% extends 'users/auth/partials/base.html' %}
 {% load static %}
-
+{% block page_title %}Login {% endblock %}
 {% block content %}
-    <h1>Login</h1>
-    {% if messages %}
-        {% for message in messages %}
-            <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="fa fa-times"></i>
-                </button>
-                <div>
-                    {{ message }}
+    <div class="auth-box-w ">
+        <div class="text-center pt-3 pb-2">
+            <a href="/"><img alt="" src="{% static '/logo.png' %}" class="logo-responsive"></a>
+        </div>
+        <h4 class="auth-header">Login</h4>
+        <form action="" method="post">
+            {% if messages %}
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <div>
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <span>{{ error|escape }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="">Email Address</label>
+                <input type="email" name="email"
+                       class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                       placeholder="Email address">
+                <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                <div class="invalid-feedback">
+                    {{ form.email.errors.0 | escape }}
                 </div>
             </div>
-        {% endfor %}
-    {% endif %}
-
-    {% if form.errors %}
-        {% for error in form.non_field_errors %}
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="material-icons">close</i>
-                </button>
-                <span>{{ error|escape }}</span>
+            <div class="form-group">
+                <label for="">Password</label>
+                <input type="password" name="password"
+                       class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                       placeholder="Password">
+                <div class="pre-icon os-icon os-icon-fingerprint"></div>
+                <div class="invalid-feedback">
+                    {{ form.password.errors.0 | escape }}
+                </div>
             </div>
-        {% endfor %}
-    {% endif %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input type="email" name="email" class="form-control" placeholder="Email address">
-            <div>
-                {{ form.email.errors.0 | escape }}
+            <div class="buttons-w">
+                <button class="btn btn-primary" type="submit">Log me in</button>
             </div>
-        </div>
-        <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Password">
-            <div>
-                {{ form.password.errors.0 | escape }}
-            </div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary">Login</button>
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock content %}
