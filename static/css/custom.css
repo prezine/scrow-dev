@@ -1,28 +1,38 @@
-.hide {	display: none; }
-.icon-2 i {
-    width: 24px !important;
-    height: 24px !important;
+.hide { display: none; }
+ul.accordion {
+	border-bottom: 1px solid #CCCCCC;
 }
-.icon-3 i {
-    width: 32px !important;
-    height: 32px !important;
+ul.accordion li,
+ul.accordion li.active { 
+	display: inline-table; 
+	padding: 3px 15px;
+	cursor: pointer;
+	transition: .5s ease-in-out;
+	scroll-behavior: smooth;
+	border-bottom: 3px solid transparent;
 }
-.icon-4 i {
-    width: 48px !important;
-    height: 48px !important;
+ul.accordion li.active {
+	border-color: #1C1F26;
 }
-.icon-5 i {
-    width: 64px !important;
-    height: 64px !important;
-}
-.logo-preview {
-	display: inline-table;
-	height: 90px;
-	width: 90px;
-	margin-bottom: 30px;
-}
+.description {
+ 	border-radius: 5px;
+    background-color: #58caff29;
+    padding: 20px;
+ }
+ .description ul li {
+ 	display: inline-block;
+ 	line-height: 30px;
+ 	list-style: asterisks;
+ }
+ .logo { width: 180px; }
 
-.unstyle_elementbox {
-    background-color: transparent;
-    box-shadow: none;
-}
+ .team img {
+ 	display: inline-block;
+ 	width: 70%;
+ }
+ .bout {
+ 	background-image: url(../images/bout.jpg);
+ 	background-size: cover;
+ 	height: auto;
+ 	min-height: 500px;
+ }

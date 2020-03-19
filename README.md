@@ -1,19 +1,19 @@
 # SCROW
  
-##Requirements
+###Requirements
 * Python3.6+
 * Redis
 * Nodejs
 * Yarn
 
-##Setup
+###Setup
 
 * Install redis apt-get redis
 * pip install virtualenv
 * Setup virtualenv with virtualenv .scrowenv
 * pip install -r requirements.txt
 
-##Usage
+###Usage
 * Rename `.env.example` to `.env` file to fit usage
 * Make sure redis-server is running
 * run `yarn` to install npm dependencies
