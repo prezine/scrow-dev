@@ -55,31 +55,12 @@
                 <div class="error" v-if="!$v.formData.phone.required">Enter your phone number</div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select class="form-control" v-model.trim="$v.formData.country.$model" id="country"
-                                required></select>
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
-                        <div class="error" v-if="!$v.formData.country.required">Please select country</div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="state">State</label>
-                        <select class="form-control" v-model.trim="$v.formData.state.$model" id="state"
-                                required></select>
-                        <div class="error" v-if="!$v.formData.state.required">Please select state</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" class="form-control" v-model.trim="$v.formData.city.$model" id="city"
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" v-model.trim="$v.formData.location.$model" id="location"
                                required>
-                        <div class="error" v-if="!$v.formData.city.required">Enter city</div>
+                        <div class="error" v-if="!$v.formData.location.required">Enter location</div>
                     </div>
                 </div>
             </div>
@@ -112,9 +93,7 @@
                     email: '',
                     gender: '',
                     phone: '',
-                    country: '',
-                    state: '',
-                    city: '',
+                    location: '',
                     date_of_birth: ''
                 }
             }
@@ -131,13 +110,7 @@
                 phone: {
                     required
                 },
-                country: {
-                    required
-                },
-                state: {
-                    required
-                },
-                city: {
+                location: {
                     required
                 },
                 date_of_birth: {
@@ -151,15 +124,13 @@
         methods: {
             getProfileDetails() {
                 axios.get('/api/users/profile-details').then(resp => {
-                    const {name, email, phone, gender, country, state, city, date_of_birth} = resp.data;
+                    const {name, email, phone, gender, location, date_of_birth} = resp.data;
                     this.formData = {
                         name,
                         email,
                         gender,
                         phone,
-                        country,
-                        state,
-                        city,
+                        location,
                         date_of_birth
                     };
                 }).catch(err => {

@@ -37,10 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
             name=validated_data.get('name'),
             email=validated_data.get('email').lower(),
             phone=validated_data.get('phone'),
-            country=validated_data.get('country'),
-            state=validated_data.get('state'),
-            city=validated_data.get('city'),
-            address=validated_data.get('address'),
+            location=validated_data.get('location'),
             gender=validated_data.get('gender'),
             date_of_birth=date_of_birth,
         )
@@ -71,7 +68,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('name', 'email', 'phone', 'calling_code', 'date_of_birth', 'country', 'state', 'city')
+        fields = ('name', 'email', 'phone', 'calling_code', 'date_of_birth', 'location')
 
     def update(self, instance, validated_data):
         if check_username_exist(User, instance.pk, validated_data.get('name')):
