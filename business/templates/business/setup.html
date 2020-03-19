@@ -62,7 +62,8 @@
                         <div class="form-group">
                             <input type="tel" name="bvn"
                                    class="form-control {% if form.bvn.errors %}is-invalid{% endif %}"
-                                   placeholder="Bank Verification Number (BVN)" value="{{ user.active_business.bank.bvn }}">
+                                   placeholder="Bank Verification Number (BVN)"
+                                   value="{{ user.active_business.bank.bvn }}">
                             <div class="invalid-feedback">
                                 {{ form.bvn.errors.0 | escape }}
                             </div>

@@ -9,3 +9,11 @@ export const fileHandler = (file, extensions = [], maxFileSize) => {
     resolve(true);
   });
 };
+
+export const formErrorHandler = (response, storeInstance, fieldErrorsHolder) => {
+  if (response.non_field_errors) {
+    storeInstance.commit({type: 'warning', msg: response.non_field_errors})
+  } else {
+    fieldErrorsHolder = response;
+  }
+};
