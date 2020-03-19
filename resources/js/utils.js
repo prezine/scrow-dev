@@ -10,10 +10,10 @@ export const fileHandler = (file, extensions = [], maxFileSize) => {
   });
 };
 
-export const formErrorHandler = (response, storeInstance, fieldErrorsHolder) => {
+export const formErrorHandler = (response, instance) => {
   if (response.non_field_errors) {
-    storeInstance.commit({type: 'warning', msg: response.non_field_errors})
+    instance.$store.commit('setstatusMsg', {type: 'warning', msg: response.non_field_errors[0]});
   } else {
-    fieldErrorsHolder = response;
+    instance.formErrors = response;
   }
 };
