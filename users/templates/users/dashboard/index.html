@@ -6,6 +6,10 @@
     <link href="{% static 'css/offline-theme-chrome.css' %}" rel="stylesheet">
     <link href="{% static 'libraries/introjs/introjs.css' %}" rel="stylesheet">
 {% endblock %}
+{% block left_sidebar %}
+    {% include "users/partials/mobile-menu.html" %}
+    {% include "users/partials/web-menu.html" %}
+{% endblock %}
 {% block content %}
     <div class="element-content">
         <div>

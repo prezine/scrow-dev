@@ -2,6 +2,10 @@
 {% load static %}
 {% load business %}
 {% block page_title %}{{ user.active_business.name }} Setup{% endblock %}
+{% block left_sidebar %}
+    {% include "users/partials/mobile-menu.html" %}
+    {% include "users/partials/web-menu.html" %}
+{% endblock %}
 {% block content %}
     {% if messages %}
         {% for message in messages %}

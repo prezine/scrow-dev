@@ -43,8 +43,7 @@
     {% include "./header.html" %}
     <div class="layout-w">
 
-        {% include "./mobile-menu.html" %}
-        {% include "./web-menu.html" %}
+        {% block left_sidebar %}{% endblock %}
         <div class="content-w">
             <div class="content-i">
                 <div class="content-box">
