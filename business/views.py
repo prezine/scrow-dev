@@ -176,3 +176,7 @@ def business_verification_details_view(request):
 
     serializer = BusinessVerificationSerializer(instance=queryset)
     return Response(data=serializer.data)
+
+
+def setup_business(request):
+    return render(request, 'business/create.html')

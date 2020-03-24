@@ -52,13 +52,9 @@ class BusinessSerializer(serializers.ModelSerializer):
         business = Business.objects.create(
             name=validated_data.get('name'),
             email=validated_data.get('email'),
-            country=validated_data.get('country'),
-            state=validated_data.get('state'),
-            city=validated_data.get('city'),
             address=validated_data.get('address'),
-            category=validated_data.get('category'),
-            sub_category=validated_data.get('sub_category'),
             website=validated_data.get('website'),
+            description=validated_data.get('description'),
             business_type=validated_data.get('business_type')
         )
 
@@ -90,4 +86,4 @@ class BusinessUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Business
-        exclude = ('country', 'city', 'state', 'category', 'sub_category')
+        fields = '__all__'

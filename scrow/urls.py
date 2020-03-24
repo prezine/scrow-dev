@@ -4,6 +4,7 @@ from django.urls import path, include, re_path
 from django.views.static import serve
 from django.utils.decorators import decorator_from_middleware
 
+from business.views import setup_business
 from core.views import homepage_view, settings_view
 from users.views import (register_user_view, dashboard_view, LoginView, account_verification_view,
                          ResendVerificationLinkView, PasswordResetView, LostPassword, LogoutView)
@@ -32,6 +33,7 @@ urlpatterns = [
     # path('users/', include('users.urls')),
     path('api/users/', include('users.urls')),
     path('dashboard', user_auth_access_decorator(dashboard_view), name='dashboard'),
+    path('getting-started', user_auth_access_decorator(setup_business), name='business_setup'),
     path('settings', user_auth_access_decorator(settings_view), name='settings'),
 
     path('business/', include('business.urls')),

@@ -2,6 +2,10 @@
 {% load static %}
 {% load business %}
 {% block page_title %}{{ user.active_business.name }} Verification{% endblock %}
+{% block left_sidebar %}
+    {% include "users/partials/mobile-menu.html" %}
+    {% include "users/partials/web-menu.html" %}
+{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-md-3"></div>
