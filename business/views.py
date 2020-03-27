@@ -17,7 +17,7 @@ from business.serializers import (BusinessSerializer, BusinessVerificationSerial
                                   StaffInviteSerializer, BusinessUpdateSerializer)
 from users.models import User
 from users.serializers import UserSerializer
-from utils.helpers import update_bank_details, send_team_invite_link, validate_invite
+from utils.helpers import send_team_invite_link, validate_invite
 from utils.token import generate_invite_token
 
 
@@ -30,25 +30,8 @@ class CreateBusinessView(CreateAPIView):
     serializer_class = BusinessSerializer
 
 
-class BankDetailsView(View):
-    form_class = BankDetailsForm
-
-    def get(self, request):
-        return render(request, 'business/bank.html', {'form': self.form_class, 'message': messages})
-
-    def post(self, request):
-        return update_bank_details(request)
-
-
 def business_setup(request):
     return render(request, 'business/setup.html')
-
-
-def bank_details_edit_view(request):
-    if request.method == 'POST':
-        return update_bank_details(request)
-    else:
-        return render(request, 'business/setup.html')
 
 
 def verification_view(request):
@@ -121,9 +104,16 @@ class FindUsers(APIView):
 
     def get(self, request):
         email = request.GET.get('email')
-        team_members = TeamMember.objects.filter(business=request.user.active_business.pk)
-        users = [User.objects.filter(~Q(pk=member.user.pk), Q(email__contains=email))[0] for member in team_members]
-        serializer = self.serializer_class(users, many=True)
+        team_users = []
+
+        if email:
+            team_members = TeamMember.objects.filter(business=request.user.active_business.pk)
+            for member in team_members:
+                users = User.objects.filter(~Q(pk=member.user.pk), Q(email__contains=email))
+                for user in users:
+                    team_users.append(user)
+
+        serializer = self.serializer_class(team_users, many=True)
         return Response(data=serializer.data)
 
 
@@ -180,3 +170,7 @@ def business_verification_details_view(request):
 
 def setup_business(request):
     return render(request, 'business/create.html')
+
+
+def business_activation(request):
+    return render(request, 'business/activation.html')

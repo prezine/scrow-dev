@@ -1,3 +1,4 @@
+from django.utils import dateparse
 from rest_framework import serializers
 
 from business.models import Business, TeamMember, BusinessVerification, StaffInvite
@@ -65,11 +66,15 @@ class BusinessSerializer(serializers.ModelSerializer):
 
 
 class BusinessVerificationSerializer(serializers.ModelSerializer):
+    date_company_started = serializers.CharField()
+
     class Meta:
         model = BusinessVerification
         fields = '__all__'
 
     def create(self, validated_data):
+        validated_data.update(
+            {'date_company_started': dateparse.parse_datetime(validated_data.get('date_company_started')).date()})
         verification = BusinessVerification.objects.filter(business=validated_data.get('business').pk)
         if verification:
             verification.update(**validated_data)

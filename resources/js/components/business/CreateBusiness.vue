@@ -150,7 +150,7 @@
 <script>
     import {required, email} from 'vuelidate/lib/validators';
     import VueGoogleAutocomplete from 'vue-google-autocomplete';
-    import {formErrorHandler} from "../../utils";
+    import {formErrorHandler, non400ErrorMsg} from "../../utils/utils";
 
     export default {
         name: "RegisterBusiness",
@@ -222,12 +222,6 @@
             }
         },
         methods: {
-            non400ErrorMsg() {
-                this.$store.commit('setstatusMsg', {
-                    type: 'warning',
-                    msg: 'Request could not be completed. Please reload and try again.'
-                });
-            },
             getAddressData: function (addressData, placeResultData, id) {
                 this.formData.address = placeResultData.formatted_address;
             },
@@ -242,7 +236,7 @@
                         if (err.response.status === 400) {
                             formErrorHandler(err.response.data, this);
                         } else {
-                            this.non400ErrorMsg();
+                            non400ErrorMsg(this);
                         }
                     });
                 }

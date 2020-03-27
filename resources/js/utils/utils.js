@@ -17,3 +17,10 @@ export const formErrorHandler = (response, instance) => {
     instance.formErrors = response;
   }
 };
+
+export const non400ErrorMsg = (instance) => {
+  instance.$store.commit('setstatusMsg', {
+    type: 'warning',
+    msg: 'Request could not be completed. Please reload and try again.'
+  });
+};

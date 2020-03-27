@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_decode
 from business.models import StaffInvite
 from users.forms import LoginForm, ForgotPasswordForm, ForgotResetForm
 from users.models import User
-from users.serializers import UserSerializer, UpdateUserSerializer
+from users.serializers import UserSerializer, UpdateUserSerializer, UpdateHalfUserSerializer
 from utils.helpers import send_verification_link, send_reset_password_link, check_password_reset_token
 from utils.token import Token
 
@@ -181,6 +181,18 @@ class LogoutView(View):
 class ProfileDetailsView(RetrieveUpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UpdateUserSerializer
+
+    def get_object(self):
+        try:
+            user = User.objects.get(pk=self.request.user.pk)
+        except User.DoesNotExist:
+            return []
+        return user
+
+
+class HalfProfileDetailsView(RetrieveUpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UpdateHalfUserSerializer
 
     def get_object(self):
         try:

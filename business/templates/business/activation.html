@@ -1,0 +1,127 @@
+{% extends 'users/partials/base.html' %}
+{% load static %}
+{% load business %}
+{% block page_title %}Business Setup{% endblock %}
+{% block suffix_headtags %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChZ14EHsvHTX9WdHjYPKDh09ZFrrWjsSA&libraries=places"></script>
+{% endblock %}
+{% block left_sidebar %}
+    {% include "users/partials/mobile-menu.html" %}
+    {% include "users/partials/web-menu.html" %}
+{% endblock %}
+{% block content %}
+    <div class="element-content">
+        <div class="row" align="center">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 mt-5 mb-4">
+                <h4 style="font-weight: 600">Activate Your Business</h4>
+                <p class="col-md-8">To activate your business, kindly complete the checks below. When you’re done, click
+                    the “Send Request” button.</p>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-sm-8 offset-sm-2 col-xxxl-3">
+                <div class="table-responsive">
+                    <table class="table table-padded">
+                        <tbody>
+                        <tr>
+                            <td class="nowrap">
+                                                        <span>
+                                                            <button class="btn btn-success btn-rounded"
+                                                                    style="padding: .8rem 1rem;">
+                                                                1
+                                                            </button>
+                                                        </span>
+                            </td>
+                            <td>
+                                <h5>Personal Detail</h5>
+                                <span class="small lighter">Please tell us a little about yourself</span>
+                            </td>
+                            <td class="bolder nowrap">
+                                <a class="btn btn-grey" href="javascript:void(0)" data-target="#profile" data-toggle="modal"><span>Update</span></a>
+                            </td>
+                            <div aria-hidden="true" aria-labelledby="profile" class="modal fade" id="profile"
+                                 role="dialog" tabindex="-1">
+                                <div class="modal-dialog" role="document">
+                                    <verify-personal-details phone="{{ user.phone }}"
+                                                             username="{{ user.name }}"></verify-personal-details>
+                                </div>
+                            </div>
+                        </tr>
+                        <tr>
+                            <td class="nowrap">
+                                                        <span>
+                                                            <button class="btn btn-outline-success btn-rounded"
+                                                                    style="padding: .8rem 1rem;">
+                                                                2
+                                                            </button>
+                                                        </span>
+                            </td>
+                            <td>
+                                <h5>Business Information</h5>
+                                <span class="small lighter">Please tell us some more about your business</span>
+                            </td>
+                            <td class="bolder nowrap">
+                                <a class="btn btn-success" href="javascript:void(0)" data-target="#business" data-toggle="modal"><span>Continue</span></a>
+                            </td>
+                            <div aria-hidden="true" aria-labelledby="business" class="modal fade bd-example-modal-lg"
+                                 id="business" role="dialog" tabindex="-1">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <verify-business-details></verify-business-details>
+                                </div>
+                            </div>
+                        </tr>
+                        <tr>
+                            <td class="nowrap">
+                                                        <span>
+                                                            <button class="btn btn-outline-success btn-rounded"
+                                                                    style="padding: .8rem 1rem;">
+                                                                3
+                                                            </button>
+                                                        </span>
+                            </td>
+                            <td>
+                                <h5>Verification Documents</h5>
+                                <span class="small lighter">The documents we ask for are based on your business profile</span>
+                            </td>
+                            <td class="bolder nowrap">
+                                <a class="btn btn-success" href="javascript:void(0)" data-target="#doc" data-toggle="modal"><span>Continue</span></a>
+                            </td>
+                            <div aria-hidden="true" aria-labelledby="doc" class="modal fade" id="doc" role="dialog"
+                                 tabindex="-1">
+                                <div class="modal-dialog" role="document">
+                                    <verification-document :business_id="{{ user.active_business.pk }}"></verification-document>
+                                </div>
+                            </div>
+                        </tr>
+                        <tr>
+                            <td class="nowrap">
+                                                        <span>
+                                                            <button class="btn btn-outline-success btn-rounded"
+                                                                    style="padding: .8rem 1rem;">
+                                                                4
+                                                            </button>
+                                                        </span>
+                            </td>
+                            <td>
+                                <h5>Settlement Account</h5>
+                                <span class="small lighter">Let us know where to send your payouts to</span>
+                            </td>
+                            <td class="bolder nowrap">
+                                <a class="btn btn-success" href="javascript:void(0)" data-target="#settlement"
+                                   data-toggle="modal"><span>Continue</span></a>
+                            </td>
+                            <div aria-hidden="true" aria-labelledby="settlement" class="modal fade" id="settlement"
+                                 role="dialog" tabindex="-1">
+                                <div class="modal-dialog" role="document">
+                                    <verify-bank-details></verify-bank-details>
+                                </div>
+                            </div>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="mr-2 mb-2 btn btn-success btn-lg" type="button"> Send Request</button>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
