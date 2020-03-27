@@ -172,5 +172,22 @@ def setup_business(request):
     return render(request, 'business/create.html')
 
 
-def business_activation(request):
-    return render(request, 'business/activation.html')
+class BusinessActivationView(View):
+    def get(self, request):
+        if request.user.active_business.request_verification or request.user.active_business.is_active:
+            return redirect(reverse('dashboard'))
+        return render(request, 'business/activation.html')
+
+    def post(self, request):
+        if request.user.active_business.request_verification or request.user.active_business.is_active:
+            return redirect(reverse('dashboard'))
+
+        try:
+            business = Business.objects.get(pk=request.user.active_business.pk)
+        except Business.DoesNotExist:
+            messages.warning(request, 'Request not validated.')
+            return redirect(reverse('business:activation'))
+
+        business.request_account_verification()
+        messages.success(request, 'Request completed. You will be notified once your request has been attended to.')
+        return redirect(reverse('dashboard'))

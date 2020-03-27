@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from config.models import BaseModel, BaseModelWithSoftDelete
 from finance.models import Bank
@@ -38,6 +39,11 @@ class Business(BaseModelWithSoftDelete):
 
     def __str__(self):
         return self.name
+
+    def request_account_verification(self):
+        self.request_verification = timezone.now()
+        # Todo: Send request to admin to verify business details
+        self.save()
 
 
 STAFF_ROLES = (
