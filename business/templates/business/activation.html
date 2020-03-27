@@ -5,6 +5,7 @@
 {% block suffix_headtags %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChZ14EHsvHTX9WdHjYPKDh09ZFrrWjsSA&libraries=places"></script>
 {% endblock %}
+
 {% block left_sidebar %}
     {% include "users/partials/mobile-menu.html" %}
     {% include "users/partials/web-menu.html" %}
@@ -17,6 +18,20 @@
                 <h4 style="font-weight: 600">Activate Your Business</h4>
                 <p class="col-md-8">To activate your business, kindly complete the checks below. When you’re done, click
                     the “Send Request” button.</p>
+            </div>
+            <div class="col-8 mx-auto">
+                {% if messages %}
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <div>
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
             </div>
             <div class="col-md-2"></div>
             <div class="col-sm-8 offset-sm-2 col-xxxl-3">
@@ -37,7 +52,8 @@
                                 <span class="small lighter">Please tell us a little about yourself</span>
                             </td>
                             <td class="bolder nowrap">
-                                <a class="btn btn-grey" href="javascript:void(0)" data-target="#profile" data-toggle="modal"><span>Update</span></a>
+                                <a class="btn btn-grey" href="javascript:void(0)" data-target="#profile"
+                                   data-toggle="modal"><span>Update</span></a>
                             </td>
                             <div aria-hidden="true" aria-labelledby="profile" class="modal fade" id="profile"
                                  role="dialog" tabindex="-1">
@@ -61,7 +77,8 @@
                                 <span class="small lighter">Please tell us some more about your business</span>
                             </td>
                             <td class="bolder nowrap">
-                                <a class="btn btn-success" href="javascript:void(0)" data-target="#business" data-toggle="modal"><span>Continue</span></a>
+                                <a class="btn btn-success" href="javascript:void(0)" data-target="#business"
+                                   data-toggle="modal"><span>Continue</span></a>
                             </td>
                             <div aria-hidden="true" aria-labelledby="business" class="modal fade bd-example-modal-lg"
                                  id="business" role="dialog" tabindex="-1">
@@ -84,12 +101,14 @@
                                 <span class="small lighter">The documents we ask for are based on your business profile</span>
                             </td>
                             <td class="bolder nowrap">
-                                <a class="btn btn-success" href="javascript:void(0)" data-target="#doc" data-toggle="modal"><span>Continue</span></a>
+                                <a class="btn btn-success" href="javascript:void(0)" data-target="#doc"
+                                   data-toggle="modal"><span>Continue</span></a>
                             </td>
                             <div aria-hidden="true" aria-labelledby="doc" class="modal fade" id="doc" role="dialog"
                                  tabindex="-1">
                                 <div class="modal-dialog" role="document">
-                                    <verification-document :business_id="{{ user.active_business.pk }}"></verification-document>
+                                    <verification-document
+                                            :business_id="{{ user.active_business.pk }}"></verification-document>
                                 </div>
                             </div>
                         </tr>
@@ -120,7 +139,17 @@
                         </tbody>
                     </table>
                 </div>
-                <button class="mr-2 mb-2 btn btn-success btn-lg" type="button"> Send Request</button>
+                {% if not user.active_business.request_verification %}
+                    <a onclick="
+                            var result = confirm('Are you sure you have completed you have completed all the forms? Yeah! whatever');
+                            if (result){
+                            event.preventDefault();
+                            document.getElementById('send-request-form').submit();
+                            }" class="mr-2 mb-2 btn btn-success btn-lg" href="javascript:void(0)"> Send Request</a>
+                    <form action="" method="POST" style="display: none;" id="send-request-form">
+                        {% csrf_token %}
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>
