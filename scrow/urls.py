@@ -14,6 +14,7 @@ user_auth_access_decorator = decorator_from_middleware(AuthOnlyMiddleware)
 non_admin_auth_access_decorator = decorator_from_middleware(AuthUserOnlyMiddleware)
 non_auth_access_decorator = decorator_from_middleware(NonAuthMiddleware)
 
+
 urlpatterns = [
     path('sudo/admin/ps/', admin.site.urls),
     path('', homepage_view, name='homepage'),
@@ -37,6 +38,8 @@ urlpatterns = [
     path('settings', user_auth_access_decorator(settings_view), name='settings'),
 
     path('business/', include('business.urls')),
+    path('finance/', include('finance.urls')),
+
     path('transactions/', include('transactions.urls'))
 ]
 

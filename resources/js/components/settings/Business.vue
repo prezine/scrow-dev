@@ -6,21 +6,32 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="currency"> Default Currency</label>
-                        <select class="form-control" id="currency" v-model.trim="$v.formData.currency.$model">
+                        <select class="form-control"
+                                :class="{'is-invalid': formErrors.currency || $v.formData.currency.$error}"
+                                id="currency" v-model.trim="$v.formData.currency.$model">
                             <option value="NGN" :selected="formData.currency === 'NGN'">NG</option>
                             <option value="USD" :selected="formData.currency === 'USD'">USD</option>
                         </select>
-                        <div class="error" v-if="!$v.formData.currency.required">Please select currency</div>
+                        <div class="invalid-feedback" v-if="!$v.formData.currency.required">Please select currency</div>
+                        <div class="invalid-feedback" v-if="formErrors.currency">{{formErrors.currency[0]}}
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-9">
                     <div class="form-group">
                         <label for="email"> Business Contact Email</label>
-                        <input id="email" class="form-control" v-model.trim="$v.formData.email.$model"
-                               placeholder="Your Business Email Address" required="required" type="email">
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
-                        <div class="error" v-if="!$v.formData.email.required">Please providesupport_email email
+                        <input id="email" class="form-control"
+                               :class="{'is-invalid': formErrors.email || $v.formData.email.$error}"
+                               v-model.trim="$v.formData.email.$model"
+                               placeholder="Your Business Email Address" type="email">
+                        <div class="invalid-feedback" v-if="!$v.formData.email.required">Please provide contact email
                             address
+                        </div>
+                        <div class="invalid-feedback" v-if="!$v.formData.email.email">Please provide a valid contact
+                            email
+                            address
+                        </div>
+                        <div class="invalid-feedback" v-if="formErrors.email">{{formErrors.email[0]}}
                         </div>
                     </div>
                 </div>
@@ -29,20 +40,35 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="support_email"> Business Support Email</label>
-                        <input id="support_email" class="form-control" v-model.trim="$v.formData.support_email.$model"
-                               placeholder="Your Support Email Address" required="required" type="email">
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
-                        <div class="error" v-if="!$v.formData.support_email.required">enter support email</div>
+                        <input id="support_email" class="form-control"
+                               :class="{'is-invalid': formErrors.support_email || $v.formData.support_email.$error}"
+                               v-model.trim="$v.formData.support_email.$model"
+                               placeholder="Your Support Email Address" type="email">
+                        <div class="invalid-feedback" v-if="!$v.formData.support_email.required">enter support email
+                        </div>
+                        <div class="invalid-feedback" v-if="!$v.formData.support_email.email">enter a valid support
+                            email
+                        </div>
+                        <div class="invalid-feedback" v-if="formErrors.support_email">{{formErrors.support_email[0]}}
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="chargeback_email"> Business Chargeback Email</label>
                         <input id="chargeback_email" class="form-control"
+                               :class="{'is-invalid': formErrors.chargeback_email || $v.formData.chargeback_email.$error}"
                                v-model.trim="$v.formData.chargeback_email.$model"
-                               placeholder="Your Chargeback Email Address" required="required" type="email">
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
-                        <div class="error" v-if="!$v.formData.chargeback_email.required">enter chargeback email</div>
+                               placeholder="Your Chargeback Email Address" type="email">
+                        <div class="invalid-feedback" v-if="!$v.formData.chargeback_email.required">enter chargeback
+                            email
+                        </div>
+                        <div class="invalid-feedback" v-if="!$v.formData.chargeback_email.email">enter a valid
+                            chargeback email
+                        </div>
+                        <div class="invalid-feedback" v-if="formErrors.chargeback_email">
+                            {{formErrors.chargeback_email[0]}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,7 +76,7 @@
                 <label for="name"> Business Name</label>
                 <input id="name" class="form-control"
                        placeholder="Your Business Name"
-                       readonly="readonly" v-model="formData.name" type="text">
+                       readonly="readonly" :value="formData.name" type="text">
             </div>
             <div class="form-group">
                 <label for="phone">Business Phone Number</label>
@@ -61,18 +87,28 @@
                         </div>
                     </div>
                     <input id="phone" v-model.trim="$v.formData.phone.$model" class="form-control"
+                           :class="{'is-invalid': formErrors.phone || $v.formData.phone.$error}"
                            placeholder="817 123 4567" type="tel">
                 </div>
-                <div class="error" v-if="!$v.formData.phone.required">Please enter phone number</div>
+                <div class="invalid-feedback" v-if="!$v.formData.phone.required">Please enter phone number</div>
+                <div class="invalid-feedback" v-if="formErrors.phone">{{formErrors.phone[0]}}
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="address"> Business Address</label>
-                        <input id="address" class="form-control" v-model.trim="$v.formData.address.$model"
-                               placeholder="Your Business Address" required="required" type="text">
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
-                        <div class="error" v-if="!$v.formData.address.required">Please enter address</div>
+                        <label> Business Address</label>
+                        <vue-google-autocomplete
+                                id="map"
+                                v-model="formData.address"
+                                :classname="locationStyleClass"
+                                placeholder="Enter your location"
+                                v-on:placechanged="getAddressData"
+                        >
+                        </vue-google-autocomplete>
+                        <div class="invalid-feedback" v-if="!$v.formData.address.required">Please enter address</div>
+                        <div class="invalid-feedback" v-if="formErrors.address">{{formErrors.address[0]}}
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -80,7 +116,6 @@
                         <label for="website">Business Website</label>
                         <input id="website" class="form-control" v-model="formData.website"
                                placeholder="Your Business Website" type="text">
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
                     </div>
                 </div>
             </div>
@@ -88,7 +123,6 @@
                 <label for="photo">Business Logo</label>
                 <input id="photo" class="form-control" @change="photoFileChange"
                        placeholder="Your Business Website" type="file" accept="image/*">
-                <div class="help-block form-text with-errors form-control-feedback"></div>
             </div>
             <fieldset class="form-group">
                 <legend><span>Social Media</span></legend>
@@ -123,7 +157,8 @@
                 </div>
             </fieldset>
             <div class="form-buttons-w" align="center">
-                <button class="mr-2 mb-2 btn btn-outline-success" type="submit"> Save Changes</button>
+                <button class="mr-2 mb-2 btn btn-outline-success" type="submit" :disabled="isLoading"> Save Changes
+                </button>
             </div>
         </form>
     </div>
@@ -131,12 +166,17 @@
 
 <script>
     import {required, email} from 'vuelidate/lib/validators';
-    import {fileHandler} from "../../utils";
+    import VueGoogleAutocomplete from 'vue-google-autocomplete';
+    import {fileHandler, formErrorHandler, non400ErrorMsg} from "../../utils/utils";
 
     export default {
         name: "Business",
+        components: {
+            VueGoogleAutocomplete
+        },
         data() {
             return {
+                formErrors: [],
                 isLoading: false,
                 formData: {
                     calling_code: '',
@@ -169,17 +209,33 @@
                     required
                 },
                 support_email: {
-                    required
+                    required,
+                    email
                 },
                 chargeback_email: {
-                    required
+                    required,
+                    email
                 }
             }
         },
         created() {
             this.getSettings();
         },
+        computed: {
+            locationStyleClass() {
+                let className = 'form-control';
+
+                if (this.formErrors.address || this.$v.formData.address.$error) {
+                    className += ' is-invalid';
+                }
+
+                return className;
+            }
+        },
         methods: {
+            getAddressData: function (addressData, placeResultData, id) {
+                this.formData.address = placeResultData.formatted_address;
+            },
             getSettings() {
                 axios.get('/business/details').then(resp => {
                     const {
@@ -202,11 +258,11 @@
                         email,
                         address,
                         currency,
-                        website,
                         support_email,
                         chargeback_email,
-                        twitter_username,
-                        instagram_username
+                        website: website === 'null' ? '' : website,
+                        twitter_username: twitter_username === 'null' ? '' : twitter_username,
+                        instagram_username: instagram_username === 'null' ? '' : instagram_username
                     };
                 }).catch(err => {
                     this.$store.commit('setstatusMsg', {type: 'error', msg: 'Request could not be validated.'});
@@ -215,6 +271,7 @@
             updateSettings() {
                 this.$v.$touch();
                 if (!this.$v.$invalid) {
+                    this.isLoading = true;
                     let formData = new FormData();
                     let formDataKeys = Object.keys(this.formData);
                     let formDataValues = Object.values(this.formData);
@@ -225,18 +282,15 @@
 
                     axios.put('/business/details', formData).then(resp => {
                         this.$store.commit('setstatusMsg', {type: 'success', msg: 'Profile details updated.'});
-                        console.log('Form Success: ', resp.data);
                         setTimeout(() => {
                             location.reload();
-                        }, 5000)
+                        }, 4000)
                     }).catch(err => {
-                        if (err.response) {
-                            if (err.response.data.non_field_errors) {
-                                this.$store.commit('setstatusMsg', {
-                                    type: 'error',
-                                    msg: err.response.data.non_field_errors[0]
-                                });
-                            }
+                        this.isLoading = false;
+                        if (err.response.status === 400) {
+                            formErrorHandler(err.response.data, this);
+                        } else {
+                            non400ErrorMsg(this);
                         }
                     })
                 }
@@ -256,7 +310,8 @@
                     await fileHandler(file, extensions);
                 } catch (err) {
                     this.isLoading = false;
-                    return this.errorResponse = err;
+                    this.$store.commit('setstatusMsg', {type: 'error', msg: err});
+                    return;
                 }
 
                 this.formData.photo = file;

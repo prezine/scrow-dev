@@ -37,11 +37,11 @@
                     <h5 style="font-weight: 600;">Introduction to Scrow</h5>
                     <div class="label">See what you can do with Scrow</div>
                     <div class="mt-2">
-                        <button class="mr-2 mb-2 btn btn-outline-primary btn-md"> Get Started</button>
+                        <a href="{% url 'business_setup' %}" class="mr-2 mb-2 btn btn-outline-primary btn-md"> Get Started</a>
                     </div>
                 </div>
             </div>
-            {% if not user.active_business.is_active %}
+{#            {% if not user.active_business.is_active %}#}
                 <div class="col-sm-4 col-xxxl-3" data-step="3"
                      data-intro="Activate your account to have complete access to Scrow">
                     <div class="element-box el-tablo" href="./#">
@@ -49,18 +49,18 @@
                         <h5 style="font-weight: 600;">Activate your business</h5>
                         <div class="label">1 of 6 tasks completed</div>
                         <div class="mt-2">
-                            <a href="{% url 'business:setup' %}" class="mr-2 mb-2 btn btn-outline-primary btn-md">
+                            <a href="{% url 'business:activation' %}" class="mr-2 mb-2 btn btn-outline-primary btn-md">
                                 Continue</a>
                         </div>
                     </div>
                 </div>
-            {% endif %}
+{#            {% endif %}#}
             <div class="col-sm-4 col-xxxl-3"
-                    {% if not user.active_business.is_active %}
-                 data-step="4"
-                    {% else %}
+{#                    {% if not user.active_business.is_active %}#}
+{#                 data-step="4"#}
+{#                    {% else %}#}
                  data-step="3"
-                    {% endif %}
+{#                    {% endif %}#}
                  data-intro="Setup your account and enjoy a seemless payment">
                 <div class="element-box el-tablo" href="./#">
                     <img src="{% static 'img/m-payment.png' %}" style="width: 200px;">

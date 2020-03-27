@@ -109,7 +109,7 @@
 <script>
     import {required, minLength, email, sameAs} from 'vuelidate/lib/validators';
     import VueGoogleAutocomplete from 'vue-google-autocomplete';
-    import {formErrorHandler} from "../../utils";
+    import {formErrorHandler, non400ErrorMsg} from "../../utils/utils";
 
     export default {
         name: "RegisterUser",
@@ -205,7 +205,7 @@
                         if (err.response.status === 400) {
                             formErrorHandler(err.response.data, this);
                         } else {
-                            this.non400ErrorMsg();
+                            non400ErrorMsg(this);
                         }
                     });
                 }

@@ -68,23 +68,6 @@ def check_password_reset_token(user, reset_token):
     return eval_token
 
 
-def update_bank_details(request):
-    if request.user.active_business:
-        try:
-            business = Business.objects.get(pk=request.user.active_business.pk)
-        except Business.DoesNotExist:
-            raise Http404
-
-    form = BankDetailsForm(instance=business.bank, data=request.POST)
-    if form.is_valid():
-        bank = form.save()
-        business.bank = bank
-        business.save()
-
-        messages.success(request, 'Bank details updated!')
-    return render(request, 'business/setup.html', {'form': form, 'message': messages})
-
-
 def check_username_exist(model, pk, name):
     return model.objects.filter(~Q(id=pk), name=name).exists()
 
