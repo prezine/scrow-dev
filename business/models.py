@@ -1,6 +1,6 @@
 from django.db import models
 
-from config.models import BaseModel
+from config.models import BaseModel, BaseModelWithSoftDelete
 from finance.models import Bank
 from utils.files import file_upload_path
 
@@ -15,7 +15,7 @@ CURRENCY = (
 )
 
 
-class Business(BaseModel):
+class Business(BaseModelWithSoftDelete):
     name = models.CharField(max_length=300, db_index=True, unique=True)
     email = models.EmailField(max_length=200, unique=True, db_index=True)
     address = models.CharField(max_length=300, null=True, blank=True)
@@ -23,6 +23,7 @@ class Business(BaseModel):
                               default='business-photo-fallback.png', blank=True)
     business_type = models.CharField(max_length=20, choices=BUSINESS_TYPE, default='startup')
     is_active = models.DateTimeField(null=True, blank=True)
+    request_verification = models.DateTimeField(null=True, blank=True)
     bank = models.OneToOneField(Bank, on_delete=models.CASCADE, null=True, blank=True)
     phone = models.CharField(max_length=20, default='')
     website = models.CharField(max_length=300, default='')
