@@ -174,12 +174,12 @@ def setup_business(request):
 
 class BusinessActivationView(View):
     def get(self, request):
-        if request.user.active_business.request_verification or request.user.active_business.is_active:
+        if business_verified_or_pending_approval(request.user.active_business) or not is_business_owner(request.user):
             return redirect(reverse('dashboard'))
         return render(request, 'business/activation.html')
 
     def post(self, request):
-        if request.user.active_business.request_verification or request.user.active_business.is_active:
+        if business_verified_or_pending_approval(request.user.active_business) or not is_business_owner(request.user):
             return redirect(reverse('dashboard'))
 
         try:
@@ -191,3 +191,17 @@ class BusinessActivationView(View):
         business.request_account_verification()
         messages.success(request, 'Request completed. You will be notified once your request has been attended to.')
         return redirect(reverse('dashboard'))
+
+
+def is_business_owner(user):
+    try:
+        TeamMember.objects.get(business=user.active_business.pk, role='Owner', user=user.pk)
+        return True
+    except TeamMember.DoesNotExist:
+        return False
+
+
+def business_verified_or_pending_approval(business):
+    if business.request_verification or business.is_active:
+        return True
+    return False
