@@ -58,6 +58,15 @@ class LoginView(View):
             if not user.is_active:
                 messages.warning(request, 'Login failed! Please contact support for help.')
                 return render(request, 'users/auth/login.html', {'form': form, 'message': messages})
+
+            if not request.user.is_activated:
+                send_verification_link(request.user)
+                messages.warning(
+                    request,
+                    'Account not verified. A new verification link has been sent to your email address'
+                )
+                return render(request, 'users/auth/login.html', {'form': form, 'message': messages})
+
             login(request, user)
             return redirect('dashboard')
         return render(request, 'users/auth/login.html', {'form': form, 'message': messages})
