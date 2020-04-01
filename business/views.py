@@ -15,6 +15,7 @@ from business.forms import BankDetailsForm
 from business.models import TeamMember, StaffInvite, Business, BusinessVerification
 from business.serializers import (BusinessSerializer, BusinessVerificationSerializer, TeamMemberSerializer,
                                   StaffInviteSerializer, BusinessUpdateSerializer)
+from business.utils import BusinessVerificationCheck
 from users.models import User
 from users.serializers import UserSerializer
 from utils.helpers import send_team_invite_link, validate_invite
@@ -205,3 +206,15 @@ def business_verified_or_pending_approval(business):
     if business.request_verification or business.is_active:
         return True
     return False
+
+
+class BusinessCompletionDetailsView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        verification_details = BusinessVerificationCheck(request.user)
+        verification_details = verification_details.verify_and_get_details()
+
+        return Response(verification_details)
+
+
