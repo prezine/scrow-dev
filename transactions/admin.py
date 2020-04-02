@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from transactions.models import Transaction, Customer
+
+admin.site.register(Transaction)
+admin.site.register(Customer)
