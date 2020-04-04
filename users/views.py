@@ -101,7 +101,7 @@ def account_verification_view(request, verification_code, email):
         login(request, user)
 
         messages.success(request, 'Account activated!.')
-        return redirect(reverse('dashboard'))
+        return redirect(reverse('business_setup'))
     messages.warning(request, 'Verification not valid or has expired.')
     return redirect(reverse('userLogin'))
 
