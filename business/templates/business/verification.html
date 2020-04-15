@@ -1,8 +1,0 @@
-{% extends 'core/partials/base.html' %}
-{% load static %}
-
-{% block content %}
-    <h1>Business setup</h1>
-    <h3>Verification Details</h3>
-    <verify-business-details :business_id="'{{ user.business.id }}'"></verify-business-details>
-{% endblock content %}

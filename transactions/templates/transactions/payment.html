@@ -1,0 +1,65 @@
+{% extends 'core/partials/navless/base.html' %}
+{% load static %}
+{% block page_title %}Make Payment {% endblock %}
+{% block content %}
+    <div class="content-box" align="center">
+        <div class="col-md-12 mt-5">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <img src="{% get_media_prefix %}{{customer.transaction.business.photo}}" class="logo-icon" style="height: 60px; width: 60px">
+                    <div class="mb-4">
+                        <strong>{{customer.transaction.business.email}}</strong> <br>
+                        Pay {{customer.transaction.currency}} {{ customer.transaction.amount }}
+                    </div>
+                    <div class="element-wrapper text-left">
+                        <div class="element-box">
+                            <div class="element-title text-center pb-4 lighter">Enter your card details to pay</div>
+                            <form>
+                                <div class="form-group">
+                                    <label class="lighter" for="">Card number</label>
+                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                        <input class="form-control" placeholder="0000 0000 0000 0000" type="text">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text font-3">
+                                                <i class="picons-social-icon-visa"></i>
+                                                <i class="picons-social-icon-mastercard"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="lighter" for="">Card Expiry</label>
+                                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                                <input class="form-control" id="inputExpDate" placeholder="MM / YY"
+                                                       maxlength='7' type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label class="lighter" for="">CVV</label>
+                                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                                <input class="form-control" class="cvv" placeholder="123" type="text">
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">Help</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-buttons-w text-center compact">
+                                    <a class="btn btn-md btn-success" href="./#"><span>Pay NGN 100</span></a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="mt-2 text-center">
+                            <i class="typcn typcn-lock-closed"></i> secured by <strong>scrow</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

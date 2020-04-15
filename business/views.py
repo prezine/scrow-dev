@@ -5,18 +5,20 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework import permissions, status
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from business.forms import BankDetailsForm
-from business.models import TeamMember, StaffInvite, Business
+from business.models import TeamMember, StaffInvite, Business, BusinessVerification
 from business.serializers import (BusinessSerializer, BusinessVerificationSerializer, TeamMemberSerializer,
                                   StaffInviteSerializer, BusinessUpdateSerializer)
+from business.utils import BusinessVerificationCheck
 from users.models import User
 from users.serializers import UserSerializer
-from utils.helpers import update_bank_details, send_team_invite_link, validate_invite
+from utils.helpers import send_team_invite_link, validate_invite
 from utils.token import generate_invite_token
 
 
@@ -29,29 +31,8 @@ class CreateBusinessView(CreateAPIView):
     serializer_class = BusinessSerializer
 
 
-class BankDetailsView(View):
-    form_class = BankDetailsForm
-
-    def get(self, request):
-        return render(request, 'business/bank.html', {'form': self.form_class, 'message': messages})
-
-    def post(self, request):
-        form = BankDetailsForm(instance=request.user.bank, data=request.POST)
-        update_bank_details(request, form)
-        return render(request, 'business/bank.html', {'form': form, 'message': messages})
-
-
 def business_setup(request):
     return render(request, 'business/setup.html')
-
-
-def bank_details_edit_view(request):
-    if request.method == 'POST':
-        form = BankDetailsForm(instance=request.user.bank, data=request.POST)
-        update_bank_details(request, form)
-        return render(request, 'business/setup.html', {'form': form, 'message': messages})
-    else:
-        return reverse('dashboard')
 
 
 def verification_view(request):
@@ -124,9 +105,16 @@ class FindUsers(APIView):
 
     def get(self, request):
         email = request.GET.get('email')
-        team_members = TeamMember.objects.filter(business=request.user.active_business.pk)
-        users = [User.objects.filter(~Q(pk=member.user.pk), Q(email__contains=email))[0] for member in team_members]
-        serializer = self.serializer_class(users, many=True)
+        team_users = []
+
+        if email:
+            team_members = TeamMember.objects.filter(business=request.user.active_business.pk)
+            for member in team_members:
+                users = User.objects.filter(~Q(pk=member.user.pk), Q(email__contains=email))
+                for user in users:
+                    team_users.append(user)
+
+        serializer = self.serializer_class(team_users, many=True)
         return Response(data=serializer.data)
 
 
@@ -167,3 +155,66 @@ def switch_business_view(request, pk):
     user.save()
 
     return redirect(reverse('dashboard'))
+
+
+@api_view(['GET'])
+@permission_classes((permissions.IsAuthenticated,))
+def business_verification_details_view(request):
+    try:
+        queryset = BusinessVerification.objects.get(business=request.user.active_business.pk)
+    except BusinessVerification.DoesNotExist:
+        return Response(data={})
+
+    serializer = BusinessVerificationSerializer(instance=queryset)
+    return Response(data=serializer.data)
+
+
+def setup_business(request):
+    return render(request, 'business/create.html')
+
+
+class BusinessActivationView(View):
+    def get(self, request):
+        if business_verified_or_pending_approval(request.user.active_business) or not is_business_owner(request.user):
+            return redirect(reverse('dashboard'))
+        return render(request, 'business/activation.html')
+
+    def post(self, request):
+        if business_verified_or_pending_approval(request.user.active_business) or not is_business_owner(request.user):
+            return redirect(reverse('dashboard'))
+
+        try:
+            business = Business.objects.get(pk=request.user.active_business.pk)
+        except Business.DoesNotExist:
+            messages.warning(request, 'Request not validated.')
+            return redirect(reverse('business:activation'))
+
+        business.request_account_verification()
+        messages.success(request, 'Request completed. You will be notified once your request has been attended to.')
+        return redirect(reverse('dashboard'))
+
+
+def is_business_owner(user):
+    try:
+        TeamMember.objects.get(business=user.active_business.pk, role='Owner', user=user.pk)
+        return True
+    except TeamMember.DoesNotExist:
+        return False
+
+
+def business_verified_or_pending_approval(business):
+    if business.request_verification or business.is_active:
+        return True
+    return False
+
+
+class BusinessCompletionDetailsView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        verification_details = BusinessVerificationCheck(request.user)
+        verification_details = verification_details.verify_and_get_details()
+
+        return Response(verification_details)
+
+

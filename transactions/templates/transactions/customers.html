@@ -1,0 +1,72 @@
+{% extends 'users/partials/base.html' %}
+{% load static %}
+{% block page_title %}Transactions{% endblock %}
+{% block suffix_headtags %}
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+{% block left_sidebar %}
+    {% include "users/partials/mobile-menu.html" %}
+    {% include "users/partials/web-menu.html" %}
+{% endblock %}
+{% block content %}
+    <div class="element-wrapper mt-4" align="center">
+        <div class="col-md-10 col-sm-12">
+            <h5 class="element-header text-left">Customers</h5>
+        </div>
+        <div class="col-md-10 col-sm-12">
+            <div class="element-box">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Customer Email</th>
+                            <th>Customer Fullname</th>
+                            <th>Customer Phone Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for customer in page_obj %}
+                            <tr>
+                                <td class="text-left">
+                                    {% if customer.product.status == 'in progress' %}
+                                        <div class="status-pill yellow" data-title="In Progress" data-toggle="tooltip"
+                                             data-original-title="" title=""></div>
+                                    {% elif customer.product.status == 'completed' %}
+                                        <div class="status-pill green" data-title="Complete" data-toggle="tooltip"
+                                             data-original-title="" title=""></div>
+                                    {% else %}
+                                        <div class="status-pill red" data-title="Cancelled" data-toggle="tooltip"
+                                             data-original-title="" title=""></div>
+                                    {% endif %}
+                                </td>
+                                <td style="font-weight:600;">{{ customer.email }}</td>
+                                <td style="color:#B3AAA5;">{{ customer.name }}</td>
+                                <td style="color:#B3AAA5;">{{ customer.phone }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="100%" class="text-center">No Customer available</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">first</a>&nbsp;
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>&nbsp;
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>&nbsp;
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

@@ -5,7 +5,7 @@
             <div class="form-group">
                 <label for="name"> Your Name</label>
                 <input class="form-control" id="name" placeholder="Your Name"
-                       required="required" v-model="formData.name" type="text" readonly>
+                       required="required" :value="formData.name" type="text" readonly>
                 <div>
 
                 </div>
@@ -14,25 +14,30 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="email"> Email address</label>
-                        <input class="form-control" id="email"
+                        <input class="form-control"
+                               :class="{'is-invalid': formErrors.email || $v.formData.email.$error}" id="email"
                                placeholder="Your Email Address" v-model.trim="$v.formData.email.$model"
                                required="required"
                                type="email">
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
-                        <div class="error" v-if="!$v.formData.email.required">Please provide your email address</div>
+                        <div class="invalid-feedback" v-if="!$v.formData.email.required">Please provide your email
+                            address
+                        </div>
+                        <div class="invalid-feedback" v-if="!$v.formData.email.email">Enter a valid email address</div>
+                        <div class="invalid-feedback" v-if="formErrors.email">{{formErrors.email[0]}}</div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="gender"> Gender </label>
-                        <select class="form-control" v-model.trim="$v.formData.gender.$model" id="gender">
+                        <select class="form-control"
+                                :class="{'is-invalid': formErrors.gender || $v.formData.gender.$error}"
+                                v-model.trim="$v.formData.gender.$model" id="gender">
                             <option>Select gender</option>
-                            <option value="Male">Male
-                            </option>
-                            <option value="Female">Female
-                            </option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
-                        <div class="error" v-if="!$v.formData.gender.required">Please select gender</div>
+                        <div class="invalid-feedback" v-if="!$v.formData.gender.required">Please select gender</div>
+                        <div class="invalid-feedback" v-if="formErrors.gender">{{formErrors.gender[0]}}</div>
                     </div>
                 </div>
             </div>
@@ -49,37 +54,27 @@
                             +234
                         </div>
                     </div>
-                    <input class="form-control" v-model.trim="$v.formData.phone.$model" id="phone"
+                    <input class="form-control" :class="{'is-invalid': formErrors.phone || $v.formData.phone.$error}"
+                           v-model.trim="$v.formData.phone.$model" id="phone"
                            placeholder="817 123 4567" type="text">
                 </div>
-                <div class="error" v-if="!$v.formData.phone.required">Enter your phone number</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select class="form-control" v-model.trim="$v.formData.country.$model" id="country"
-                                required></select>
-                        <div class="help-block form-text with-errors form-control-feedback"></div>
-                        <div class="error" v-if="!$v.formData.country.required">Please select country</div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="state">State</label>
-                        <select class="form-control" v-model.trim="$v.formData.state.$model" id="state"
-                                required></select>
-                        <div class="error" v-if="!$v.formData.state.required">Please select state</div>
-                    </div>
-                </div>
+                <div class="invalid-feedback" v-if="!$v.formData.phone.required">Enter your phone number</div>
+                <div class="invalid-feedback" v-if="formErrors.phone">{{formErrors.phone[0]}}</div>
             </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" class="form-control" v-model.trim="$v.formData.city.$model" id="city"
-                               required>
-                        <div class="error" v-if="!$v.formData.city.required">Enter city</div>
+                        <label for="">Location</label>
+                        <vue-google-autocomplete
+                                id="map"
+                                v-model="$v.formData.location.$model"
+                                :classname="locationStyleClass"
+                                placeholder="Enter your location"
+                                v-on:placechanged="getAddressData"
+                        >
+                        </vue-google-autocomplete>
+                        <div class="invalid-feedback" v-if="!$v.formData.location.required">Enter location</div>
+                        <div class="invalid-feedback" v-if="formErrors.location">{{formErrors.location[0]}}</div>
                     </div>
                 </div>
             </div>
@@ -87,14 +82,20 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="date_of_birth"> Date of Birth</label>
-                        <datetime class="form-control" id="date_of_birth" type="date"
-                                  v-model.trim="$v.formData.date_of_birth.$model"></datetime>
-                        <div class="error" v-if="!$v.formData.date_of_birth.required">Enter your date of birth</div>
+                        <datetime
+                                :input-class="{'form-control': true, 'is-invalid': formErrors.date_of_birth || $v.formData.date_of_birth.$error}"
+                                id="date_of_birth" type="date"
+                                v-model.trim="$v.formData.date_of_birth.$model"></datetime>
+                        <div class="invalid-feedback" v-if="!$v.formData.date_of_birth.required">Enter your date of
+                            birth
+                        </div>
+                        <div class="invalid-feedback" v-if="formErrors.date_of_birth">{{formErrors.date_of_birth[0]}}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="form-buttons-w" align="center">
-                <button class="mr-2 mb-2 btn btn-outline-success" type="submit"> Save Changes</button>
+                <button class="mr-2 mb-2 btn btn-outline-success" type="submit" :disabled="isLoading"> Save Changes</button>
             </div>
         </form>
     </div>
@@ -102,19 +103,24 @@
 
 <script>
     import {required, email} from 'vuelidate/lib/validators';
+    import VueGoogleAutocomplete from 'vue-google-autocomplete';
+    import {formErrorHandler, non400ErrorMsg} from "../../utils/utils";
 
     export default {
         name: "Profile",
+        components: {
+            VueGoogleAutocomplete
+        },
         data() {
             return {
+                isLoading: false,
+                formErrors: [],
                 formData: {
                     name: '',
                     email: '',
                     gender: '',
                     phone: '',
-                    country: '',
-                    state: '',
-                    city: '',
+                    location: '',
                     date_of_birth: ''
                 }
             }
@@ -131,13 +137,7 @@
                 phone: {
                     required
                 },
-                country: {
-                    required
-                },
-                state: {
-                    required
-                },
-                city: {
+                location: {
                     required
                 },
                 date_of_birth: {
@@ -148,18 +148,30 @@
         mounted() {
             this.getProfileDetails();
         },
+        computed: {
+            locationStyleClass() {
+                let className = 'form-control';
+
+                if (this.formErrors.location || this.$v.formData.location.$error) {
+                    className += ' is-invalid';
+                }
+
+                return className;
+            }
+        },
         methods: {
+            getAddressData: function (addressData, placeResultData, id) {
+                this.formData.location = placeResultData.formatted_address;
+            },
             getProfileDetails() {
                 axios.get('/api/users/profile-details').then(resp => {
-                    const {name, email, phone, gender, country, state, city, date_of_birth} = resp.data;
+                    const {name, email, phone, gender, location, date_of_birth} = resp.data;
                     this.formData = {
                         name,
                         email,
                         gender,
                         phone,
-                        country,
-                        state,
-                        city,
+                        location,
                         date_of_birth
                     };
                 }).catch(err => {
@@ -169,17 +181,15 @@
             updateProfile() {
                 this.$v.$touch();
                 if (!this.$v.$invalid) {
+                    this.isLoading = true;
                     axios.put('/api/users/profile-details', this.formData).then(resp => {
                         this.$store.commit('setstatusMsg', {type: 'success', msg: 'Profile details updated.'});
-                        console.log('Form Success: ', resp.data);
                     }).catch(err => {
-                        if (err.response) {
-                            if (err.response.data.non_field_errors) {
-                                this.$store.commit('setstatusMsg', {
-                                    type: 'error',
-                                    msg: err.response.data.non_field_errors[0]
-                                });
-                            }
+                        this.isLoading = false;
+                        if (err.response.status === 400) {
+                            formErrorHandler(err.response.data, this);
+                        } else {
+                            non400ErrorMsg(this);
                         }
                     })
                 }

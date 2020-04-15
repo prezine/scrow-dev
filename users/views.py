@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_decode
 from business.models import StaffInvite
 from users.forms import LoginForm, ForgotPasswordForm, ForgotResetForm
 from users.models import User
-from users.serializers import UserSerializer, UpdateUserSerializer
+from users.serializers import UserSerializer, UpdateUserSerializer, UpdateHalfUserSerializer
 from utils.helpers import send_verification_link, send_reset_password_link, check_password_reset_token
 from utils.token import Token
 
@@ -58,6 +58,15 @@ class LoginView(View):
             if not user.is_active:
                 messages.warning(request, 'Login failed! Please contact support for help.')
                 return render(request, 'users/auth/login.html', {'form': form, 'message': messages})
+
+            if not user.is_activated:
+                send_verification_link(user)
+                messages.warning(
+                    request,
+                    'Account not verified. A new verification link has been sent to your email address'
+                )
+                return render(request, 'users/auth/login.html', {'form': form, 'message': messages})
+
             login(request, user)
             return redirect('dashboard')
         return render(request, 'users/auth/login.html', {'form': form, 'message': messages})
@@ -92,7 +101,7 @@ def account_verification_view(request, verification_code, email):
         login(request, user)
 
         messages.success(request, 'Account activated!.')
-        return redirect(reverse('dashboard'))
+        return redirect(reverse('business_setup'))
     messages.warning(request, 'Verification not valid or has expired.')
     return redirect(reverse('userLogin'))
 
@@ -181,6 +190,18 @@ class LogoutView(View):
 class ProfileDetailsView(RetrieveUpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UpdateUserSerializer
+
+    def get_object(self):
+        try:
+            user = User.objects.get(pk=self.request.user.pk)
+        except User.DoesNotExist:
+            return []
+        return user
+
+
+class HalfProfileDetailsView(RetrieveUpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UpdateHalfUserSerializer
 
     def get_object(self):
         try:

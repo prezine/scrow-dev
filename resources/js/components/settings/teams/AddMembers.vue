@@ -11,13 +11,17 @@
                 </div>
                 <form @submit.prevent="sendInvite">
                     <div class="modal-body">
-                        <div class="form-group" :class="{'has-danger': $v.formData.email.$error}">
+                        <div class="form-group">
                             <label>Email address</label>
-                            <input type="email" v-model.trim="$v.formData.email.$model" @input="findUser"
+                            <input type="email" v-model.trim="$v.formData.email.$model"
+                                   :class="{'is-invalid': formErrors.email || $v.formData.email.$error}"
+                                   @input="findUser"
                                    placeholder="Add by email" class="form-control">
-                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback"
-                                 v-if="!$v.formData.email.required">Enter your email address
+                            <div class="invalid-feedback" v-if="!$v.formData.email.email">Enter a valid email address
                             </div>
+                            <div class="invalid-feedback" v-if="!$v.formData.email.required">Enter an email address
+                            </div>
+                            <div class="invalid-feedback" v-if="formErrors.email">{{formErrors.email[0]}}</div>
                             <div class="position-relative" v-if="users">
                                 <div class="team-members-area">
                                     <div class="team-member" @click="selectUser(user)" v-for="user in users">
@@ -26,17 +30,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" :class="{'has-danger': $v.formData.role.$error}">
+                        <div class="form-group">
                             <label>Roles</label>
-                            <select v-model.trim="$v.formData.role.$model" class="form-control">
+                            <select v-model.trim="$v.formData.role.$model" class="form-control"
+                                    :class="{'is-invalid': formErrors.role || $v.formData.role.$error}">
                                 <option value="" selected disabled>
                                     Select role
                                 </option>
                                 <option value="Developer">Developer</option>
                                 <option value="Moderator">Moderator</option>
                             </select>
-                            <div class="help-block form-text with-errors form-control-feedback invalid-feedback"
-                                 v-if="!$v.formData.role.required">Select role
+
+                            <div class="invalid-feedback" v-if="!$v.formData.role.required">Select role
+                            </div>
+                            <div class="invalid-feedback" v-if="formErrors.role">
+                                {{formErrors.role[0]}}
                             </div>
                         </div>
                     </div>
@@ -51,6 +59,7 @@
 
 <script>
     import {required, email} from 'vuelidate/lib/validators';
+    import {formErrorHandler, non400ErrorMsg} from "../../../utils/utils";
 
     export default {
         name: "AddMembers",
@@ -80,13 +89,18 @@
             sendInvite() {
                 this.$v.$touch();
                 if (!this.$v.$invalid) {
+                    this.isLoading = true;
                     axios.post('/business/team', this.formData).then(resp => {
-                        console.log(resp.data);
                         this.$store.commit('setstatusMsg', {msg: resp.data, type: 'success'});
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
                     }).catch(err => {
-                        console.log(err.response);
-                        if (err.response.data) {
-                            console.log(err.response.data);
+                        this.isLoading = false;
+                        if (err.response.status === 400) {
+                            formErrorHandler(err.response.data, this);
+                        } else {
+                            non400ErrorMsg(this);
                         }
                     });
                 }
@@ -124,7 +138,11 @@
         cursor: pointer;
     }
 
+    .team-member:hover, .team-member:focus {
+        background-color: #fafafa;
+    }
+
     .team-member + .team-member {
-        border-bottom: 1px;
+        border-top: solid 1px #eee;
     }
 </style>

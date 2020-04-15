@@ -6,14 +6,14 @@ from .models import User
 
 class UserAdmin(BaseUserAdmin):
     list_display = (
-        'name', 'email', 'phone', 'is_staff', 'is_active', 'country',)
+        'name', 'email', 'phone', 'is_staff', 'is_active', 'location',)
     list_filter = ('is_staff', 'is_active', 'created_at',)
     fieldsets = (
         ('Basic Details', {'fields': (
-            'name', 'email','password', 'calling_code', 'phone',
+            'name', 'email', 'password', 'calling_code', 'phone',
         )}),
         ('Others', {'fields': (
-            'gender', 'address', 'country', 'state', 'city', 'photo', 'active_business',)}),
+            'gender', 'location', 'photo', 'active_business',)}),
         ('Permissions', {'fields': ('is_staff', 'deleted_at', 'is_active', 'is_activated',)}),
     )
 
@@ -22,7 +22,7 @@ class UserAdmin(BaseUserAdmin):
             'classes': ('wide',),
             'fields': (
                 'name', 'email', 'calling_code', 'phone', 'password1',
-                'password2', 'gender', 'address', 'country', 'state', 'city')}
+                'password2', 'gender', 'location')}
          ),
     )
 

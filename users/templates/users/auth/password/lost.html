@@ -1,33 +1,44 @@
-{% extends 'core/partials/base.html' %}
+{% extends 'users/auth/partials/base.html' %}
+{% load static %}
+{% block page_title %}Lost Password {% endblock %}
 {% block content %}
-
-    <form method="post" action="{% url 'lostPassword' %}">
-        {% csrf_token %}
-        {% if messages %}
-            {% for message in messages %}
-                <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <i class="fa fa-times"></i>
-                    </button>
-                    <span>
+    <div class="auth-box-w ">
+        <div class="text-center pt-3 pb-2">
+            <a href="/"><img alt="" src="{% static '/logo.png' %}" class="logo-responsive"></a>
+        </div>
+        <h4 class="auth-header">Lost Password</h4>
+        <form method="post" action="{% url 'lostPassword' %}">
+            {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <span>
                         {{ message }}
                     </span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-warning">
+                    {{ form.non_field_errors|striptags }}
                 </div>
-            {% endfor %}
-        {% endif %}
-        {% if form.non_field_errors %}
-            <div class="alert alert-warning">
-                {{ form.non_field_errors|striptags }}
+            {% endif %}
+
+
+            <div class="form-group">
+                <input placeholder="Enter Registered Email Address" type="email" name="email"
+                       class="form-control {% if form.email.errors %}is-invalid{% endif %}">
+                <div class="pre-icon os-icon os-icon-email-2-at"></div>
+                <div class="invalid-feedback">
+                    {{ form.email.errors.0 | escape }}
+                </div>
             </div>
-        {% endif %}
-
-
-        <div class="form-group">
-            <input placeholder="Enter Registered Email Address" type="email" name="email">
-        </div>
-        <button type="submit">
-            Request Password Reset
-        </button>
-    </form>
-
+            <div class="buttons-w">
+                <button class="btn btn-primary" type="submit">Request Password Reset</button>
+            </div>
+        </form>
+    </div>
 {% endblock content %}

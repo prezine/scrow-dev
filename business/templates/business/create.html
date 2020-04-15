@@ -1,0 +1,16 @@
+{% extends 'users/partials/base.html' %}
+{% load static %}
+{% load business %}
+{% block page_title %}Business Setup{% endblock %}
+{% block suffix_headtags %}
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChZ14EHsvHTX9WdHjYPKDh09ZFrrWjsSA&libraries=places"></script>
+{% endblock %}
+{% block content %}
+    <div class="element-wrapper">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="element-wrapper">
+                <create-business :user_id="{{ user.pk }}"></create-business>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

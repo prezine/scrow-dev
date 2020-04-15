@@ -1,6 +1,7 @@
 from django.db import models
+from django.utils import timezone
 
-from config.models import BaseModel
+from config.models import BaseModel, BaseModelWithSoftDelete
 from finance.models import Bank
 from utils.files import file_upload_path
 
@@ -15,36 +16,47 @@ CURRENCY = (
 )
 
 
-class Business(BaseModel):
+class Business(BaseModelWithSoftDelete):
     name = models.CharField(max_length=300, db_index=True, unique=True)
     email = models.EmailField(max_length=200, unique=True, db_index=True)
-    country = models.CharField(max_length=200)
-    state = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
-    address = models.CharField(max_length=300)
+    address = models.CharField(max_length=300, null=True, blank=True)
     photo = models.ImageField(upload_to=file_upload_path.business_avatar_upload_path,
                               default='business-photo-fallback.png', blank=True)
-    category = models.CharField(max_length=200)
-    sub_category = models.CharField(max_length=200)
     business_type = models.CharField(max_length=20, choices=BUSINESS_TYPE, default='startup')
     is_active = models.DateTimeField(null=True, blank=True)
+    request_verification = models.DateTimeField(null=True, blank=True)
     bank = models.OneToOneField(Bank, on_delete=models.CASCADE, null=True, blank=True)
-    phone = models.CharField(max_length=20, null=True, blank=True)
-    website = models.CharField(max_length=300, null=True, blank=True)
+    phone = models.CharField(max_length=20, default='')
+    website = models.CharField(max_length=300, default='', null=True, blank=True)
     currency = models.CharField(max_length=10, choices=CURRENCY, default='NGN')
-    support_email = models.EmailField(max_length=300, null=True, blank=True)
-    chargeback_email = models.EmailField(max_length=300, null=True, blank=True)
-    twitter_username = models.CharField(max_length=100, null=True, blank=True)
-    instagram_username = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    support_email = models.EmailField(max_length=300, default='', null=False, blank=True)
+    chargeback_email = models.EmailField(max_length=300, default='', null=False, blank=True)
+    twitter_username = models.CharField(max_length=100, default='', null=False, blank=True)
+    instagram_username = models.CharField(max_length=100, default='', null=False, blank=True)
+    facebook_username = models.CharField(max_length=100, default='', null=False, blank=True)
+    linkedin_username = models.CharField(max_length=100, default='', null=False, blank=True)
 
     def __str__(self):
         return self.name
+
+    def request_account_verification(self):
+        self.request_verification = timezone.now()
+        # Todo: Send request to admin to verify business details
+        self.save()
 
 
 STAFF_ROLES = (
     ('Owner', 'owner'),
     ('Developer', 'developer'),
     ('Moderator', 'moderator')
+)
+
+DOCUMENT_TYPE = (
+    ('RC Document', 'rc'),
+    ('BN Document', 'bn'),
+    ('NEPZA Document', 'nepza'),
+    ('CAC IT Document', 'cac')
 )
 
 
@@ -60,12 +72,10 @@ class TeamMember(models.Model):
 
 class BusinessVerification(BaseModel):
     business = models.ForeignKey(Business, on_delete=models.CASCADE)
-    cac_cert = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
-    cac_verified = models.BooleanField(default=False)
-    tax_doc = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
-    tax_doc_verified = models.BooleanField(default=False)
-    personal_id = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
-    personal_id_verified = models.BooleanField(default=False)
+    document = models.FileField(upload_to=file_upload_path.document_upload_path, default='', blank=True)
+    document_type = models.CharField(choices=DOCUMENT_TYPE, max_length=100)
+    bvn = models.CharField(default='', max_length=100)
+    date_company_started = models.DateField(blank=True, null=True)
 
 
 class StaffInvite(BaseModel):

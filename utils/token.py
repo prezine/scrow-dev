@@ -15,7 +15,7 @@ class Token:
                 math_random = random.uniform(0.1, 0.9)
             token += possibilities[round(math_random * len(possibilities))]
 
-        return token.lower()
+        return token
 
     @staticmethod
     def token_possibility(ext):

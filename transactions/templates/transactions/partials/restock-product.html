@@ -1,0 +1,30 @@
+<!--Modal - Edit Task-->
+<div aria-hidden="true" class="modal fade" id="restockProductModal-{{ product.id }}" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header faded smaller">
+                <div class="modal-title">
+                    <span>Restock {{ product.name }}</span>
+                </div>
+            </div>
+            <form action="{% url 'transactions:update_stock' product.id %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Product in Stock</label>
+                                <input type="number" name="quantity" class="form-control" value="{{ product.quantity }}"
+                                       placeholder="Total number of Available Item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer buttons-on-left">
+                    <button class="btn btn-teal" type="submit"> Add to stock</button>
+                    <button class="btn btn-link" data-dismiss="modal" type="button"> Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

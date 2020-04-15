@@ -8,7 +8,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 from business.forms import BankDetailsForm
-from business.models import Business, StaffInvite, TeamMember
+from business.models import Business, StaffInvite, TeamMember, BusinessVerification
 from users.models import User
 from utils.mailer import Mailer
 from utils.token import Token
@@ -48,6 +48,17 @@ def send_reset_password_link(user):
     #        payload={'reset_link': reset_link})
 
 
+def send_invoice(user, transaction):
+    current_site = Site.objects.get_current()
+    payment_path = reverse('transactions:payment',
+                           kwargs={'product_id': transaction.get('product_id'), 'customer_uid': user.uid})
+    payment_link = '%s%s' % (current_site.domain, payment_path)
+
+    print(payment_link)
+    # Mailer(template='transactions/mail/payment_invoice.html', subject='Scrow - Transaction Invoice',
+    #        to_email=user.email, payload={'payment_link': payment_link})
+
+
 def send_team_invite_link(invite_id, email):
     current_site = Site.objects.get_current()
 
@@ -66,27 +77,6 @@ def check_password_reset_token(user, reset_token):
     token.remove_token(user.pk)
 
     return eval_token
-
-
-def update_bank_details(request, form):
-    if request.user.business:
-        try:
-            business = Business.objects.get(pk=request.user.business.pk)
-        except Business.DoesNotExist:
-            raise Http404
-
-    if business.bank:
-        form = BankDetailsForm(instance=business.bank, data=request.POST)
-    if form.is_valid():
-        bank = form.save()
-        if business:
-            business.bank = bank
-            business.save()
-        else:
-            user = User.objects.get(pk=request.user.pk)
-            user.bank = bank
-            user.save()
-        messages.success(request, 'Bank details updated!')
 
 
 def check_username_exist(model, pk, name):
@@ -108,9 +98,22 @@ def validate_invite(invite_id, request):
         return messages.warning(request, 'Invite link not valid.')
 
     if invite.is_active:
-        return messages.warning(request, 'Invite link has already been used, thus is no longer active.')\
+        return messages.warning(request, 'Invite link has already been used, thus is no longer active.')
 
     if TeamMember.objects.filter(user=request.user.pk, business=invite.business.pk):
         return messages.warning(request, 'You are already a member of this team.')
 
     return invite
+
+
+def verify_business(business):
+    if business.bank:
+        try:
+            business_verification = BusinessVerification.objects.get(business=business.pk)
+        except BusinessVerification.DoesNotExist:
+            return None
+
+        if business_verification.personal_id_verified and (
+            business_verification.cac_verified or business_verification.tax_doc_verified):
+            business.is_active = True
+            business.save(update_fields=('is_active',))

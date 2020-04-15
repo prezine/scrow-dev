@@ -33,6 +33,8 @@ class BusinessOnlyMiddleware:
         if request.user.is_authenticated:
             if request.user.active_business:
                 return None
+            elif not request.user.is_staff:
+                return HttpResponseRedirect('/getting-started')
             return HttpResponseRedirect('/admin')
         else:
             return HttpResponseRedirect('/login')
