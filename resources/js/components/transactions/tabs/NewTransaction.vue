@@ -69,10 +69,10 @@
                                     <div class="form-group">
                                         <label for=""> Name of Item</label>
                                         <input class="form-control" placeholder="Enter item name" type="text"
-                                               v-model.trim="$v.formData.transaction.product_name.$model"
-                                               :class="{'is-invalid': $v.formData.transaction.product_name.$error}">
+                                               v-model.trim="$v.formData.product.name.$model"
+                                               :class="{'is-invalid': $v.formData.product.name.$error}">
                                         <div class="invalid-feedback"
-                                             v-if="!$v.formData.transaction.product_name.required">name of item is
+                                             v-if="!$v.formData.product.name.required">name of item is
                                             required
                                         </div>
                                     </div>
@@ -81,10 +81,10 @@
                                     <div class="form-group">
                                         <label for="">Item Quantity</label>
                                         <input class="form-control" placeholder="Item Quantity" type="number"
-                                               v-model.trim="$v.formData.transaction.product_quantity.$model"
-                                               :class="{'is-invalid': $v.formData.transaction.product_quantity.$error}">
+                                               v-model.trim="$v.formData.product.quantity.$model"
+                                               :class="{'is-invalid': $v.formData.product.quantity.$error}">
                                         <div class="invalid-feedback"
-                                             v-if="!$v.formData.transaction.product_quantity.required">provide quantity
+                                             v-if="!$v.formData.product.quantity.required">provide quantity
                                             of item
                                         </div>
                                     </div>
@@ -95,10 +95,10 @@
                                     <div class="form-group">
                                         <label for=""> Expected Delivery Date</label>
                                         <datetime type="date"
-                                                  v-model.trim="$v.formData.transaction.delivery_date.$model"
-                                                  :input-class="{'form-control': true, 'is-invalid': $v.formData.transaction.delivery_date.$error}"></datetime>
+                                                  v-model.trim="$v.formData.product.delivery_date.$model"
+                                                  :input-class="{'form-control': true, 'is-invalid': $v.formData.product.delivery_date.$error}"></datetime>
                                         <div class="invalid-feedback"
-                                             v-if="!$v.formData.transaction.delivery_date.required">provide deliver
+                                             v-if="!$v.formData.product.delivery_date.required">provide deliver
                                             date
                                         </div>
                                     </div>
@@ -107,8 +107,8 @@
                                     <div class="form-group">
                                         <label for="">Currency</label>
                                         <select class="form-control"
-                                                v-model.trim="$v.formData.transaction.currency.$model"
-                                                :class="{'is-invalid': $v.formData.transaction.currency.$error}">
+                                                v-model.trim="$v.formData.product.currency.$model"
+                                                :class="{'is-invalid': $v.formData.product.currency.$error}">
                                             <option>Select currency</option>
                                             <option>Nigerian Naira (NGN)</option>
                                             <option>U.S. Dollar (USD)</option>
@@ -121,7 +121,7 @@
                                             <option>South African Rand (ZAR)</option>
                                         </select>
                                         <div class="invalid-feedback"
-                                             v-if="!$v.formData.transaction.currency.required">select currency to
+                                             v-if="!$v.formData.product.currency.required">select currency to
                                             receive with
                                         </div>
                                     </div>
@@ -129,21 +129,21 @@
                             </div>
                             <div class="form-group">
                                 <label for=""> Amount </label>
-                                <money v-model.trim="$v.formData.transaction.amount.$model" v-bind="money"
+                                <money v-model.trim="$v.formData.product.amount.$model" v-bind="money"
                                        class="form-control" placeholder="Enter amount per item"
-                                       :class="{'is-invalid': $v.formData.transaction.amount.$error}"></money>
+                                       :class="{'is-invalid': $v.formData.product.amount.$error}"></money>
                                 <div class="invalid-feedback"
-                                     v-if="!$v.formData.transaction.amount.required">enter amount
+                                     v-if="!$v.formData.product.amount.required">enter amount
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label> Terms of service </label>
                                 <textarea class="form-control" rows="3"
                                           placeholder="We agreed that we'll send x item in gold color and x Ton by y day"
-                                          v-model.trim="$v.formData.transaction.terms.$model"
-                                          :class="{'is-invalid': $v.formData.transaction.terms.$error}"></textarea>
+                                          v-model.trim="$v.formData.product.terms.$model"
+                                          :class="{'is-invalid': $v.formData.product.terms.$error}"></textarea>
                                 <div class="invalid-feedback"
-                                     v-if="!$v.formData.transaction.terms.required">enter terms and condition
+                                     v-if="!$v.formData.product.terms.required">enter terms and condition
                                 </div>
                             </div>
                         </fieldset>
@@ -187,9 +187,9 @@
                         phone: '',
                         gender: ''
                     },
-                    transaction: {
-                        product_name: '',
-                        product_quantity: '',
+                    product: {
+                        name: '',
+                        quantity: '',
                         delivery_date: '',
                         currency: '',
                         amount: 0,
@@ -218,11 +218,11 @@
                         required
                     }
                 },
-                transaction: {
-                    product_name: {
+                product: {
+                    name: {
                         required
                     },
-                    product_quantity: {
+                    quantity: {
                         required
                     },
                     delivery_date: {
@@ -245,7 +245,7 @@
                 this.$v.$touch();
                 if (!this.$v.$invalid) {
                     this.isLoading = true;
-                    axios.post('/transactions/new', this.formData).then(resp => {
+                    axios.post('/transactions/product', this.formData).then(resp => {
                         location.reload();
                     }).catch(err => {
                         this.isLoading = false;

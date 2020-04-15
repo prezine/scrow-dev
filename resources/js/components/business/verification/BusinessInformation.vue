@@ -299,13 +299,10 @@
                 }
 
                 let file = files[0];
-                this.isLoading = true;
-
                 let extensions = ["image/png", "image/gif", "image/jpeg", "image/jpg"];
                 try {
                     await fileHandler(file, extensions);
                 } catch (err) {
-                    this.isLoading = false;
                     this.$store.commit('setstatusMsg', {type: 'error', msg: err});
                     return;
                 }

@@ -58,10 +58,10 @@
             </div>
             <div class="form-group">
                 <label> About Business </label>
-                <textarea class="form-control" rows="3" maxlength="150" v-model.trim="$v.formData.about.$model"
-                          :class="{'is-invalid': formErrors.about || $v.formData.about.$error}"></textarea>
-                <div class="invalid-feedback" v-if="!$v.formData.about.required">Tell us about your business</div>
-                <div class="invalid-feedback" v-if="formErrors.about">{{formErrors.about[0]}}</div>
+                <textarea class="form-control" rows="3" maxlength="150" v-model.trim="$v.formData.description.$model"
+                          :class="{'is-invalid': formErrors.description || $v.formData.description.$error}"></textarea>
+                <div class="invalid-feedback" v-if="!$v.formData.description.required">Tell us about your business</div>
+                <div class="invalid-feedback" v-if="formErrors.description">{{formErrors.description[0]}}</div>
             </div>
             <div class="form-group">
                 <select class="form-control" v-model.trim="$v.formData.business_type.$model"
@@ -141,7 +141,7 @@
             </div>
             <div class="form-buttons-w">
                 <button class="btn btn-primary" type="submit" :disabled="isLoading"> Create a business</button>
-                <a href="./" class="btn btn-grey"> Skip </a>
+                <a href="/dashboard" class="btn btn-grey"> Skip </a>
             </div>
         </form>
     </div>
@@ -168,7 +168,7 @@
                     email: '',
                     calling_code: '',
                     phone: '',
-                    about: '',
+                    description: '',
                     address: '',
                     business_type: '',
                     website: '',
@@ -193,7 +193,7 @@
                 phone: {
                     required
                 },
-                about: {
+                description: {
                     required
                 },
                 address: {

@@ -1,4 +1,5 @@
 from business.models import BusinessVerification
+from transactions.models import ProductBacklog
 
 
 class BusinessVerificationCheck:
@@ -61,3 +62,26 @@ class BusinessVerificationCheck:
         self.completion_percentage()
 
         return self.completion_records
+
+
+class ProductBacklogAction:
+    ModelClass = ProductBacklog
+
+    def _save_backlog(self, **kwargs):
+        return self.ModelClass.objects.create(**kwargs)
+
+    def add_product(self, user, product):
+        action_msg = 'Added product %s' % product.name
+        self._save_backlog(user=user, product=product, action=action_msg)
+
+    def update_product(self, user, product):
+        action_msg = 'Updated product %s' % product.name
+        self._save_backlog(user=user, product=product, action=action_msg)
+
+    def delete_product(self, user, product):
+        action_msg = 'Deleted %s' % product.name
+        self._save_backlog(user=user, product=product, action=action_msg)
+
+    def update_stock(self, user, product):
+        action_msg = '%s products in stock was updated to %s' % (product.name, product.quantity)
+        self._save_backlog(user=user, product=product, action=action_msg)

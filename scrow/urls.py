@@ -6,13 +6,15 @@ from django.utils.decorators import decorator_from_middleware
 
 from business.views import setup_business
 from core.views import homepage_view, settings_view
+from transactions.views import customers_view, store_view, StoreView
 from users.views import (register_user_view, dashboard_view, LoginView, account_verification_view,
                          ResendVerificationLinkView, PasswordResetView, LostPassword, LogoutView)
-from utils.auth_middlewares import AuthOnlyMiddleware, AuthUserOnlyMiddleware, NonAuthMiddleware
+from utils.auth_middlewares import AuthOnlyMiddleware, AuthUserOnlyMiddleware, NonAuthMiddleware, BusinessOnlyMiddleware
 
 user_auth_access_decorator = decorator_from_middleware(AuthOnlyMiddleware)
 non_admin_auth_access_decorator = decorator_from_middleware(AuthUserOnlyMiddleware)
 non_auth_access_decorator = decorator_from_middleware(NonAuthMiddleware)
+business_only_access_decorator = decorator_from_middleware(BusinessOnlyMiddleware)
 
 
 urlpatterns = [
@@ -40,7 +42,9 @@ urlpatterns = [
     path('business/', include('business.urls')),
     path('finance/', include('finance.urls')),
 
-    path('transactions/', include('transactions.urls'))
+    path('transactions/', include('transactions.urls')),
+    path('customers', business_only_access_decorator(customers_view), name='customers'),
+    path('store', business_only_access_decorator(StoreView.as_view()), name='store'),
 ]
 
 if settings.DEBUG:

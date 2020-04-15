@@ -27,7 +27,7 @@ class Business(BaseModelWithSoftDelete):
     request_verification = models.DateTimeField(null=True, blank=True)
     bank = models.OneToOneField(Bank, on_delete=models.CASCADE, null=True, blank=True)
     phone = models.CharField(max_length=20, default='')
-    website = models.CharField(max_length=300, default='')
+    website = models.CharField(max_length=300, default='', null=True, blank=True)
     currency = models.CharField(max_length=10, choices=CURRENCY, default='NGN')
     description = models.TextField(null=True, blank=True)
     support_email = models.EmailField(max_length=300, default='', null=False, blank=True)

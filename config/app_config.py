@@ -10,6 +10,7 @@ env.read_env(f'{BASE_DIR}/.env')
 PROFILE_UPLOAD_PATH = 'uploads/profile'
 BUSINESS_AVATAR_UPLOAD_PATH = 'uploads/business'
 DOCUMENT_UPLOAD_PATH = 'uploads/documents'
+PRODUCT_IMAGE_UPLOAD_PATH = 'uploads/products'
 
 NUMBERS = '0123456789'
 ALPHA_NUM = f'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ{NUMBERS}'

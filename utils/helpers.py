@@ -51,12 +51,12 @@ def send_reset_password_link(user):
 def send_invoice(user, transaction):
     current_site = Site.objects.get_current()
     payment_path = reverse('transactions:payment',
-                           kwargs={'transaction_id': transaction.get('transaction_id')})
+                           kwargs={'product_id': transaction.get('product_id'), 'customer_uid': user.uid})
     payment_link = '%s%s' % (current_site.domain, payment_path)
 
     print(payment_link)
     # Mailer(template='transactions/mail/payment_invoice.html', subject='Scrow - Transaction Invoice',
-    #        to_email=user.get('email'), payload={'payment_link': payment_link})
+    #        to_email=user.email, payload={'payment_link': payment_link})
 
 
 def send_team_invite_link(invite_id, email):
