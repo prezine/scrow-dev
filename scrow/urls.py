@@ -17,6 +17,7 @@ non_auth_access_decorator = decorator_from_middleware(NonAuthMiddleware)
 business_only_access_decorator = decorator_from_middleware(BusinessOnlyMiddleware)
 
 
+
 urlpatterns = [
     path('sudo/admin/ps/', admin.site.urls),
     path('', homepage_view, name='homepage'),
