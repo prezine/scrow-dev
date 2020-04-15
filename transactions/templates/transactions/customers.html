@@ -29,10 +29,10 @@
                         {% for customer in page_obj %}
                             <tr>
                                 <td class="text-left">
-                                    {% if customer.transaction.status == 'in progress' %}
+                                    {% if customer.product.status == 'in progress' %}
                                         <div class="status-pill yellow" data-title="In Progress" data-toggle="tooltip"
                                              data-original-title="" title=""></div>
-                                    {% elif customer.transaction.status == 'completed' %}
+                                    {% elif customer.product.status == 'completed' %}
                                         <div class="status-pill green" data-title="Complete" data-toggle="tooltip"
                                              data-original-title="" title=""></div>
                                     {% else %}
